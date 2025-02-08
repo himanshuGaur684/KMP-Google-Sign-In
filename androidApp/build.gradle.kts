@@ -2,13 +2,14 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "gaur.himanshu.youtube.goglesignin.signin.android"
     compileSdk = 35
     defaultConfig {
-        applicationId = "gaur.himanshu.youtube.goglesignin.signin.android"
+        applicationId = "gaur.himanshu.youtube.goglesignin.signin"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -43,4 +44,7 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
 }

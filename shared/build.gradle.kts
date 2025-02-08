@@ -31,6 +31,9 @@ kotlin {
             isStatic = true
         }
         pod("GoogleSignIn")
+        pod("FirebaseAuth"){
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
     }
 
     sourceSets {

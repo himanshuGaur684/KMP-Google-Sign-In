@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "458352816759",
+    "project_id": "login-cd323",
+    "storage_bucket": "login-cd323.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458352816759:android:4d8f31cd72c2c680e88c72",
+        "android_client_info": {
+          "package_name": "gaur.himanshu.goglesignin.kmp.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458352816759-n7arocbhd5dm93irom3cbnq1tvqst3o9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gaur.himanshu.goglesignin.kmp.android",
+            "certificate_hash": "291bf2928bfada4c2ab0a9416bc59bbd06c7c3bd"
+          }
+        },
+        {
+          "client_id": "458352816759-ls7libfra52161m07hrf4r1b5bn7pt54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjCdMTznMIMJO-ABtP1Pt6-9aVAx0MI8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458352816759-3makgqcq48j8lalvtepfu9ai2b1jvteh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "458352816759-ptia71tv7fl52hfd5espnd0guktlvbub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "orgIdentifier.iosApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458352816759:android:95db8a29a6fafec8e88c72",
+        "android_client_info": {
+          "package_name": "gaur.himanshu.youtube.goglesignin.signin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458352816759-lrkhquaebthudhjpb66htgo1uoes1lgb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gaur.himanshu.youtube.goglesignin.signin",
+            "certificate_hash": "291bf2928bfada4c2ab0a9416bc59bbd06c7c3bd"
+          }
+        },
+        {
+          "client_id": "458352816759-ls7libfra52161m07hrf4r1b5bn7pt54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjCdMTznMIMJO-ABtP1Pt6-9aVAx0MI8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458352816759-3makgqcq48j8lalvtepfu9ai2b1jvteh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "458352816759-ptia71tv7fl52hfd5espnd0guktlvbub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "orgIdentifier.iosApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
