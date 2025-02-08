@@ -22,18 +22,20 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol RCAActionProtocol
 
 /** Indicates that the protected action is a Login workflow. */
-@property(class, readonly, nonatomic) id<RCAActionProtocol> login;
+@property(class, readonly, nonatomic) id <RCAActionProtocol> login;
 
 /** Indicates that the protected action is a Signup workflow. */
-@property(class, readonly, nonatomic) id<RCAActionProtocol> signup;
+@property(class, readonly, nonatomic) id <RCAActionProtocol> signup;
 
 /** A String representing the action. */
-@property(nonatomic, readonly) NSString* action;
+@property(nonatomic, readonly) NSString *action;
 
 /** Creates an instance with a custom action from a String. */
-- (instancetype)initWithCustomAction:(NSString*)customAction;
+- (instancetype)initWithCustomAction:(NSString *)customAction;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

@@ -18,25 +18,26 @@
 
 /// Values stored in analyticsEnabledState. Never alter these constants since they must match with
 /// values persisted to disk.
-typedef NS_ENUM(int64_t, FIRAnalyticsEnabledState) {
-  // 0 is the default value for keys not found stored in persisted config, so it cannot represent
-  // kFIRAnalyticsEnabledStateSetNo. It must represent kFIRAnalyticsEnabledStateNotSet.
-  kFIRAnalyticsEnabledStateNotSet = 0,
-  kFIRAnalyticsEnabledStateSetYes = 1,
-  kFIRAnalyticsEnabledStateSetNo = 2,
+typedef NS_ENUM(int64_t, FIRAnalyticsEnabledState
+) {
+// 0 is the default value for keys not found stored in persisted config, so it cannot represent
+// kFIRAnalyticsEnabledStateSetNo. It must represent kFIRAnalyticsEnabledStateNotSet.
+kFIRAnalyticsEnabledStateNotSet = 0,
+        kFIRAnalyticsEnabledStateSetYes = 1,
+        kFIRAnalyticsEnabledStateSetNo = 2,
 };
 
 /// The user defaults key for the persisted measurementEnabledState value. FIRAPersistedConfig reads
 /// measurementEnabledState using this same key.
 static NSString *const kFIRAPersistedConfigMeasurementEnabledStateKey =
-    @"/google/measurement/measurement_enabled_state";
+        @"/google/measurement/measurement_enabled_state";
 
 static NSString *const kFIRAnalyticsConfigurationSetEnabledNotification =
-    @"FIRAnalyticsConfigurationSetEnabledNotification";
+        @"FIRAnalyticsConfigurationSetEnabledNotification";
 static NSString *const kFIRAnalyticsConfigurationSetMinimumSessionIntervalNotification =
-    @"FIRAnalyticsConfigurationSetMinimumSessionIntervalNotification";
+        @"FIRAnalyticsConfigurationSetMinimumSessionIntervalNotification";
 static NSString *const kFIRAnalyticsConfigurationSetSessionTimeoutIntervalNotification =
-    @"FIRAnalyticsConfigurationSetSessionTimeoutIntervalNotification";
+        @"FIRAnalyticsConfigurationSetSessionTimeoutIntervalNotification";
 
 @interface FIRAnalyticsConfiguration : NSObject
 

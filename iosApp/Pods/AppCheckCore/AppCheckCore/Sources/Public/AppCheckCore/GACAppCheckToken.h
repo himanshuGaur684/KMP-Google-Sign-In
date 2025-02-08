@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// An object representing an App Check token.
 NS_SWIFT_NAME(AppCheckCoreToken)
+
 @interface GACAppCheckToken : NSObject
 
 /// The App Check token.
@@ -31,7 +32,9 @@ NS_SWIFT_NAME(AppCheckCoreToken)
 /// The date when the App Check token was received in the device's local time.
 @property(nonatomic, readonly) NSDate *receivedAtDate;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// Convenience initializer that uses the current device local time to set `receivedAtDate`.
 /// @param token A Firebase App Check token.

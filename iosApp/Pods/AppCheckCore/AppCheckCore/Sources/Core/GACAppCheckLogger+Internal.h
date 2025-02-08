@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param message The message string to log.
  */
 FOUNDATION_EXPORT
+
 void GACAppCheckLog(GACAppCheckMessageCode code,
                     GACAppCheckLogLevel logLevel,
                     NSString *_Nonnull message);

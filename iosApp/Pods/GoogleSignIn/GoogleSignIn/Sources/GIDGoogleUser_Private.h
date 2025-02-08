@@ -19,7 +19,9 @@
 #ifdef SWIFT_PACKAGE
 @import AppAuth;
 #else
+
 #import <AppAuth/AppAuth.h>
+
 #endif
 
 @class OIDAuthState;
@@ -43,7 +45,7 @@ typedef void (^GIDGoogleUserCompletion)(GIDGoogleUser *_Nullable user, NSError *
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-@property(nonatomic, readwrite) id<GTMFetcherAuthorizationProtocol> fetcherAuthorizer;
+@property(nonatomic, readwrite) id <GTMFetcherAuthorizationProtocol> fetcherAuthorizer;
 #pragma clang diagnostic pop
 
 #if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
@@ -53,12 +55,18 @@ typedef void (^GIDGoogleUserCompletion)(GIDGoogleUser *_Nullable user, NSError *
 
 // Create a object with an auth state, scopes, and profile data.
 - (instancetype)initWithAuthState:(OIDAuthState *)authState
-                      profileData:(nullable GIDProfileData *)profileData;
+                      profileData:(nullable GIDProfileData
+
+*)
+profileData;
 
 // Update the auth state and profile data.
 - (void)updateWithTokenResponse:(OIDTokenResponse *)tokenResponse
           authorizationResponse:(OIDAuthorizationResponse *)authorizationResponse
-                    profileData:(nullable GIDProfileData *)profileData;
+                    profileData:(nullable GIDProfileData
+
+*)
+profileData;
 
 @end
 

@@ -22,44 +22,44 @@
 @implementation FBLPromise (RaceAdditions)
 
 + (instancetype)race:(NSArray *)promises {
-  return [self onQueue:self.defaultDispatchQueue race:promises];
+    return [self onQueue:self.defaultDispatchQueue race:promises];
 }
 
 + (instancetype)onQueue:(dispatch_queue_t)queue race:(NSArray *)racePromises {
-  NSParameterAssert(queue);
-  NSAssert(racePromises.count > 0, @"No promises to observe");
+    NSParameterAssert(queue);
+    NSAssert(racePromises.count > 0, @"No promises to observe");
 
-  NSArray *promises = [racePromises copy];
-  return [self onQueue:queue
-                       async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
-                         for (id promise in promises) {
+    NSArray *promises = [racePromises copy];
+    return [self onQueue:queue
+                   async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
+                       for (id promise in promises) {
                            if (![promise isKindOfClass:self]) {
-                             fulfill(promise);
-                             return;
+                               fulfill(promise);
+                               return;
                            }
-                         }
-                         // Subscribe all, but only the first one to resolve will change
-                         // the resulting promise's state.
-                         for (FBLPromise *promise in promises) {
+                       }
+                       // Subscribe all, but only the first one to resolve will change
+                       // the resulting promise's state.
+                       for (FBLPromise *promise in promises) {
                            [promise observeOnQueue:queue fulfill:fulfill reject:reject];
-                         }
-                       }];
+                       }
+                   }];
 }
 
 @end
 
 @implementation FBLPromise (DotSyntax_RaceAdditions)
 
-+ (FBLPromise * (^)(NSArray *))race {
-  return ^(NSArray *promises) {
-    return [self race:promises];
-  };
++ (FBLPromise *(^)(NSArray *))race {
+    return ^(NSArray *promises) {
+        return [self race:promises];
+    };
 }
 
-+ (FBLPromise * (^)(dispatch_queue_t, NSArray *))raceOn {
-  return ^(dispatch_queue_t queue, NSArray *promises) {
-    return [self onQueue:queue race:promises];
-  };
++ (FBLPromise *(^)(dispatch_queue_t, NSArray *))raceOn {
+    return ^(dispatch_queue_t queue, NSArray *promises) {
+        return [self onQueue:queue race:promises];
+    };
 }
 
 @end

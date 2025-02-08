@@ -24,7 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// profile that has the Keychain Sharing capability enabled.
 @interface GULKeychainStorage : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /** Initializes the keychain storage with Keychain Service name.
  *  @param service A Keychain Service name that will be used to store and retrieve objects. See also
@@ -43,9 +45,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// handler.
 - (void)getObjectForKey:(NSString *)key
             objectClass:(Class)objectClass
-            accessGroup:(nullable NSString *)accessGroup
-      completionHandler:
-          (void (^)(id<NSSecureCoding> _Nullable obj, NSError *_Nullable error))completionHandler;
+            accessGroup:(nullable NSString
+
+*)
+accessGroup
+        completionHandler
+:
+(void (^)(
+id <NSSecureCoding> _Nullable
+obj,
+NSError *_Nullable
+error))
+completionHandler;
 
 /// Saves the given object by the given key.
 /// @param object The object to store.
@@ -56,11 +67,20 @@ NS_ASSUME_NONNULL_BEGIN
 /// synchronized keychain write is complete. An error is passed to the
 /// completion handler if the keychain read fails. Else, the object written to
 /// the keychain is passed to the completion handler.
-- (void)setObject:(id<NSSecureCoding>)object
-               forKey:(NSString *)key
-          accessGroup:(nullable NSString *)accessGroup
-    completionHandler:
-        (void (^)(id<NSSecureCoding> _Nullable obj, NSError *_Nullable error))completionHandler;
+- (void)setObject:(id <NSSecureCoding>)object
+           forKey:(NSString *)key
+      accessGroup:(nullable NSString
+
+*)
+accessGroup
+        completionHandler
+:
+(void (^)(
+id <NSSecureCoding> _Nullable
+obj,
+NSError *_Nullable
+error))
+completionHandler;
 
 /// Removes the object by the given key.
 /// @param key The key to store the object. If there is an existing object by
@@ -70,8 +90,15 @@ NS_ASSUME_NONNULL_BEGIN
 /// synchronized keychain removal is complete. An error is passed to the
 /// completion handler if the keychain removal fails.
 - (void)removeObjectForKey:(NSString *)key
-               accessGroup:(nullable NSString *)accessGroup
-         completionHandler:(void (^)(NSError *_Nullable error))completionHandler;
+               accessGroup:(nullable NSString
+
+*)
+accessGroup
+        completionHandler
+:(void (^)(
+NSError *_Nullable
+error))
+completionHandler;
 
 #if TARGET_OS_OSX
 /// If not `nil`, then only this keychain will be used to save and read data (see

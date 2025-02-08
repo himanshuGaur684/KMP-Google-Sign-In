@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /// The authorizer for use with `GTLRService`, `GTMSessionFetcher`, or `GTMHTTPFetcher`.
-@property(nonatomic, readonly) id<GTMFetcherAuthorizationProtocol> fetcherAuthorizer;
+@property(nonatomic, readonly) id <GTMFetcherAuthorizationProtocol> fetcherAuthorizer;
 #pragma clang diagnostic pop
 
 /// Refresh the user's access and ID tokens if they have expired or are about to expire.

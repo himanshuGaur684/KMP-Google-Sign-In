@@ -19,7 +19,9 @@
 #if __has_include(<FBLPromises/FBLPromises.h>)
 #import <FBLPromises/FBLPromises.h>
 #else
+
 #import "FBLPromises.h"
+
 #endif
 
 #import <GoogleUtilities/GULKeychainStorage.h>
@@ -29,7 +31,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kKeychainService = @"com.google.app_check_core.token_storage";
+static NSString
+*
+const kKeychainService = @"com.google.app_check_core.token_storage";
 
 @interface GACAppCheckStorage ()
 
@@ -43,77 +47,91 @@ static NSString *const kKeychainService = @"com.google.app_check_core.token_stor
 
 - (instancetype)initWithTokenKey:(NSString *)tokenKey
                  keychainStorage:(GULKeychainStorage *)keychainStorage
-                     accessGroup:(nullable NSString *)accessGroup {
-  self = [super init];
-  if (self) {
-    _tokenKey = [tokenKey copy];
-    _keychainStorage = keychainStorage;
-    _accessGroup = [accessGroup copy];
-  }
-  return self;
+                     accessGroup:(nullable NSString
+
+*)accessGroup {
+    self = [super init];
+    if (self) {
+        _tokenKey = [tokenKey copy];
+        _keychainStorage = keychainStorage;
+        _accessGroup = [accessGroup copy];
+    }
+    return self;
 }
 
-- (instancetype)initWithTokenKey:(NSString *)tokenKey accessGroup:(nullable NSString *)accessGroup {
-  GULKeychainStorage *keychainStorage =
-      [[GULKeychainStorage alloc] initWithService:kKeychainService];
-  return [self initWithTokenKey:tokenKey keychainStorage:keychainStorage accessGroup:accessGroup];
+- (instancetype)initWithTokenKey:(NSString *)tokenKey accessGroup:(nullable NSString
+
+*)accessGroup {
+    GULKeychainStorage *keychainStorage =
+            [[GULKeychainStorage alloc] initWithService:kKeychainService];
+    return [self initWithTokenKey:tokenKey keychainStorage:keychainStorage accessGroup:accessGroup];
 }
 
 - (FBLPromise<GACAppCheckToken *> *)getToken {
-  return [FBLPromise
-             wrapObjectOrErrorCompletion:^(FBLPromiseObjectOrErrorCompletion _Nonnull handler) {
-               [self.keychainStorage getObjectForKey:[self tokenKey]
-                                         objectClass:[GACAppCheckStoredToken class]
-                                         accessGroup:self.accessGroup
-                                   completionHandler:handler];
-             }]
-      .then(^GACAppCheckToken *(id<NSSecureCoding> storedToken) {
-        if ([(NSObject *)storedToken isKindOfClass:[GACAppCheckStoredToken class]]) {
-          return [(GACAppCheckStoredToken *)storedToken appCheckToken];
-        } else {
-          return nil;
-        }
-      })
-      .recover(^NSError *(NSError *error) {
-        return [GACAppCheckErrorUtil keychainErrorWithError:error];
-      });
-}
-
-- (FBLPromise<NSNull *> *)setToken:(nullable GACAppCheckToken *)token {
-  if (token) {
-    return [self storeToken:token].recover(^NSError *(NSError *error) {
-      return [GACAppCheckErrorUtil keychainErrorWithError:error];
-    });
-  } else {
-    return [FBLPromise wrapErrorCompletion:^(FBLPromiseErrorCompletion _Nonnull handler) {
-             [self.keychainStorage removeObjectForKey:[self tokenKey]
+    return [FBLPromise
+            wrapObjectOrErrorCompletion:^(FBLPromiseObjectOrErrorCompletion _Nonnull handler) {
+                [self.keychainStorage getObjectForKey:[self tokenKey]
+                                          objectClass:[GACAppCheckStoredToken class]
                                           accessGroup:self.accessGroup
                                     completionHandler:handler];
-           }]
-        .then(^id _Nullable(id _Nullable __unused _) {
-          return token;
+            }]
+            .then(^GACAppCheckToken *(id <NSSecureCoding> storedToken) {
+                if ([(NSObject *) storedToken isKindOfClass:[GACAppCheckStoredToken class]]) {
+                    return [(GACAppCheckStoredToken *) storedToken appCheckToken];
+                } else {
+                    return nil;
+                }
+            })
+            .recover(^NSError *(NSError *error) {
+                return [GACAppCheckErrorUtil keychainErrorWithError:error];
+            });
+}
+
+- (FBLPromise<NSNull *> *)setToken:(nullable GACAppCheckToken
+
+*)token {
+    if (token) {
+        return [self storeToken:token].recover(^NSError *(NSError *error) {
+            return [GACAppCheckErrorUtil keychainErrorWithError:error];
+        });
+    } else {
+        return [FBLPromise wrapErrorCompletion:^(FBLPromiseErrorCompletion _Nonnull handler) {
+            [self.keychainStorage removeObjectForKey:[self tokenKey]
+                                         accessGroup:self.accessGroup
+                                   completionHandler:handler];
+        }]
+                .then(^id
+        _Nullable(id
+        _Nullable
+        __unused
+        _) {
+            return token;
         })
         .recover(^NSError *(NSError *error) {
-          return [GACAppCheckErrorUtil keychainErrorWithError:error];
+            return [GACAppCheckErrorUtil keychainErrorWithError:error];
         });
-  }
+    }
 }
 
 #pragma mark - Helpers
 
-- (FBLPromise<NSNull *> *)storeToken:(nullable GACAppCheckToken *)token {
-  GACAppCheckStoredToken *storedToken = [[GACAppCheckStoredToken alloc] init];
-  [storedToken updateWithToken:token];
-  return
-      [FBLPromise wrapObjectOrErrorCompletion:^(
-                      FBLPromiseObjectOrErrorCompletion _Nonnull handler) {
-        [self.keychainStorage setObject:storedToken
-                                 forKey:[self tokenKey]
-                            accessGroup:self.accessGroup
-                      completionHandler:handler];
-      }].then(^id _Nullable(id<NSSecureCoding> _Nullable value) {
+- (FBLPromise<NSNull *> *)storeToken:(nullable GACAppCheckToken
+
+*)token {
+    GACAppCheckStoredToken *storedToken = [[GACAppCheckStoredToken alloc] init];
+    [storedToken updateWithToken:token];
+    return
+            [FBLPromise wrapObjectOrErrorCompletion:^(
+                    FBLPromiseObjectOrErrorCompletion _Nonnull handler) {
+                [self.keychainStorage setObject:storedToken
+                                         forKey:[self tokenKey]
+                                    accessGroup:self.accessGroup
+                              completionHandler:handler];
+            }].then(^id
+    _Nullable(id < NSSecureCoding > _Nullable
+    value) {
         return token;
-      });
+    });
 }
 
 @end

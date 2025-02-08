@@ -52,7 +52,7 @@ typedef void (^OIDAuthStateAuthorizationCallback)(OIDAuthState *_Nullable authSt
         authorization request with no authorization code.
  */
 static NSString *const kRefreshTokenRequestException =
-    @"Attempted to create a token refresh request from a token response with no refresh token.";
+        @"Attempted to create a token refresh request from a token response with no refresh token.";
 
 /*! @brief A convenience class that retains the auth state between @c OIDAuthorizationResponse%s
         and @c OIDTokenResponse%s.
@@ -114,13 +114,13 @@ static NSString *const kRefreshTokenRequestException =
     @discussion Use the delegate to observe state changes (and update storage) as well as error
         states.
  */
-@property(nonatomic, weak, nullable) id<OIDAuthStateChangeDelegate> stateChangeDelegate;
+@property(nonatomic, weak, nullable) id <OIDAuthStateChangeDelegate> stateChangeDelegate;
 
 /*! @brief The @c OIDAuthStateErrorDelegate delegate.
     @discussion Use the delegate to observe state changes (and update storage) as well as error
         states.
  */
-@property(nonatomic, weak, nullable) id<OIDAuthStateErrorDelegate> errorDelegate;
+@property(nonatomic, weak, nullable) id <OIDAuthStateErrorDelegate> errorDelegate;
 
 /*! @brief Convenience method to create a @c OIDAuthState by presenting an authorization request
         and performing the authorization code exchange in the case of code flow requests. For
@@ -135,15 +135,17 @@ static NSString *const kRefreshTokenRequestException =
         receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
         @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>)
-    authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
-                            externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                                     callback:(OIDAuthStateAuthorizationCallback)callback;
++ (id <OIDExternalUserAgentSession>)
+authStateByPresentingAuthorizationRequest:(OIDAuthorizationRequest *)authorizationRequest
+                        externalUserAgent:(id <OIDExternalUserAgent>)externalUserAgent
+                                 callback:(OIDAuthStateAuthorizationCallback)callback;
 
 /*! @internal
     @brief Unavailable. Please use @c initWithAuthorizationResponse:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Creates an auth state from an authorization response.
     @param authorizationResponse The authorization response.
@@ -155,7 +157,10 @@ static NSString *const kRefreshTokenRequestException =
     @param tokenResponse The token response.
  */
 - (instancetype)initWithAuthorizationResponse:(OIDAuthorizationResponse *)authorizationResponse
-                                tokenResponse:(nullable OIDTokenResponse *)tokenResponse;
+                                tokenResponse:(nullable OIDTokenResponse
+
+*)
+tokenResponse;
 
 /*! @brief Creates an auth state from an registration response.
     @param registrationResponse The registration response.
@@ -168,10 +173,21 @@ static NSString *const kRefreshTokenRequestException =
     @param registrationResponse The registration response.
  */
 - (instancetype)initWithAuthorizationResponse:
-    (nullable OIDAuthorizationResponse *)authorizationResponse
-           tokenResponse:(nullable OIDTokenResponse *)tokenResponse
-    registrationResponse:(nullable OIDRegistrationResponse *)registrationResponse
-    NS_DESIGNATED_INITIALIZER;
+        (nullable OIDAuthorizationResponse
+
+*)
+authorizationResponse
+        tokenResponse
+:(
+nullable OIDTokenResponse
+*)
+tokenResponse
+        registrationResponse
+:(
+nullable OIDRegistrationResponse
+*)
+registrationResponse
+        NS_DESIGNATED_INITIALIZER;
 
 /*! @brief Updates the authorization state based on a new authorization response.
     @param authorizationResponse The new authorization response to update the state with.
@@ -181,8 +197,15 @@ static NSString *const kRefreshTokenRequestException =
     @discussion Typically called with the response from an incremental authorization request,
         or if using the implicit flow. Will clear the @c #lastTokenResponse property.
  */
-- (void)updateWithAuthorizationResponse:(nullable OIDAuthorizationResponse *)authorizationResponse
-                                  error:(nullable NSError *)error;
+- (void)updateWithAuthorizationResponse:(nullable OIDAuthorizationResponse
+
+*)
+authorizationResponse
+        error
+:(
+nullable NSError
+*)
+error;
 
 /*! @brief Updates the authorization state based on a new token response.
     @param tokenResponse The new token response to update the state from.
@@ -192,15 +215,25 @@ static NSString *const kRefreshTokenRequestException =
     @discussion Typically called with the response from an authorization code exchange, or a token
         refresh.
  */
-- (void)updateWithTokenResponse:(nullable OIDTokenResponse *)tokenResponse
-                          error:(nullable NSError *)error;
+- (void)updateWithTokenResponse:(nullable OIDTokenResponse
+
+*)
+tokenResponse
+        error
+:(
+nullable NSError
+*)
+error;
 
 /*! @brief Updates the authorization state based on a new registration response.
     @param registrationResponse The new registration response to update the state with.
     @discussion Typically called with the response from a successful client registration
         request. Will reset the auth state.
  */
-- (void)updateWithRegistrationResponse:(nullable OIDRegistrationResponse *)registrationResponse;
+- (void)updateWithRegistrationResponse:(nullable OIDRegistrationResponse
+
+*)
+registrationResponse;
 
 /*! @brief Updates the authorization state based on an authorization error.
     @param authorizationError The authorization error.
@@ -233,7 +266,10 @@ static NSString *const kRefreshTokenRequestException =
  */
 - (void)performActionWithFreshTokens:(OIDAuthStateAction)action
          additionalRefreshParameters:
-    (nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+                 (nullable NSDictionary
+
+<NSString *, NSString *> *)
+additionalParameters;
 
 /*! @brief Calls the block with a valid access token (refreshing it first, if needed), or if a
         refresh was needed and failed, with the error that caused it to fail.
@@ -245,8 +281,13 @@ static NSString *const kRefreshTokenRequestException =
  */
 - (void)performActionWithFreshTokens:(OIDAuthStateAction)action
          additionalRefreshParameters:
-    (nullable NSDictionary<NSString *, NSString *> *)additionalParameters
-                       dispatchQueue:(dispatch_queue_t)dispatchQueue;
+                 (nullable NSDictionary
+
+<NSString *, NSString *> *)
+additionalParameters
+        dispatchQueue
+:(dispatch_queue_t)
+dispatchQueue;
 
 /*! @brief Forces a token refresh the next time @c OIDAuthState.performActionWithFreshTokens: is
         called, even if the current tokens are considered valid.
@@ -260,7 +301,10 @@ static NSString *const kRefreshTokenRequestException =
         yourself, you should use @c OIDAuthState.performActionWithFreshTokens:.
     @see https://tools.ietf.org/html/rfc6749#section-1.5
  */
-- (nullable OIDTokenRequest *)tokenRefreshRequest;
+- (nullable OIDTokenRequest
+
+*)
+tokenRefreshRequest;
 
 /*! @brief Creates a token request suitable for refreshing an access token.
     @param additionalParameters Additional parameters for the token request.
@@ -270,8 +314,13 @@ static NSString *const kRefreshTokenRequestException =
         yourself, you should use @c OIDAuthState.performActionWithFreshTokens:.
     @see https://tools.ietf.org/html/rfc6749#section-1.5
  */
-- (nullable OIDTokenRequest *)tokenRefreshRequestWithAdditionalParameters:
-    (nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+- (nullable OIDTokenRequest
+
+*)tokenRefreshRequestWithAdditionalParameters:
+(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters;
 
 /*! @brief Creates a token request suitable for refreshing an access token.
     @param additionalParameters Additional parameters for the token request.
@@ -282,10 +331,19 @@ static NSString *const kRefreshTokenRequestException =
         yourself, you should use @c OIDAuthState.performActionWithFreshTokens:.
     @see https://tools.ietf.org/html/rfc6749#section-1.5
  */
-- (nullable OIDTokenRequest *)tokenRefreshRequestWithAdditionalParameters:
-    (nullable NSDictionary<NSString *, NSString *> *)additionalParameters
-                                                        additionalHeaders:
-    (nullable NSDictionary<NSString *, NSString *> *)additionalHeaders;
+- (nullable OIDTokenRequest
+
+*)tokenRefreshRequestWithAdditionalParameters:
+(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters
+        additionalHeaders
+:
+(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalHeaders;
 
 /*! @brief Creates a token request suitable for refreshing an access token.
     @param additionalHeaders Additional parameters for the token request.
@@ -295,8 +353,13 @@ static NSString *const kRefreshTokenRequestException =
         yourself, you should use @c OIDAuthState.performActionWithFreshTokens:.
     @see https://tools.ietf.org/html/rfc6749#section-1.5
  */
-- (nullable OIDTokenRequest *)tokenRefreshRequestWithAdditionalHeaders:
-    (nullable NSDictionary<NSString *, NSString *> *)additionalHeaders;
+- (nullable OIDTokenRequest
+
+*)tokenRefreshRequestWithAdditionalHeaders:
+(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalHeaders;
 
 @end
 

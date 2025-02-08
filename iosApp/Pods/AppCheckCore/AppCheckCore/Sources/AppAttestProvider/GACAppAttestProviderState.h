@@ -20,19 +20,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Represents different stages of App Attest attestation.
 typedef NS_ENUM(NSInteger, GACAppAttestAttestationState) {
-  /// App Attest is not supported on the current device.
-  GACAppAttestAttestationStateUnsupported,
+    /// App Attest is not supported on the current device.
+    GACAppAttestAttestationStateUnsupported,
 
-  /// App Attest is supported, the App Attest key pair has been generated.
-  GACAppAttestAttestationStateSupportedInitial,
+            /// App Attest is supported, the App Attest key pair has been generated.
+            GACAppAttestAttestationStateSupportedInitial,
 
-  /// App Attest key pair has been generated but has not been attested and registered with Firebase
-  /// backend.
-  GACAppAttestAttestationStateKeyGenerated,
+            /// App Attest key pair has been generated but has not been attested and registered with Firebase
+            /// backend.
+            GACAppAttestAttestationStateKeyGenerated,
 
-  /// App Attest key has been generated, attested with Apple backend and registered with Firebase
-  /// backend. An encrypted artifact required to refresh FAC token is stored on the device.
-  GACAppAttestAttestationStateKeyRegistered,
+            /// App Attest key has been generated, attested with Apple backend and registered with Firebase
+            /// backend. An encrypted artifact required to refresh FAC token is stored on the device.
+            GACAppAttestAttestationStateKeyRegistered,
 };
 
 /// Represents attestation stages of App Attest. The class is designed to be used exclusively by
@@ -53,7 +53,9 @@ typedef NS_ENUM(NSInteger, GACAppAttestAttestationState) {
 /// GACAppAttestAttestationStateKeyRegistered.
 @property(nonatomic, nullable, readonly) NSData *attestationArtifact;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// Init with GACAppAttestAttestationStateUnsupported and an error describing issue.
 - (instancetype)initUnsupportedWithError:(NSError *)error;

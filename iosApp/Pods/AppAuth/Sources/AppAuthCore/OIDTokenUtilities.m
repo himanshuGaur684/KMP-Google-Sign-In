@@ -24,66 +24,68 @@
         application/x-www-form-urlencoded encoding algorithm.
  */
 static NSString *const kFormUrlEncodedAllowedCharacters =
-    @" *-._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        @" *-._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 @implementation OIDTokenUtilities
 
 + (NSString *)encodeBase64urlNoPadding:(NSData *)data {
-  NSString *base64string = [data base64EncodedStringWithOptions:0];
-  // converts base64 to base64url
-  base64string = [base64string stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
-  base64string = [base64string stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-  // strips padding
-  base64string = [base64string stringByReplacingOccurrencesOfString:@"=" withString:@""];
-  return base64string;
+    NSString * base64string = [data base64EncodedStringWithOptions:0];
+    // converts base64 to base64url
+    base64string = [base64string stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
+    base64string = [base64string stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    // strips padding
+    base64string = [base64string stringByReplacingOccurrencesOfString:@"=" withString:@""];
+    return base64string;
 }
 
-+ (nullable NSString *)randomURLSafeStringWithSize:(NSUInteger)size {
-  NSMutableData *randomData = [NSMutableData dataWithLength:size];
-  int result = SecRandomCopyBytes(kSecRandomDefault, randomData.length, randomData.mutableBytes);
-  if (result != 0) {
-    return nil;
-  }
-  return [[self class] encodeBase64urlNoPadding:randomData];
++ (nullable NSString
+
+*)randomURLSafeStringWithSize:(NSUInteger)size {
+    NSMutableData *randomData = [NSMutableData dataWithLength:size];
+    int result = SecRandomCopyBytes(kSecRandomDefault, randomData.length, randomData.mutableBytes);
+    if (result != 0) {
+        return nil;
+    }
+    return [[self class] encodeBase64urlNoPadding:randomData];
 }
 
 + (NSData *)sha256:(NSString *)inputString {
-  NSData *verifierData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
-  NSMutableData *sha256Verifier = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-  CC_SHA256(verifierData.bytes, (CC_LONG)verifierData.length, sha256Verifier.mutableBytes);
-  return sha256Verifier;
+    NSData *verifierData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData *sha256Verifier = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
+    CC_SHA256(verifierData.bytes, (CC_LONG) verifierData.length, sha256Verifier.mutableBytes);
+    return sha256Verifier;
 }
 
 + (NSString *)redact:(NSString *)inputString {
-  if (inputString == nil) {
-    return nil;
-  }
-  switch(inputString.length){
-    case 0:
-      return @"";
-    case 1 ... 8:
-      return @"[redacted]";
-    case 9:
-    default:
-      return [[inputString substringToIndex:6] stringByAppendingString:@"...[redacted]"];
-  }
+    if (inputString == nil) {
+        return nil;
+    }
+    switch (inputString.length) {
+        case 0:
+            return @"";
+        case 1 ... 8:
+            return @"[redacted]";
+        case 9:
+        default:
+            return [[inputString substringToIndex:6] stringByAppendingString:@"...[redacted]"];
+    }
 }
 
-+ (NSString*)formUrlEncode:(NSString*)inputString {
-  // https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
-  // Following the spec from the above link, application/x-www-form-urlencoded percent encode all
-  // the characters except *-._A-Za-z0-9
-  // Space character is replaced by + in the resulting bytes sequence
-  if (inputString.length == 0) {
-    return inputString;
-  }
-  NSCharacterSet *allowedCharacters =
-      [NSCharacterSet characterSetWithCharactersInString:kFormUrlEncodedAllowedCharacters];
-  // Percent encode all characters not present in the provided set.
-  NSString *encodedString =
-      [inputString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
-  // Replace occurences of space by '+' character
-  return [encodedString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
++ (NSString *)formUrlEncode:(NSString *)inputString {
+    // https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
+    // Following the spec from the above link, application/x-www-form-urlencoded percent encode all
+    // the characters except *-._A-Za-z0-9
+    // Space character is replaced by + in the resulting bytes sequence
+    if (inputString.length == 0) {
+        return inputString;
+    }
+    NSCharacterSet *allowedCharacters =
+            [NSCharacterSet characterSetWithCharactersInString:kFormUrlEncodedAllowedCharacters];
+    // Percent encode all characters not present in the provided set.
+    NSString * encodedString =
+            [inputString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+    // Replace occurences of space by '+' character
+    return [encodedString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
 @end

@@ -16,48 +16,67 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kEmailScope = @"email";
+static NSString
+*
+const kEmailScope = @"email";
 static NSString *const kOldEmailScope = @"https://www.googleapis.com/auth/userinfo.email";
 static NSString *const kProfileScope = @"profile";
 static NSString *const kOldProfileScope = @"https://www.googleapis.com/auth/userinfo.profile";
 
 static BOOL hasProfile(NSString *scope) {
-  return [scope isEqualToString:kProfileScope] || [scope isEqualToString:kOldProfileScope];
+    return [scope isEqualToString:kProfileScope] || [scope isEqualToString:kOldProfileScope];
 }
 
 static BOOL hasEmail(NSString *scope) {
-  return [scope isEqualToString:kEmailScope] || [scope isEqualToString:kOldEmailScope];
+    return [scope isEqualToString:kEmailScope] || [scope isEqualToString:kOldEmailScope];
 }
 
 // Checks whether |scopes| contains or implies a particular scope, using
 // |hasScope| as the predicate.
-static BOOL hasScopeInArray(NSArray *scopes, BOOL (*hasScope)(NSString *)) {
-  for (NSString *scope in scopes) {
-    if (hasScope(scope)) {
-      return YES;
-    }
-  }
-  return NO;
+static BOOL hasScopeInArray(NSArray *scopes, BOOL (*hasScope)(NSString *)
+
+) {
+for (
+NSString *scope
+in scopes
+) {
+if (
+hasScope(scope)
+) {
+return
+YES;
+}
+}
+return
+NO;
 }
 
 // Adds |scopeToAdd| to |originalScopes| if it is not already contained
 // or implied, using |hasScope| as the predicate.
 static NSArray *addScopeTo(NSArray *originalScopes,
                            BOOL (*hasScope)(NSString *),
-                           NSString *scopeToAdd) {
-  if (hasScopeInArray(originalScopes, hasScope)) {
-    return originalScopes;
-  }
-  NSMutableArray *result = [NSMutableArray arrayWithArray:originalScopes];
-  [result addObject:scopeToAdd];
-  return result;
+        NSString
+
+*scopeToAdd) {
+if (
+hasScopeInArray(originalScopes, hasScope
+)) {
+return
+originalScopes;
+}
+NSMutableArray *result = [NSMutableArray arrayWithArray:originalScopes];
+[
+result addObject
+:scopeToAdd];
+return
+result;
 }
 
 @implementation GIDScopes
 
 + (NSArray *)scopesWithBasicProfile:(NSArray *)scopes {
-  scopes = addScopeTo(scopes, hasEmail, kEmailScope);
-  return addScopeTo(scopes, hasProfile, kProfileScope);
+    scopes = addScopeTo(scopes, hasEmail, kEmailScope);
+    return addScopeTo(scopes, hasProfile, kProfileScope);
 }
 
 @end

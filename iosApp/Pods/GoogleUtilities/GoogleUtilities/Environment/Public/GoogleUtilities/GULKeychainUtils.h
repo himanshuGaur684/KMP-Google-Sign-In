@@ -18,7 +18,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSString *const kGULKeychainUtilsErrorDomain;
+        FOUNDATION_EXPORT
+NSString *const kGULKeychainUtilsErrorDomain;
 
 /// A collection of helper functions that abstract away common Keychain operations.
 ///
@@ -34,8 +35,15 @@ FOUNDATION_EXPORT NSString *const kGULKeychainUtilsErrorDomain;
  *  @returns Data for the first Keychain Item matching the provided query or `nil` if there is not
  * such an item (`outError` will be `nil` in this case) or an error occurred.
  */
-+ (nullable NSData *)getItemWithQuery:(NSDictionary *)query
-                                error:(NSError *_Nullable *_Nullable)outError;
++ (nullable NSData
+
+*)getItemWithQuery:(NSDictionary *)
+query
+        error
+:(
+NSError *_Nullable
+*_Nullable)
+outError;
 
 /** Stores data to a Keychain Item matching to the provided query. An existing Keychain Item
  * matching the query parameters will be updated or a new will be created.
@@ -48,7 +56,10 @@ FOUNDATION_EXPORT NSString *const kGULKeychainUtilsErrorDomain;
  */
 + (BOOL)setItem:(NSData *)item
       withQuery:(NSDictionary *)query
-          error:(NSError *_Nullable *_Nullable)outError;
+          error:(NSError *_Nullable
+
+*_Nullable)
+outError;
 
 /** Removes a Keychain Item matching to the provided query.
  *  @param query A dictionary with Keychain query parameters. See docs for `SecItemDelete` for
@@ -57,7 +68,10 @@ FOUNDATION_EXPORT NSString *const kGULKeychainUtilsErrorDomain;
  * assigned with an error if there is.
  *  @returns `YES` if the item was removed successfully or doesn't exist, `NO` otherwise.
  */
-+ (BOOL)removeItemWithQuery:(NSDictionary *)query error:(NSError *_Nullable *_Nullable)outError;
++ (BOOL)removeItemWithQuery:(NSDictionary *)query error:(NSError *_Nullable
+
+*_Nullable)
+outError;
 
 @end
 

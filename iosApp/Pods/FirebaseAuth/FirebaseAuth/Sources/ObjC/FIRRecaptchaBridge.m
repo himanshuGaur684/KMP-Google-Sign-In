@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <TargetConditionals.h>
+
 #if TARGET_OS_IOS
 
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRRecaptchaBridge.h"

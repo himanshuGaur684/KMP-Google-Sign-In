@@ -20,8 +20,12 @@
 
 @interface FIRFirebaseUserAgent ()
 
-@property(nonatomic, readonly) NSMutableDictionary<NSString *, NSString *> *valuesByComponent;
-@property(nonatomic, readonly) NSDictionary<NSString *, NSString *> *environmentComponents;
+@property(nonatomic, readonly)
+NSMutableDictionary<NSString *, NSString *> *
+valuesByComponent;
+@property(nonatomic, readonly)
+NSDictionary<NSString *, NSString *> *
+environmentComponents;
 @property(nonatomic, readonly) NSString *firebaseUserAgent;
 
 @end
@@ -32,76 +36,86 @@
 @synthesize environmentComponents = _environmentComponents;
 
 - (instancetype)init {
-  self = [super init];
-  if (self) {
-    _valuesByComponent = [[NSMutableDictionary alloc] init];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _valuesByComponent = [[NSMutableDictionary alloc] init];
+    }
+    return self;
 }
 
 - (NSString *)firebaseUserAgent {
-  @synchronized(self) {
-    if (_firebaseUserAgent == nil) {
-      NSMutableDictionary<NSString *, NSString *> *allComponents =
-          [self.valuesByComponent mutableCopy];
-      [allComponents setValuesForKeysWithDictionary:self.environmentComponents];
+    @synchronized (self) {
+        if (_firebaseUserAgent == nil) {
+            NSMutableDictionary < NSString * , NSString * > *allComponents =
+                                                       [self.valuesByComponent mutableCopy];
+            [allComponents setValuesForKeysWithDictionary:self.environmentComponents];
 
-      __block NSMutableArray<NSString *> *components =
-          [[NSMutableArray<NSString *> alloc] initWithCapacity:self.valuesByComponent.count];
-      [allComponents enumerateKeysAndObjectsUsingBlock:^(
-                         NSString *_Nonnull name, NSString *_Nonnull value, BOOL *_Nonnull stop) {
-        [components addObject:[NSString stringWithFormat:@"%@/%@", name, value]];
-      }];
-      [components sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-      _firebaseUserAgent = [components componentsJoinedByString:@" "];
+            __block NSMutableArray < NSString * > *components =
+                            [[NSMutableArray < NSString * >
+                              alloc] initWithCapacity:self.valuesByComponent.count];
+            [allComponents enumerateKeysAndObjectsUsingBlock:^(
+                    NSString *_Nonnull name, NSString *_Nonnull value, BOOL *_Nonnull stop) {
+                [components addObject:[NSString stringWithFormat:@"%@/%@", name, value]];
+            }];
+            [components sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+            _firebaseUserAgent = [components componentsJoinedByString:@" "];
+        }
+        return _firebaseUserAgent;
     }
-    return _firebaseUserAgent;
-  }
 }
 
-- (void)setValue:(nullable NSString *)value forComponent:(NSString *)componentName {
-  @synchronized(self) {
-    self.valuesByComponent[componentName] = value;
-    // Reset cached user agent string.
-    _firebaseUserAgent = nil;
-  }
+- (void)setValue:(nullable NSString
+
+*)
+value forComponent
+:(NSString *)componentName {
+    @synchronized (self) {
+        self.valuesByComponent[componentName] = value;
+        // Reset cached user agent string.
+        _firebaseUserAgent = nil;
+    }
 }
 
 - (void)reset {
-  @synchronized(self) {
-    // Reset components.
-    _valuesByComponent = [[[self class] environmentComponents] mutableCopy];
-    // Reset cached user agent string.
-    _firebaseUserAgent = nil;
-  }
+    @synchronized (self) {
+        // Reset components.
+        _valuesByComponent = [[[self class] environmentComponents] mutableCopy];
+        // Reset cached user agent string.
+        _firebaseUserAgent = nil;
+    }
 }
 
 #pragma mark - Environment components
 
-- (NSDictionary<NSString *, NSString *> *)environmentComponents {
-  if (_environmentComponents == nil) {
-    _environmentComponents = [[self class] environmentComponents];
-  }
-  return _environmentComponents;
+- (NSDictionary
+
+<NSString *, NSString *> *)environmentComponents {
+    if (_environmentComponents == nil) {
+        _environmentComponents = [[self class] environmentComponents];
+    }
+    return _environmentComponents;
 }
 
-+ (NSDictionary<NSString *, NSString *> *)environmentComponents {
-  NSMutableDictionary<NSString *, NSString *> *components = [NSMutableDictionary dictionary];
++ (NSDictionary
 
-  NSDictionary<NSString *, id> *info = [[NSBundle mainBundle] infoDictionary];
-  NSString *xcodeVersion = info[@"DTXcodeBuild"];
-  NSString *appleSdkVersion = info[@"DTSDKBuild"];
-  NSString *isFromAppstoreFlagValue = [GULAppEnvironmentUtil isFromAppStore] ? @"true" : @"false";
+<NSString *, NSString *> *)environmentComponents {
+    NSMutableDictionary < NSString * , NSString * > *components = [NSMutableDictionary dictionary];
 
-  components[@"apple-platform"] = [GULAppEnvironmentUtil applePlatform];
-  components[@"apple-sdk"] = appleSdkVersion;
-  components[@"appstore"] = isFromAppstoreFlagValue;
-  components[@"deploy"] = [GULAppEnvironmentUtil deploymentType];
-  components[@"device"] = [GULAppEnvironmentUtil deviceModel];
-  components[@"os-version"] = [GULAppEnvironmentUtil systemVersion];
-  components[@"xcode"] = xcodeVersion;
+    NSDictionary < NSString * , id > *info = [[NSBundle mainBundle] infoDictionary];
+    NSString * xcodeVersion = info[@"DTXcodeBuild"];
+    NSString * appleSdkVersion = info[@"DTSDKBuild"];
+    NSString * isFromAppstoreFlagValue = [GULAppEnvironmentUtil isFromAppStore] ? @"true"
+                                                                                : @"false";
 
-  return [components copy];
+    components[@"apple-platform"] = [GULAppEnvironmentUtil applePlatform];
+    components[@"apple-sdk"] = appleSdkVersion;
+    components[@"appstore"] = isFromAppstoreFlagValue;
+    components[@"deploy"] = [GULAppEnvironmentUtil deploymentType];
+    components[@"device"] = [GULAppEnvironmentUtil deviceModel];
+    components[@"os-version"] = [GULAppEnvironmentUtil systemVersion];
+    components[@"xcode"] = xcodeVersion;
+
+    return [components copy];
 }
 
 @end

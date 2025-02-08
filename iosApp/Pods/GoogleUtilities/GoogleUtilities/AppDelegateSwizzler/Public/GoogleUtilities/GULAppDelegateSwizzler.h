@@ -20,7 +20,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *const GULAppDelegateInterceptorID;
+typedef NSString
+*
+const GULAppDelegateInterceptorID;
 
 /** This class contains methods that isa swizzle the app delegate. */
 @interface GULAppDelegateSwizzler : NSProxy
@@ -34,7 +36,7 @@ typedef NSString *const GULAppDelegateInterceptorID;
  *      if it fails.
  */
 + (nullable GULAppDelegateInterceptorID)registerAppDelegateInterceptor:
-    (id<GULApplicationDelegate>)interceptor;
+        (id <GULApplicationDelegate>)interceptor;
 
 /** Unregisters an interceptor with the given ID if it exists.
  *
@@ -97,10 +99,15 @@ typedef NSString *const GULAppDelegateInterceptorID;
  *  @return the current application instance if in an app, or nil if in extension or if it doesn't
  * exist.
  */
-+ (nullable GULApplication *)sharedApplication;
++ (nullable GULApplication
+
+*)
+sharedApplication;
 
 /** Do not initialize this class. */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 NS_ASSUME_NONNULL_END
 

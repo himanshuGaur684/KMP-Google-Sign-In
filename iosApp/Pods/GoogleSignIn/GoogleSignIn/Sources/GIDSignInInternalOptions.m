@@ -40,8 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
                                          scopes:(nullable NSArray *)scopes
                                      completion:(nullable GIDSignInCompletion)completion {
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
-  GIDSignInInternalOptions *options = [[GIDSignInInternalOptions alloc] init];
-  if (options) {
+GIDSignInInternalOptions *options = [[GIDSignInInternalOptions alloc] init];
+if (options) {
     options->_interactive = YES;
     options->_continuation = NO;
     options->_addScopesFlow = addScopesFlow;
@@ -54,8 +54,9 @@ NS_ASSUME_NONNULL_BEGIN
     options->_loginHint = loginHint;
     options->_completion = completion;
     options->_scopes = [GIDScopes scopesWithBasicProfile:scopes];
-  }
-  return options;
+}
+return
+options;
 }
 
 #if TARGET_OS_IOS || TARGET_OS_MACCATALYST
@@ -71,54 +72,55 @@ NS_ASSUME_NONNULL_BEGIN
                                   addScopesFlow:(BOOL)addScopesFlow
                                      completion:(nullable GIDSignInCompletion)completion {
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
-    GIDSignInInternalOptions *options = [self defaultOptionsWithConfiguration:configuration
+GIDSignInInternalOptions *options = [self defaultOptionsWithConfiguration:configuration
 #if TARGET_OS_IOS || TARGET_OS_MACCATALYST
-                                                     presentingViewController:presentingViewController
+        presentingViewController:presentingViewController
 #elif TARGET_OS_OSX
-                                                             presentingWindow:presentingWindow
+        presentingWindow:presentingWindow
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
-                                                                    loginHint:loginHint
-                                                                addScopesFlow:addScopesFlow
-                                                                       scopes:@[]
-                                                                   completion:completion];
-  return options;
+                                                                loginHint:loginHint
+                                                            addScopesFlow:addScopesFlow
+                                                                   scopes:@[]
+                                                               completion:completion];
+return
+options;
 }
 
 + (instancetype)silentOptionsWithCompletion:(GIDSignInCompletion)completion {
-  GIDSignInInternalOptions *options = [self defaultOptionsWithConfiguration:nil
+    GIDSignInInternalOptions *options = [self defaultOptionsWithConfiguration:nil
 #if TARGET_OS_IOS || TARGET_OS_MACCATALYST
-                                                   presentingViewController:nil
+            presentingViewController:nil
 #elif TARGET_OS_OSX
-                                                           presentingWindow:nil
+            presentingWindow:nil
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
-                                                                  loginHint:nil
-                                                              addScopesFlow:NO
-                                                                 completion:completion];
-  if (options) {
-    options->_interactive = NO;
-  }
-  return options;
+                                                                    loginHint:nil
+                                                                addScopesFlow:NO
+                                                                   completion:completion];
+    if (options) {
+        options->_interactive = NO;
+    }
+    return options;
 }
 
 - (instancetype)optionsWithExtraParameters:(NSDictionary *)extraParams
                            forContinuation:(BOOL)continuation {
-  GIDSignInInternalOptions *options = [[GIDSignInInternalOptions alloc] init];
-  if (options) {
-    options->_interactive = _interactive;
-    options->_continuation = continuation;
-    options->_addScopesFlow = _addScopesFlow;
-    options->_configuration = _configuration;
+    GIDSignInInternalOptions *options = [[GIDSignInInternalOptions alloc] init];
+    if (options) {
+        options->_interactive = _interactive;
+        options->_continuation = continuation;
+        options->_addScopesFlow = _addScopesFlow;
+        options->_configuration = _configuration;
 #if TARGET_OS_IOS || TARGET_OS_MACCATALYST
-    options->_presentingViewController = _presentingViewController;
+        options->_presentingViewController = _presentingViewController;
 #elif TARGET_OS_OSX
-    options->_presentingWindow = _presentingWindow;
+        options->_presentingWindow = _presentingWindow;
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
-    options->_loginHint = _loginHint;
-    options->_completion = _completion;
-    options->_scopes = _scopes;
-    options->_extraParams = [extraParams copy];
-  }
-  return options;
+        options->_loginHint = _loginHint;
+        options->_completion = _completion;
+        options->_scopes = _scopes;
+        options->_extraParams = [extraParams copy];
+    }
+    return options;
 }
 
 @end

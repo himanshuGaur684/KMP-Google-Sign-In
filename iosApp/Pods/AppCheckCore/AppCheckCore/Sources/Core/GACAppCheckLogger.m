@@ -28,16 +28,16 @@ NS_ASSUME_NONNULL_BEGIN
 static volatile GACAppCheckLogLevel _logLevel;
 
 + (void)load {
-  // Set the default log level (warning).
-  _logLevel = GACAppCheckLogLevelWarning;
+    // Set the default log level (warning).
+    _logLevel = GACAppCheckLogLevelWarning;
 }
 
 + (GACAppCheckLogLevel)logLevel {
-  return _logLevel;
+    return _logLevel;
 }
 
 + (void)setLogLevel:(GACAppCheckLogLevel)logLevel {
-  _logLevel = logLevel;
+    _logLevel = logLevel;
 }
 
 @end
@@ -45,22 +45,22 @@ static volatile GACAppCheckLogLevel _logLevel;
 #pragma mark - Helpers
 
 static NSString *MessageCodeEnumToString(GACAppCheckMessageCode code) {
-  return [[NSString alloc] initWithFormat:@"I-GAC%06ld", (long)code];
+    return [[NSString alloc] initWithFormat:@"I-GAC%06ld", (long) code];
 }
 
 static NSString *LoggerLevelEnumToString(GACAppCheckLogLevel logLevel) {
-  switch (logLevel) {
-    case GACAppCheckLogLevelFault:
-      return @"Fault";
-    case GACAppCheckLogLevelError:
-      return @"Error";
-    case GACAppCheckLogLevelWarning:
-      return @"Warning";
-    case GACAppCheckLogLevelInfo:
-      return @"Info";
-    case GACAppCheckLogLevelDebug:
-      return @"Debug";
-  }
+    switch (logLevel) {
+        case GACAppCheckLogLevelFault:
+            return @"Fault";
+        case GACAppCheckLogLevelError:
+            return @"Error";
+        case GACAppCheckLogLevelWarning:
+            return @"Warning";
+        case GACAppCheckLogLevelInfo:
+            return @"Info";
+        case GACAppCheckLogLevelDebug:
+            return @"Debug";
+    }
 }
 
 #pragma mark - Logging Functions
@@ -75,12 +75,12 @@ static NSString *LoggerLevelEnumToString(GACAppCheckLogLevel logLevel) {
  * succeed.
  */
 void GACAppCheckLog(GACAppCheckMessageCode code, GACAppCheckLogLevel logLevel, NSString *message) {
-  // Don't log anything in not debug builds.
+    // Don't log anything in not debug builds.
 #if !NDEBUG
-  if (logLevel >= GACAppCheckLogger.logLevel) {
-    NSLog(@"<%@> [AppCheckCore][%@] %@", LoggerLevelEnumToString(logLevel),
-          MessageCodeEnumToString(code), message);
-  }
+    if (logLevel >= GACAppCheckLogger.logLevel) {
+        NSLog(@"<%@> [AppCheckCore][%@] %@", LoggerLevelEnumToString(logLevel),
+              MessageCodeEnumToString(code), message);
+    }
 #endif  // !NDEBUG
 }
 

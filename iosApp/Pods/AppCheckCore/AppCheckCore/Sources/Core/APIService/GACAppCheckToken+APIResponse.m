@@ -19,7 +19,9 @@
 #if __has_include(<FBLPromises/FBLPromises.h>)
 #import <FBLPromises/FBLPromises.h>
 #else
+
 #import "FBLPromises.h"
+
 #endif
 
 #import "AppCheckCore/Sources/Core/Errors/GACAppCheckErrorUtil.h"
@@ -32,59 +34,67 @@ static NSString *const kResponseFieldTTL = @"ttl";
 - (nullable instancetype)initWithTokenExchangeResponse:(NSData *)response
                                            requestDate:(NSDate *)requestDate
                                                  error:(NSError **)outError {
-  if (response.length <= 0) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil errorWithFailureReason:@"Empty server response body."], outError);
-    return nil;
-  }
+    if (response.length <= 0) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil errorWithFailureReason:@"Empty server response body."],
+                outError);
+        return nil;
+    }
 
-  NSError *JSONError;
-  NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:response
-                                                               options:0
-                                                                 error:&JSONError];
+    NSError * JSONError;
+    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:response
+                                                                 options:0
+                                                                   error:&JSONError];
 
-  if (![responseDict isKindOfClass:[NSDictionary class]]) {
-    GACAppCheckSetErrorToPointer([GACAppCheckErrorUtil JSONSerializationError:JSONError], outError);
-    return nil;
-  }
+    if (![responseDict isKindOfClass:[NSDictionary class]]) {
+        GACAppCheckSetErrorToPointer([GACAppCheckErrorUtil JSONSerializationError:JSONError],
+                                     outError);
+        return nil;
+    }
 
-  return [self initWithResponseDict:responseDict requestDate:requestDate error:outError];
+    return [self initWithResponseDict:responseDict requestDate:requestDate error:outError];
 }
 
-- (nullable instancetype)initWithResponseDict:(NSDictionary<NSString *, id> *)responseDict
-                                  requestDate:(NSDate *)requestDate
-                                        error:(NSError **)outError {
-  NSString *token = responseDict[kResponseFieldToken];
-  if (![token isKindOfClass:[NSString class]]) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:kResponseFieldToken],
-        outError);
-    return nil;
-  }
+- (nullable instancetype)initWithResponseDict:(NSDictionary
 
-  NSString *timeToLiveString = responseDict[kResponseFieldTTL];
-  if (![token isKindOfClass:[NSString class]] || token.length <= 0) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:kResponseFieldTTL],
-        outError);
-    return nil;
-  }
+<NSString *, id> *)
+responseDict
+        requestDate
+:(NSDate *)
+requestDate
+        error
+:(NSError **)outError {
+    NSString *token = responseDict[kResponseFieldToken];
+    if (![token isKindOfClass:[NSString class]]) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:kResponseFieldToken],
+                outError);
+        return nil;
+    }
 
-  // Expect a string like "3600s" representing a time interval in seconds.
-  NSString *timeToLiveValueString = [timeToLiveString stringByReplacingOccurrencesOfString:@"s"
-                                                                                withString:@""];
-  NSTimeInterval secondsToLive = timeToLiveValueString.doubleValue;
+    NSString *timeToLiveString = responseDict[kResponseFieldTTL];
+    if (![token isKindOfClass:[NSString class]] || token.length <= 0) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:kResponseFieldTTL],
+                outError);
+        return nil;
+    }
 
-  if (secondsToLive == 0) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:kResponseFieldTTL],
-        outError);
-    return nil;
-  }
+    // Expect a string like "3600s" representing a time interval in seconds.
+    NSString *timeToLiveValueString = [timeToLiveString stringByReplacingOccurrencesOfString:@"s"
+                                                                                  withString:@""];
+    NSTimeInterval secondsToLive = timeToLiveValueString.doubleValue;
 
-  NSDate *expirationDate = [requestDate dateByAddingTimeInterval:secondsToLive];
+    if (secondsToLive == 0) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:kResponseFieldTTL],
+                outError);
+        return nil;
+    }
 
-  return [self initWithToken:token expirationDate:expirationDate receivedAtDate:requestDate];
+    NSDate *expirationDate = [requestDate dateByAddingTimeInterval:secondsToLive];
+
+    return [self initWithToken:token expirationDate:expirationDate receivedAtDate:requestDate];
 }
 
 @end

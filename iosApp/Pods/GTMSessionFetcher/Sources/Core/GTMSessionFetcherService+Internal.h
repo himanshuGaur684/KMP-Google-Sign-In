@@ -20,11 +20,34 @@
 @interface GTMSessionFetcherService (Internal)
 
 // Methods for use by the fetcher class only.
-- (nullable NSURLSession *)session;
-- (nullable NSURLSession *)sessionWithCreationBlock:
-    (nonnull NS_NOESCAPE GTMSessionFetcherSessionCreationBlock)creationBlock;
-- (nullable id<NSURLSessionDelegate>)sessionDelegate;
-- (nullable NSDate *)stoppedAllFetchersDate;
-- (void)fetcherDidStop:(nonnull GTMSessionFetcher *)fetcher callbacksPending: (BOOL)callbacksPending;
+- (nullable NSURLSession
+
+*)
+session;
+
+- (nullable NSURLSession
+
+*)sessionWithCreationBlock:
+(
+nonnull NS_NOESCAPE
+GTMSessionFetcherSessionCreationBlock)
+creationBlock;
+
+- (nullable id
+
+<NSURLSessionDelegate>)
+sessionDelegate;
+
+- (nullable NSDate
+
+*)
+stoppedAllFetchersDate;
+
+- (void)fetcherDidStop:(nonnull GTMSessionFetcher
+
+*)
+fetcher callbacksPending
+: (BOOL)
+callbacksPending;
 
 @end

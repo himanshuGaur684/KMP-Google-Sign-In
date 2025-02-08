@@ -26,26 +26,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Returns an data as the result of decompressing the payload of |data|.The data to decompress must
 /// be a gzipped payloads.
-+ (nullable NSData *)gul_dataByInflatingGzippedData:(NSData *)data error:(NSError **)error;
++ (nullable NSData
+
+*)gul_dataByInflatingGzippedData:(NSData *)
+data error
+:(NSError **)
+error;
 
 /// Returns an compressed data with the result of gzipping the payload of |data|. Uses the default
 /// compression level.
-+ (nullable NSData *)gul_dataByGzippingData:(NSData *)data error:(NSError **)error;
++ (nullable NSData
 
-FOUNDATION_EXPORT NSString *const GULNSDataZlibErrorDomain;
-FOUNDATION_EXPORT NSString *const GULNSDataZlibErrorKey;           // NSNumber
-FOUNDATION_EXPORT NSString *const GULNSDataZlibRemainingBytesKey;  // NSNumber
+*)gul_dataByGzippingData:(NSData *)
+data error
+:(NSError **)
+error;
 
-typedef NS_ENUM(NSInteger, GULNSDataZlibError) {
-  GULNSDataZlibErrorGreaterThan32BitsToCompress = 1024,
-  // An internal zlib error.
-  // GULNSDataZlibErrorKey will contain the error value.
-  // NSLocalizedDescriptionKey may contain an error string from zlib.
-  // Look in zlib.h for list of errors.
-  GULNSDataZlibErrorInternal,
-  // There was left over data in the buffer that was not used.
-  // GULNSDataZlibRemainingBytesKey will contain number of remaining bytes.
-  GULNSDataZlibErrorDataRemaining
+FOUNDATION_EXPORT NSString
+*
+const GULNSDataZlibErrorDomain;
+FOUNDATION_EXPORT NSString
+*
+const GULNSDataZlibErrorKey;           // NSNumber
+FOUNDATION_EXPORT NSString
+*
+const GULNSDataZlibRemainingBytesKey;  // NSNumber
+
+typedef NS_ENUM(NSInteger, GULNSDataZlibError
+) {
+    GULNSDataZlibErrorGreaterThan32BitsToCompress = 1024,
+            // An internal zlib error.
+            // GULNSDataZlibErrorKey will contain the error value.
+            // NSLocalizedDescriptionKey may contain an error string from zlib.
+            // Look in zlib.h for list of errors.
+            GULNSDataZlibErrorInternal,
+            // There was left over data in the buffer that was not used.
+            // GULNSDataZlibRemainingBytesKey will contain number of remaining bytes.
+            GULNSDataZlibErrorDataRemaining
 };
 
 @end

@@ -22,25 +22,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Backoff type. Backoff interval calculation depends on the type.
 typedef NS_ENUM(NSUInteger, GACAppCheckBackoffType) {
-  /// No backoff. Another retry is allowed straight away.
-  GACAppCheckBackoffTypeNone,
+    /// No backoff. Another retry is allowed straight away.
+    GACAppCheckBackoffTypeNone,
 
-  /// Next retry will be allowed in 1 day (24 hours) after the failure.
-  GACAppCheckBackoffType1Day,
+            /// Next retry will be allowed in 1 day (24 hours) after the failure.
+            GACAppCheckBackoffType1Day,
 
-  /// A small backoff interval that exponentially increases after each consequent failure.
-  GACAppCheckBackoffTypeExponential
+            /// A small backoff interval that exponentially increases after each consequent failure.
+            GACAppCheckBackoffTypeExponential
 };
 
 /// Creates a promise for an operation to apply the backoff to.
-typedef FBLPromise *_Nonnull (^GACAppCheckBackoffOperationProvider)(void);
+typedef FBLPromise *_Nonnull(^GACAppCheckBackoffOperationProvider)
+(void);
 
 /// Converts an error to a backoff type.
 typedef GACAppCheckBackoffType (^GACAppCheckBackoffErrorHandler)(NSError *error);
 
 /// A block returning a date. Is used instead of `+[NSDate date]` for better testability of logic
 /// dependent on the current time.
-typedef NSDate *_Nonnull (^GACAppCheckDateProvider)(void);
+typedef NSDate *_Nonnull(^GACAppCheckDateProvider)
+(void);
 
 /// Defines API for an object that conditionally applies backoff to a given operation based on the
 /// history of previous operation failures.
@@ -77,7 +79,7 @@ typedef NSDate *_Nonnull (^GACAppCheckDateProvider)(void);
 - (instancetype)init;
 
 - (instancetype)initWithDateProvider:(GACAppCheckDateProvider)dateProvider
-    NS_DESIGNATED_INITIALIZER;
+NS_DESIGNATED_INITIALIZER;
 
 /// A date provider that returns `+[NSDate date]`.
 + (GACAppCheckDateProvider)currentDateProvider;

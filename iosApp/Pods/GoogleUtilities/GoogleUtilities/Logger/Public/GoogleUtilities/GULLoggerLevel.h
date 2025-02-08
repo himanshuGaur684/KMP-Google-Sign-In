@@ -20,28 +20,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The log levels used by internal logging.
 typedef NS_ENUM(NSInteger, GULLoggerLevel) {
-  /// Error level, corresponding to `OS_LOG_TYPE_ERROR`.
-  GULLoggerLevelError = 3,  // For backwards compatibility, the enum value matches `ASL_LEVEL_ERR`.
+    /// Error level, corresponding to `OS_LOG_TYPE_ERROR`.
+    GULLoggerLevelError = 3,  // For backwards compatibility, the enum value matches `ASL_LEVEL_ERR`.
 
-  /// Warning level, corresponding to `OS_LOG_TYPE_DEFAULT`.
-  ///
-  /// > Note: Since OSLog doesn't have a WARNING type, this is equivalent to `GULLoggerLevelNotice`.
-  GULLoggerLevelWarning = 4,  // For backwards compatibility, the value matches `ASL_LEVEL_WARNING`.
+            /// Warning level, corresponding to `OS_LOG_TYPE_DEFAULT`.
+            ///
+            /// > Note: Since OSLog doesn't have a WARNING type, this is equivalent to `GULLoggerLevelNotice`.
+    GULLoggerLevelWarning = 4,  // For backwards compatibility, the value matches `ASL_LEVEL_WARNING`.
 
-  /// Notice level, corresponding to `OS_LOG_TYPE_DEFAULT`.
-  GULLoggerLevelNotice = 5,  // For backwards compatibility, the value matches `ASL_LEVEL_NOTICE`.
+            /// Notice level, corresponding to `OS_LOG_TYPE_DEFAULT`.
+    GULLoggerLevelNotice = 5,  // For backwards compatibility, the value matches `ASL_LEVEL_NOTICE`.
 
-  /// Info level, corresponding to `OS_LOG_TYPE_INFO`.
-  GULLoggerLevelInfo = 6,  // For backwards compatibility, the enum value matches `ASL_LEVEL_INFO`.
+            /// Info level, corresponding to `OS_LOG_TYPE_INFO`.
+    GULLoggerLevelInfo = 6,  // For backwards compatibility, the enum value matches `ASL_LEVEL_INFO`.
 
-  /// Debug level, corresponding to `OS_LOG_TYPE_DEBUG`.
-  GULLoggerLevelDebug = 7,  // For backwards compatibility, the value matches `ASL_LEVEL_DEBUG`.
+            /// Debug level, corresponding to `OS_LOG_TYPE_DEBUG`.
+    GULLoggerLevelDebug = 7,  // For backwards compatibility, the value matches `ASL_LEVEL_DEBUG`.
 
-  /// The minimum (most severe) supported logging level.
-  GULLoggerLevelMin = GULLoggerLevelError,
+            /// The minimum (most severe) supported logging level.
+    GULLoggerLevelMin = GULLoggerLevelError,
 
-  /// The maximum (least severe) supported logging level.
-  GULLoggerLevelMax = GULLoggerLevelDebug
-} NS_SWIFT_NAME(GoogleLoggerLevel);
+            /// The maximum (least severe) supported logging level.
+    GULLoggerLevelMax = GULLoggerLevelDebug
+}
+
+NS_SWIFT_NAME(GoogleLoggerLevel);
 
 NS_ASSUME_NONNULL_END

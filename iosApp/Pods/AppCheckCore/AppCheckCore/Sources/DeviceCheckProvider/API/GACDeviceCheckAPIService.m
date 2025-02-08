@@ -19,7 +19,9 @@
 #if __has_include(<FBLPromises/FBLPromises.h>)
 #import <FBLPromises/FBLPromises.h>
 #else
+
 #import "FBLPromises.h"
+
 #endif
 
 #import "AppCheckCore/Sources/Core/APIService/GACAppCheckAPIService.h"
@@ -30,14 +32,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kContentTypeKey = @"Content-Type";
+static NSString
+*
+const kContentTypeKey = @"Content-Type";
 static NSString *const kJSONContentType = @"application/json";
 static NSString *const kDeviceTokenField = @"device_token";
 static NSString *const kLimitedUseField = @"limited_use";
 
 @interface GACDeviceCheckAPIService ()
 
-@property(nonatomic, readonly) id<GACAppCheckAPIServiceProtocol> APIService;
+@property(nonatomic, readonly) id <GACAppCheckAPIServiceProtocol> APIService;
 
 @property(nonatomic, readonly) NSString *resourceName;
 
@@ -45,68 +49,72 @@ static NSString *const kLimitedUseField = @"limited_use";
 
 @implementation GACDeviceCheckAPIService
 
-- (instancetype)initWithAPIService:(id<GACAppCheckAPIServiceProtocol>)APIService
+- (instancetype)initWithAPIService:(id <GACAppCheckAPIServiceProtocol>)APIService
                       resourceName:(NSString *)resourceName {
-  self = [super init];
-  if (self) {
-    _APIService = APIService;
-    _resourceName = resourceName;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _APIService = APIService;
+        _resourceName = resourceName;
+    }
+    return self;
 }
 
 #pragma mark - Public API
 
 - (FBLPromise<GACAppCheckToken *> *)appCheckTokenWithDeviceToken:(NSData *)deviceToken
                                                       limitedUse:(BOOL)limitedUse {
-  NSString *URLString = [NSString stringWithFormat:@"%@/%@:exchangeDeviceCheckToken",
-                                                   self.APIService.baseURL, self.resourceName];
-  NSURL *URL = [NSURL URLWithString:URLString];
+    NSString * URLString = [NSString stringWithFormat:@"%@/%@:exchangeDeviceCheckToken",
+                                                      self.APIService.baseURL, self.resourceName];
+    NSURL *URL = [NSURL URLWithString:URLString];
 
-  return [self HTTPBodyWithDeviceToken:deviceToken limitedUse:limitedUse]
-      .then(^FBLPromise<GACURLSessionDataResponse *> *(NSData *HTTPBody) {
-        return [self.APIService sendRequestWithURL:URL
-                                        HTTPMethod:@"POST"
-                                              body:HTTPBody
-                                 additionalHeaders:@{kContentTypeKey : kJSONContentType}];
-      })
-      .then(^id _Nullable(GACURLSessionDataResponse *_Nullable response) {
+    return [self HTTPBodyWithDeviceToken:deviceToken limitedUse:limitedUse]
+            .then(^FBLPromise<GACURLSessionDataResponse *> *(NSData *HTTPBody) {
+                return [self.APIService sendRequestWithURL:URL
+                                                HTTPMethod:@"POST"
+                                                      body:HTTPBody
+                                         additionalHeaders:@{kContentTypeKey: kJSONContentType}];
+            })
+            .then(^id
+    _Nullable(GACURLSessionDataResponse * _Nullable
+    response) {
         return [self.APIService appCheckTokenWithAPIResponse:response];
-      });
+    });
 }
 
 - (FBLPromise<NSData *> *)HTTPBodyWithDeviceToken:(NSData *)deviceToken
                                        limitedUse:(BOOL)limitedUse {
-  if (deviceToken.length <= 0) {
-    FBLPromise *rejectedPromise = [FBLPromise pendingPromise];
-    [rejectedPromise reject:[GACAppCheckErrorUtil
-                                errorWithFailureReason:@"DeviceCheck token must not be empty."]];
-    return rejectedPromise;
-  }
+    if (deviceToken.length <= 0) {
+        FBLPromise *rejectedPromise = [FBLPromise pendingPromise];
+        [rejectedPromise reject:[GACAppCheckErrorUtil
+                errorWithFailureReason:@"DeviceCheck token must not be empty."]];
+        return rejectedPromise;
+    }
 
-  return [FBLPromise
-      onQueue:[self backgroundQueue]
-           do:^id _Nullable {
-             NSString *base64EncodedToken = [deviceToken base64EncodedStringWithOptions:0];
+    return [FBLPromise
+            onQueue:[self backgroundQueue]
+                 do:^id
+    _Nullable
+    {
+        NSString * base64EncodedToken = [deviceToken base64EncodedStringWithOptions:0];
 
-             NSError *encodingError;
-             NSData *payloadJSON = [NSJSONSerialization dataWithJSONObject:@{
-               kDeviceTokenField : base64EncodedToken,
-               kLimitedUseField : @(limitedUse)
-             }
-                                                                   options:0
-                                                                     error:&encodingError];
+        NSError * encodingError;
+        NSData *payloadJSON = [NSJSONSerialization dataWithJSONObject:@{
+                        kDeviceTokenField: base64EncodedToken,
+                        kLimitedUseField: @(limitedUse)
+                }
+                                                              options:0
+                                                                error:&encodingError];
 
-             if (payloadJSON != nil) {
-               return payloadJSON;
-             } else {
-               return [GACAppCheckErrorUtil JSONSerializationError:encodingError];
-             }
-           }];
+        if (payloadJSON != nil) {
+            return payloadJSON;
+        } else {
+            return [GACAppCheckErrorUtil JSONSerializationError:encodingError];
+        }
+    }];
 }
 
 - (dispatch_queue_t)backgroundQueue {
-  return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0);
+    return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0);
 }
 
 @end

@@ -20,12 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
     @brief A string constant identifying the email & password identity provider.
  */
-extern NSString *const FIREmailAuthProviderID NS_SWIFT_NAME(EmailAuthProviderID);
+extern NSString
+*
+const FIREmailAuthProviderID NS_SWIFT_NAME(EmailAuthProviderID);
 
 /**
     @brief A string constant identifying the email-link sign-in method.
  */
-extern NSString *const FIREmailLinkAuthSignInMethod NS_SWIFT_NAME(EmailLinkAuthSignInMethod);
+extern NSString *const FIREmailLinkAuthSignInMethod
+NS_SWIFT_NAME(EmailLinkAuthSignInMethod);
 
 /**
     @brief A string constant identifying the email & password sign-in method.
@@ -33,7 +36,7 @@ extern NSString *const FIREmailLinkAuthSignInMethod NS_SWIFT_NAME(EmailLinkAuthS
 // clang-format off
 // clang-format12 merges the next two lines.
 extern NSString *const FIREmailPasswordAuthSignInMethod
-    NS_SWIFT_NAME(EmailPasswordAuthSignInMethod);
+NS_SWIFT_NAME(EmailPasswordAuthSignInMethod);
 // clang-format on
 
 NS_ASSUME_NONNULL_END

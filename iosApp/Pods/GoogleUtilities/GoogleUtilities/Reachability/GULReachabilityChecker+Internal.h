@@ -17,15 +17,18 @@
 #import "GoogleUtilities/Reachability/Public/GoogleUtilities/GULReachabilityChecker.h"
 
 #if !TARGET_OS_WATCH
+
 typedef SCNetworkReachabilityRef (*GULReachabilityCreateWithNameFn)(CFAllocatorRef allocator,
                                                                     const char *host);
 
 typedef Boolean (*GULReachabilitySetCallbackFn)(SCNetworkReachabilityRef target,
                                                 SCNetworkReachabilityCallBack callback,
                                                 SCNetworkReachabilityContext *context);
+
 typedef Boolean (*GULReachabilityScheduleWithRunLoopFn)(SCNetworkReachabilityRef target,
                                                         CFRunLoopRef runLoop,
                                                         CFStringRef runLoopMode);
+
 typedef Boolean (*GULReachabilityUnscheduleFromRunLoopFn)(SCNetworkReachabilityRef target,
                                                           CFRunLoopRef runLoop,
                                                           CFStringRef runLoopMode);
@@ -33,16 +36,18 @@ typedef Boolean (*GULReachabilityUnscheduleFromRunLoopFn)(SCNetworkReachabilityR
 typedef void (*GULReachabilityReleaseFn)(CFTypeRef cf);
 
 struct GULReachabilityApi {
-  GULReachabilityCreateWithNameFn createWithNameFn;
-  GULReachabilitySetCallbackFn setCallbackFn;
-  GULReachabilityScheduleWithRunLoopFn scheduleWithRunLoopFn;
-  GULReachabilityUnscheduleFromRunLoopFn unscheduleFromRunLoopFn;
-  GULReachabilityReleaseFn releaseFn;
+    GULReachabilityCreateWithNameFn createWithNameFn;
+    GULReachabilitySetCallbackFn setCallbackFn;
+    GULReachabilityScheduleWithRunLoopFn scheduleWithRunLoopFn;
+    GULReachabilityUnscheduleFromRunLoopFn unscheduleFromRunLoopFn;
+    GULReachabilityReleaseFn releaseFn;
 };
 #endif
+
 @interface GULReachabilityChecker (Internal)
 
 - (const struct GULReachabilityApi *)reachabilityApi;
+
 - (void)setReachabilityApi:(const struct GULReachabilityApi *)reachabilityApi;
 
 @end

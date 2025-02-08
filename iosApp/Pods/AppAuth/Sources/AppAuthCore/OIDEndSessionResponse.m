@@ -39,80 +39,85 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 
 #pragma mark - Initializers
 
-- (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
+- (instancetype)init OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
 
 - (instancetype)initWithRequest:(OIDEndSessionRequest *)request
-                     parameters:(NSDictionary<NSString *,NSObject<NSCopying> *> *)parameters {
-  self = [super init];
-  if (self) {
-    _request = [request copy];
-    NSDictionary<NSString *, NSObject<NSCopying> *> *additionalParameters =
-    [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
-                                     parameters:parameters
-                                       instance:self];
-    _additionalParameters = additionalParameters;
-  }
-  return self;
+                     parameters:(NSDictionary
+
+<NSString *,NSObject <NSCopying> *> *)parameters {
+    self = [super init];
+    if (self) {
+        _request = [request copy];
+        NSDictionary < NSString * , NSObject < NSCopying > * > *additionalParameters =
+                                            [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+                                                                             parameters:parameters
+                                                                               instance:self];
+        _additionalParameters = additionalParameters;
+    }
+    return self;
 }
 
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    fieldMap = [NSMutableDictionary dictionary];
-    fieldMap[kStateKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_state" type:[NSString class]];
-  });
-  return fieldMap;
++ (NSDictionary
+
+<NSString *, OIDFieldMapping *> *)fieldMap {
+    static NSMutableDictionary < NSString * , OIDFieldMapping * > *fieldMap;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fieldMap = [NSMutableDictionary dictionary];
+        fieldMap[kStateKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_state" type:[NSString class]];
+    });
+    return fieldMap;
 }
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(nullable NSZone *)zone {
-  // The documentation for NSCopying specifically advises us to return a reference to the original
-  // instance in the case where instances are immutable (as ours is):
-  // "Implement NSCopying by retaining the original instead of creating a new copy when the class
-  // and its contents are immutable."
-  return self;
+- (instancetype)copyWithZone:(nullable NSZone
+
+*)zone {
+    // The documentation for NSCopying specifically advises us to return a reference to the original
+    // instance in the case where instances are immutable (as ours is):
+    // "Implement NSCopying by retaining the original instead of creating a new copy when the class
+    // and its contents are immutable."
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDEndSessionRequest *request =
-      [aDecoder decodeObjectOfClass:[OIDEndSessionRequest class] forKey:kRequestKey];
-  self = [self initWithRequest:request parameters:@{ }];
-  if (self) {
-    [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
-    _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
-                                                     forKey:kAdditionalParametersKey];
-  }
-  return self;
+    OIDEndSessionRequest *request =
+            [aDecoder decodeObjectOfClass:[OIDEndSessionRequest class] forKey:kRequestKey];
+    self = [self initWithRequest:request parameters:@{}];
+    if (self) {
+        [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
+        _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
+                                                         forKey:kAdditionalParametersKey];
+    }
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:_request forKey:kRequestKey];
-  [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
-  [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
+    [aCoder encodeObject:_request forKey:kRequestKey];
+    [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
+    [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
 
 #pragma mark - NSObject overrides
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"<%@: %p, state: \"%@\", "
-          "additionalParameters: %@, request: %@>",
-          NSStringFromClass([self class]),
-          (void *)self,
-          _state,
-          _additionalParameters,
-          _request];
+    return [NSString stringWithFormat:@"<%@: %p, state: \"%@\", "
+                                      "additionalParameters: %@, request: %@>",
+                                      NSStringFromClass([self class]),
+                                      (void *) self,
+                                      _state,
+                                      _additionalParameters,
+                                      _request];
 }
 @end

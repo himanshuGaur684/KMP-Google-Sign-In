@@ -28,33 +28,33 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation GACAppCheckStoredToken
 
 - (NSInteger)storageVersion {
-  return kStorageVersion;
+    return kStorageVersion;
 }
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [coder encodeObject:self.token forKey:kTokenKey];
-  [coder encodeObject:self.expirationDate forKey:kExpirationDateKey];
-  [coder encodeObject:self.receivedAtDate forKey:kReceivedAtDateKey];
-  [coder encodeInteger:self.storageVersion forKey:kStorageVersionKey];
+    [coder encodeObject:self.token forKey:kTokenKey];
+    [coder encodeObject:self.expirationDate forKey:kExpirationDateKey];
+    [coder encodeObject:self.receivedAtDate forKey:kReceivedAtDateKey];
+    [coder encodeInteger:self.storageVersion forKey:kStorageVersionKey];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super init];
-  if (self) {
-    NSInteger decodedStorageVersion = [coder decodeIntegerForKey:kStorageVersionKey];
-    if (decodedStorageVersion > kStorageVersion) {
-      // TODO: Log a message.
-    }
+    self = [super init];
+    if (self) {
+        NSInteger decodedStorageVersion = [coder decodeIntegerForKey:kStorageVersionKey];
+        if (decodedStorageVersion > kStorageVersion) {
+            // TODO: Log a message.
+        }
 
-    _token = [coder decodeObjectOfClass:[NSString class] forKey:kTokenKey];
-    _expirationDate = [coder decodeObjectOfClass:[NSDate class] forKey:kExpirationDateKey];
-    _receivedAtDate = [coder decodeObjectOfClass:[NSDate class] forKey:kReceivedAtDateKey];
-  }
-  return self;
+        _token = [coder decodeObjectOfClass:[NSString class] forKey:kTokenKey];
+        _expirationDate = [coder decodeObjectOfClass:[NSDate class] forKey:kExpirationDateKey];
+        _receivedAtDate = [coder decodeObjectOfClass:[NSDate class] forKey:kReceivedAtDateKey];
+    }
+    return self;
 }
 
 @end

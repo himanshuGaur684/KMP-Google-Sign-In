@@ -21,16 +21,16 @@ NSString *const FIRAuthErrorDomain = @"FIRAuthErrorDomain";
 NSString *const FIRAuthInternalErrorDomain = @"FIRAuthInternalErrorDomain";
 
 NSString *const FIRAuthErrorUserInfoDeserializedResponseKey =
-    @"FIRAuthErrorUserInfoDeserializedResponseKey";
+        @"FIRAuthErrorUserInfoDeserializedResponseKey";
 
 NSString *const FIRAuthErrorUserInfoDataKey = @"FIRAuthErrorUserInfoDataKey";
 
 NSString *const FIRAuthErrorUserInfoEmailKey = @"FIRAuthErrorUserInfoEmailKey";
 
 NSString *const FIRAuthErrorUserInfoUpdatedCredentialKey =
-    @"FIRAuthErrorUserInfoUpdatedCredentialKey";
+        @"FIRAuthErrorUserInfoUpdatedCredentialKey";
 
 NSString *const FIRAuthErrorUserInfoNameKey = @"FIRAuthErrorUserInfoNameKey";
 
 NSString *const FIRAuthErrorUserInfoMultiFactorResolverKey =
-    @"FIRAuthErrorUserInfoMultiFactorResolverKey";
+        @"FIRAuthErrorUserInfoMultiFactorResolverKey";

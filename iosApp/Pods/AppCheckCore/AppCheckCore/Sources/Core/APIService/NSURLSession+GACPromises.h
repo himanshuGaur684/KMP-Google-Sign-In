@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
  * or is rejected with the error passed to the task completion.
  */
 - (FBLPromise<GACURLSessionDataResponse *> *)gac_dataTaskPromiseWithRequest:
-    (NSURLRequest *)URLRequest;
+        (NSURLRequest *)URLRequest;
 
 @end
 

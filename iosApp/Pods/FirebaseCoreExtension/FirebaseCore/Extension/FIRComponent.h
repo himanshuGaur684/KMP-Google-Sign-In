@@ -26,25 +26,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Provides a system to clean up cached instances returned from the component system.
 NS_SWIFT_NAME(ComponentLifecycleMaintainer)
+
 @protocol FIRComponentLifecycleMaintainer
 /// The associated app will be deleted, clean up any resources as they are about to be deallocated.
 - (void)appWillBeDeleted:(FIRApp *)app;
 @end
 
-typedef _Nullable id (^FIRComponentCreationBlock)(FIRComponentContainer *container,
-                                                  BOOL *isCacheable)
-    NS_SWIFT_NAME(ComponentCreationBlock);
+typedef _Nullable id(^FIRComponentCreationBlock)
+(
+FIRComponentContainer *container,
+        BOOL
+*isCacheable)
+NS_SWIFT_NAME(ComponentCreationBlock);
 
 /// Describes the timing of instantiation. Note: new components should default to lazy unless there
 /// is a strong reason to be eager.
-typedef NS_ENUM(NSInteger, FIRInstantiationTiming) {
-  FIRInstantiationTimingLazy,
-  FIRInstantiationTimingAlwaysEager,
-  FIRInstantiationTimingEagerInDefaultApp
-} NS_SWIFT_NAME(InstantiationTiming);
+typedef NS_ENUM(NSInteger, FIRInstantiationTiming
+) {
+FIRInstantiationTimingLazy,
+FIRInstantiationTimingAlwaysEager,
+FIRInstantiationTimingEagerInDefaultApp
+}
+NS_SWIFT_NAME(InstantiationTiming);
 
 /// A component that can be used from other Firebase SDKs.
 NS_SWIFT_NAME(Component)
+
 @interface FIRComponent : NSObject
 
 /// The protocol describing functionality provided from the `Component`.
@@ -63,7 +70,11 @@ NS_SWIFT_NAME(Component)
 /// Creates a component with no dependencies that will be lazily initialized.
 + (instancetype)componentWithProtocol:(Protocol *)protocol
                         creationBlock:(FIRComponentCreationBlock)creationBlock
-NS_SWIFT_NAME(init(_:creationBlock:));
+NS_SWIFT_NAME
+
+(
+init(_
+:creationBlock:));
 
 /// Creates a component to be registered with the component container.
 ///
@@ -75,12 +86,18 @@ NS_SWIFT_NAME(init(_:creationBlock:));
 + (instancetype)componentWithProtocol:(Protocol *)protocol
                   instantiationTiming:(FIRInstantiationTiming)instantiationTiming
                         creationBlock:(FIRComponentCreationBlock)creationBlock
-NS_SWIFT_NAME(init(_:instantiationTiming:creationBlock:));
+NS_SWIFT_NAME
+
+(
+init(_
+:instantiationTiming:creationBlock:));
 
 // clang-format on
 
 /// Unavailable.
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

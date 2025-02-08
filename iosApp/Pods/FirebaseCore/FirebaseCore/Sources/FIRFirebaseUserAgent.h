@@ -26,7 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Sets value associated with the specified component. If value is `nil` then the component is
  * removed. */
-- (void)setValue:(nullable NSString *)value forComponent:(NSString *)componentName;
+- (void)setValue:(nullable NSString
+
+*)
+value forComponent
+:(NSString *)
+componentName;
 
 /** Resets manually added components. */
 - (void)reset;

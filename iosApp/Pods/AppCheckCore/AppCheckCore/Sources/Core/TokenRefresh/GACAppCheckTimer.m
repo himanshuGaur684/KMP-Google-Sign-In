@@ -26,64 +26,67 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation GACAppCheckTimer
 
 + (GACTimerProvider)timerProvider {
-  return ^id<GACAppCheckTimerProtocol> _Nullable(NSDate *fireDate, dispatch_queue_t queue,
-                                                 dispatch_block_t handler) {
-    return [[GACAppCheckTimer alloc] initWithFireDate:fireDate dispatchQueue:queue block:handler];
-  };
+    return ^id <GACAppCheckTimerProtocol>
+    _Nullable(NSDate * fireDate, dispatch_queue_t
+    queue,
+            dispatch_block_t
+    handler) {
+        return [[GACAppCheckTimer alloc] initWithFireDate:fireDate dispatchQueue:queue block:handler];
+    };
 }
 
 + (nullable instancetype)timerFireDate:(NSDate *)fireDate
                          dispatchQueue:(dispatch_queue_t)dispatchQueue
                                  block:(dispatch_block_t)block {
-  return [[GACAppCheckTimer alloc] initWithFireDate:fireDate
-                                      dispatchQueue:dispatchQueue
-                                              block:block];
+    return [[GACAppCheckTimer alloc] initWithFireDate:fireDate
+                                        dispatchQueue:dispatchQueue
+                                                block:block];
 }
 
 - (nullable instancetype)initWithFireDate:(NSDate *)date
                             dispatchQueue:(dispatch_queue_t)dispatchQueue
                                     block:(dispatch_block_t)block {
-  self = [super init];
-  if (self == nil) {
-    return nil;
-  }
+    self = [super init];
+    if (self == nil) {
+        return nil;
+    }
 
-  if (block == nil) {
-    return nil;
-  }
+    if (block == nil) {
+        return nil;
+    }
 
-  NSTimeInterval scheduleInSec = [date timeIntervalSinceNow];
-  if (scheduleInSec <= 0) {
-    return nil;
-  }
+    NSTimeInterval scheduleInSec = [date timeIntervalSinceNow];
+    if (scheduleInSec <= 0) {
+        return nil;
+    }
 
-  dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, scheduleInSec * NSEC_PER_SEC);
-  _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.dispatchQueue);
-  dispatch_source_set_timer(_timer, startTime, UINT64_MAX * NSEC_PER_SEC, 0);
+    dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, scheduleInSec * NSEC_PER_SEC);
+    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.dispatchQueue);
+    dispatch_source_set_timer(_timer, startTime, UINT64_MAX * NSEC_PER_SEC, 0);
 
-  __auto_type __weak weakSelf = self;
-  dispatch_source_set_event_handler(_timer, ^{
-    __auto_type strongSelf = weakSelf;
+    __auto_type __weak weakSelf = self;
+    dispatch_source_set_event_handler(_timer, ^{
+        __auto_type strongSelf = weakSelf;
 
-    // The initializer returns a one-off timer, so we need to invalidate the dispatch timer to
-    // prevent firing again.
-    [strongSelf invalidate];
-    block();
-  });
+        // The initializer returns a one-off timer, so we need to invalidate the dispatch timer to
+        // prevent firing again.
+        [strongSelf invalidate];
+        block();
+    });
 
-  dispatch_resume(_timer);
+    dispatch_resume(_timer);
 
-  return self;
+    return self;
 }
 
 - (void)dealloc {
-  [self invalidate];
+    [self invalidate];
 }
 
 - (void)invalidate {
-  if (self.timer != nil) {
-    dispatch_source_cancel(self.timer);
-  }
+    if (self.timer != nil) {
+        dispatch_source_cancel(self.timer);
+    }
 }
 
 @end

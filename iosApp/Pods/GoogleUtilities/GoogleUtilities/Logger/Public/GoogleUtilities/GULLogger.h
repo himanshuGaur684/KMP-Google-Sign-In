@@ -25,7 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * DEPRECATED; use NSString instead.
  */
-typedef NSString *const GULLoggerService;
+typedef NSString
+*
+const GULLoggerService;
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +62,7 @@ extern BOOL GULIsLoggableLevel(GULLoggerLevel loggerLevel);
  * Register version to include in logs.
  * (required) version
  */
-extern void GULLoggerRegisterVersion(NSString *version);
+extern void GULLoggerRegisterVersion(NSString * version);
 
 /**
  * Logs a message to the Xcode console and the device log. If running from AppStore, will
@@ -84,7 +86,7 @@ extern void GULOSLogBasic(GULLoggerLevel level,
 // On 64-bit simulators, va_list is not a pointer, so cannot be marked nullable
 // See: http://stackoverflow.com/q/29095469
 #if __LP64__ && TARGET_OS_SIMULATOR || TARGET_OS_OSX
-                          va_list args_ptr
+        va_list args_ptr
 #else
                           va_list _Nullable args_ptr
 #endif
@@ -103,36 +105,51 @@ extern void GULOSLogBasic(GULLoggerLevel level,
  * Example usage:
  * GULLogError(kGULLoggerCore, @"I-COR000001", @"Configuration of %@ failed.", app.name);
  */
-extern void GULOSLogError(NSString *subsystem,
-                          GULLoggerService category,
-                          BOOL force,
-                          NSString *messageCode,
-                          NSString *message,
-                          ...) NS_FORMAT_FUNCTION(5, 6);
-extern void GULOSLogWarning(NSString *subsystem,
-                            GULLoggerService category,
-                            BOOL force,
-                            NSString *messageCode,
-                            NSString *message,
-                            ...) NS_FORMAT_FUNCTION(5, 6);
-extern void GULOSLogNotice(NSString *subsystem,
-                           GULLoggerService category,
-                           BOOL force,
-                           NSString *messageCode,
-                           NSString *message,
-                           ...) NS_FORMAT_FUNCTION(5, 6);
-extern void GULOSLogInfo(NSString *subsystem,
-                         GULLoggerService category,
-                         BOOL force,
-                         NSString *messageCode,
-                         NSString *message,
-                         ...) NS_FORMAT_FUNCTION(5, 6);
-extern void GULOSLogDebug(NSString *subsystem,
-                          GULLoggerService category,
-                          BOOL force,
-                          NSString *messageCode,
-                          NSString *message,
-                          ...) NS_FORMAT_FUNCTION(5, 6);
+extern void GULOSLogError(NSString * subsystem,
+                          GULLoggerService
+category,
+BOOL force,
+        NSString
+*messageCode,
+NSString *message,
+...
+) NS_FORMAT_FUNCTION(5, 6);
+extern void GULOSLogWarning(NSString * subsystem,
+                            GULLoggerService
+category,
+BOOL force,
+        NSString
+*messageCode,
+NSString *message,
+...
+) NS_FORMAT_FUNCTION(5, 6);
+extern void GULOSLogNotice(NSString * subsystem,
+                           GULLoggerService
+category,
+BOOL force,
+        NSString
+*messageCode,
+NSString *message,
+...
+) NS_FORMAT_FUNCTION(5, 6);
+extern void GULOSLogInfo(NSString * subsystem,
+                         GULLoggerService
+category,
+BOOL force,
+        NSString
+*messageCode,
+NSString *message,
+...
+) NS_FORMAT_FUNCTION(5, 6);
+extern void GULOSLogDebug(NSString * subsystem,
+                          GULLoggerService
+category,
+BOOL force,
+        NSString
+*messageCode,
+NSString *message,
+...
+) NS_FORMAT_FUNCTION(5, 6);
 
 #ifdef __cplusplus
 }  // extern "C"

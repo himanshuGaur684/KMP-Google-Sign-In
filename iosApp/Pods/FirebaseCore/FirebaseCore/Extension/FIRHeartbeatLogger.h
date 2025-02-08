@@ -26,14 +26,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// Enum representing different daily heartbeat codes.
 /// This enum is only used by clients using platform logging V1. This is because
 /// the V1 payload only supports a single daily heartbeat.
-typedef NS_ENUM(NSInteger, FIRDailyHeartbeatCode) {
-  /// Represents the absence of a daily heartbeat.
-  FIRDailyHeartbeatCodeNone = 0,
-  /// Represents the presence of a daily heartbeat.
-  FIRDailyHeartbeatCodeSome = 2,
+typedef NS_ENUM(NSInteger, FIRDailyHeartbeatCode
+) {
+/// Represents the absence of a daily heartbeat.
+FIRDailyHeartbeatCodeNone = 0,
+/// Represents the presence of a daily heartbeat.
+FIRDailyHeartbeatCodeSome = 2,
 };
 
 NS_SWIFT_SENDABLE
+
 @protocol FIRHeartbeatLoggerProtocol <NSObject>
 
 /// Asynchronously logs a heartbeat.
@@ -43,12 +45,16 @@ NS_SWIFT_SENDABLE
 - (FIRDailyHeartbeatCode)heartbeatCodeForToday;
 
 #ifndef FIREBASE_BUILD_CMAKE
+
 /// Returns the header value for the heartbeat logger via the given completion handler..
 - (void)asyncHeaderValueWithCompletionHandler:(void (^)(NSString *_Nullable))completionHandler
-    API_AVAILABLE(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0));
+API_AVAILABLE
+
+(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0));
 
 /// Return the header value for the heartbeat logger.
 - (NSString *_Nullable)headerValue;
+
 #endif  // FIREBASE_BUILD_CMAKE
 
 @end
@@ -59,7 +65,9 @@ NS_SWIFT_SENDABLE
 /// This API returns `nil` when the given heartbeats payload is considered empty.
 ///
 /// @param heartbeatsPayload The heartbeats payload.
-NSString *_Nullable FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload *heartbeatsPayload);
+NSString *_Nullable
+FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload
+*heartbeatsPayload);
 #endif  // FIREBASE_BUILD_CMAKE
 
 /// A thread safe, synchronized object that logs and flushes platform logging info.
@@ -76,6 +84,7 @@ NSString *_Nullable FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload *he
 - (void)log;
 
 #ifndef FIREBASE_BUILD_CMAKE
+
 /// Synchronously flushes heartbeats from storage into a structured payload of heartbeats.
 ///
 /// This API is for clients using platform logging V2.
@@ -91,8 +100,10 @@ NSString *_Nullable FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload *he
 /// @note This API is thread-safe.
 /// @param completionHandler A completion handler to process the flushed payload of heartbeats.
 - (void)flushHeartbeatsIntoPayloadWithCompletionHandler:
-    (void (^)(FIRHeartbeatsPayload *))completionHandler
-    API_AVAILABLE(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0));
+        (void (^)(FIRHeartbeatsPayload *))completionHandler
+API_AVAILABLE
+
+(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0));
 #endif  // FIREBASE_BUILD_CMAKE
 
 /// Gets today's corresponding heartbeat code.

@@ -19,14 +19,17 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, FIRLoggerLevel);
+typedef NS_ENUM(NSInteger, FIRLoggerLevel
+);
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  * The Firebase services used in Firebase logger.
  */
-typedef NSString *const FIRLoggerService;
+typedef NSString
+*
+const FIRLoggerService;
 
 extern NSString *const kFIRLoggerAnalytics;
 extern NSString *const kFIRLoggerCrash;
@@ -68,8 +71,11 @@ FIRLoggerLevel FIRGetLoggerLevel(void);
 void FIRSetLoggerLevel(FIRLoggerLevel loggerLevel);
 
 void FIRSetLoggerLevelNotice(void);
+
 void FIRSetLoggerLevelWarning(void);
+
 void FIRSetLoggerLevelError(void);
+
 void FIRSetLoggerLevelDebug(void);
 
 /**
@@ -80,8 +86,11 @@ void FIRSetLoggerLevelDebug(void);
 BOOL FIRIsLoggableLevel(FIRLoggerLevel loggerLevel, BOOL analyticsComponent);
 
 BOOL FIRIsLoggableLevelNotice(void);
+
 BOOL FIRIsLoggableLevelWarning(void);
+
 BOOL FIRIsLoggableLevelError(void);
+
 BOOL FIRIsLoggableLevelDebug(void);
 
 /**
@@ -104,7 +113,7 @@ extern void FIRLogBasic(FIRLoggerLevel level,
 // On 64-bit simulators, va_list is not a pointer, so cannot be marked nullable
 // See: http://stackoverflow.com/q/29095469
 #if __LP64__ && TARGET_OS_SIMULATOR || TARGET_OS_OSX
-                        va_list args_ptr
+        va_list args_ptr
 #else
                         va_list _Nullable args_ptr
 #endif
@@ -123,16 +132,16 @@ extern void FIRLogBasic(FIRLoggerLevel level,
  * Example usage:
  * FirebaseLogError(kFirebaseLoggerCore, @"I-COR000001", @"Configuration of %@ failed.", app.name);
  */
-extern void FIRLogError(NSString *category, NSString *messageCode, NSString *message, ...)
-    NS_FORMAT_FUNCTION(3, 4);
-extern void FIRLogWarning(NSString *category, NSString *messageCode, NSString *message, ...)
-    NS_FORMAT_FUNCTION(3, 4);
-extern void FIRLogNotice(NSString *category, NSString *messageCode, NSString *message, ...)
-    NS_FORMAT_FUNCTION(3, 4);
-extern void FIRLogInfo(NSString *category, NSString *messageCode, NSString *message, ...)
-    NS_FORMAT_FUNCTION(3, 4);
-extern void FIRLogDebug(NSString *category, NSString *messageCode, NSString *message, ...)
-    NS_FORMAT_FUNCTION(3, 4);
+extern void FIRLogError(NSString * category, NSString * messageCode, NSString * message, ...)
+NS_FORMAT_FUNCTION(3, 4);
+extern void FIRLogWarning(NSString * category, NSString * messageCode, NSString * message, ...)
+NS_FORMAT_FUNCTION(3, 4);
+extern void FIRLogNotice(NSString * category, NSString * messageCode, NSString * message, ...)
+NS_FORMAT_FUNCTION(3, 4);
+extern void FIRLogInfo(NSString * category, NSString * messageCode, NSString * message, ...)
+NS_FORMAT_FUNCTION(3, 4);
+extern void FIRLogDebug(NSString * category, NSString * messageCode, NSString * message, ...)
+NS_FORMAT_FUNCTION(3, 4);
 
 /**
  * This function is similar to the one above, except it takes a `va_list` instead of the listed
@@ -148,32 +157,38 @@ extern void FIRLogDebug(NSString *category, NSString *messageCode, NSString *mes
  * (required) message string which can be a format string.
  * (optional) A va_list
  */
-extern void FIRLogBasicError(NSString *category,
-                             NSString *messageCode,
-                             NSString *message,
-                             va_list args_ptr);
-extern void FIRLogBasicWarning(NSString *category,
-                               NSString *messageCode,
-                               NSString *message,
-                               va_list args_ptr);
-extern void FIRLogBasicNotice(NSString *category,
-                              NSString *messageCode,
-                              NSString *message,
-                              va_list args_ptr);
-extern void FIRLogBasicInfo(NSString *category,
-                            NSString *messageCode,
-                            NSString *message,
-                            va_list args_ptr);
-extern void FIRLogBasicDebug(NSString *category,
-                             NSString *messageCode,
-                             NSString *message,
-                             va_list args_ptr);
+extern void FIRLogBasicError(NSString * category,
+                             NSString * messageCode,
+                             NSString * message,
+                             va_list
+args_ptr);
+extern void FIRLogBasicWarning(NSString * category,
+                               NSString * messageCode,
+                               NSString * message,
+                               va_list
+args_ptr);
+extern void FIRLogBasicNotice(NSString * category,
+                              NSString * messageCode,
+                              NSString * message,
+                              va_list
+args_ptr);
+extern void FIRLogBasicInfo(NSString * category,
+                            NSString * messageCode,
+                            NSString * message,
+                            va_list
+args_ptr);
+extern void FIRLogBasicDebug(NSString * category,
+                             NSString * messageCode,
+                             NSString * message,
+                             va_list
+args_ptr);
 
 #ifdef __cplusplus
 }  // extern "C"
 #endif  // __cplusplus
 
 NS_SWIFT_NAME(FirebaseLogger)
+
 @interface FIRLoggerWrapper : NSObject
 
 /// Logs a given message at a given log level.
@@ -189,7 +204,7 @@ NS_SWIFT_NAME(FirebaseLogger)
              service:(NSString *)category
                 code:(NSString *)code
              message:(NSString *)message
-    __attribute__((__swift_name__("log(level:service:code:message:)")));
+__attribute__((__swift_name__("log(level:service:code:message:)")));
 
 @end
 

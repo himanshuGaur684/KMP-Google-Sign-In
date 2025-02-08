@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 #import <TargetConditionals.h>
+
 #if __has_include("CoreTelephony/CTTelephonyNetworkInfo.h") && !TARGET_OS_MACCATALYST && \
                   !TARGET_OS_OSX && !TARGET_OS_TV && !TARGET_OS_WATCH
 #define TARGET_HAS_MOBILE_CONNECTIVITY
@@ -38,43 +39,43 @@
 #endif
 
 + (GULNetworkType)getNetworkType {
-  GULNetworkType networkType = GULNetworkTypeNone;
+    GULNetworkType networkType = GULNetworkTypeNone;
 
 #ifdef TARGET_HAS_MOBILE_CONNECTIVITY
-  static SCNetworkReachabilityRef reachabilityRef = 0;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    reachabilityRef = SCNetworkReachabilityCreateWithName(kCFAllocatorSystemDefault, "google.com");
-  });
+    static SCNetworkReachabilityRef reachabilityRef = 0;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+      reachabilityRef = SCNetworkReachabilityCreateWithName(kCFAllocatorSystemDefault, "google.com");
+    });
 
-  if (!reachabilityRef) {
-    return GULNetworkTypeNone;
-  }
-
-  SCNetworkReachabilityFlags reachabilityFlags = 0;
-  SCNetworkReachabilityGetFlags(reachabilityRef, &reachabilityFlags);
-
-  // Parse the network flags to set the network type.
-  if (reachabilityFlags & kSCNetworkReachabilityFlagsReachable) {
-    if (reachabilityFlags & kSCNetworkReachabilityFlagsIsWWAN) {
-      networkType = GULNetworkTypeMobile;
-    } else {
-      networkType = GULNetworkTypeWIFI;
+    if (!reachabilityRef) {
+      return GULNetworkTypeNone;
     }
-  }
+
+    SCNetworkReachabilityFlags reachabilityFlags = 0;
+    SCNetworkReachabilityGetFlags(reachabilityRef, &reachabilityFlags);
+
+    // Parse the network flags to set the network type.
+    if (reachabilityFlags & kSCNetworkReachabilityFlagsReachable) {
+      if (reachabilityFlags & kSCNetworkReachabilityFlagsIsWWAN) {
+        networkType = GULNetworkTypeMobile;
+      } else {
+        networkType = GULNetworkTypeWIFI;
+      }
+    }
 #endif
 
-  return networkType;
+    return networkType;
 }
 
 + (NSString *)getNetworkRadioType {
 #ifdef TARGET_HAS_MOBILE_CONNECTIVITY
-  CTTelephonyNetworkInfo *networkInfo = [GULNetworkInfo getNetworkInfo];
-  if (networkInfo.serviceCurrentRadioAccessTechnology.count) {
-    return networkInfo.serviceCurrentRadioAccessTechnology.allValues[0] ?: @"";
-  }
+    CTTelephonyNetworkInfo *networkInfo = [GULNetworkInfo getNetworkInfo];
+    if (networkInfo.serviceCurrentRadioAccessTechnology.count) {
+      return networkInfo.serviceCurrentRadioAccessTechnology.allValues[0] ?: @"";
+    }
 #endif
-  return @"";
+    return @"";
 }
 
 @end

@@ -29,11 +29,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Provide an interface to register a library for userAgent logging and availability to others.
 NS_SWIFT_NAME(Library)
+
 @protocol FIRLibrary
 
 /// Returns one or more Components that will be registered in
 /// FirebaseApp and participate in dependency resolution and injection.
-+ (NSArray<FIRComponent *> *)componentsToRegister;
++ (NSArray
+
+<FIRComponent *> *)
+componentsToRegister;
 
 @end
 

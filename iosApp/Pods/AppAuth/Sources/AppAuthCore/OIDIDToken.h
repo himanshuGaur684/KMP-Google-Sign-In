@@ -34,7 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @internal
     @brief Unavailable. Please use @c initWithAuthorizationResponse:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Parses the given ID Token string.
     @param idToken The ID Token spring.

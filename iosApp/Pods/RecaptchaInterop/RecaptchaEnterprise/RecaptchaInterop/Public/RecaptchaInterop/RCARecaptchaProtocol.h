@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** Interface to interact with reCAPTCHA and retrieve a reCAPTCHA Client. */
 @protocol RCARecaptchaProtocol
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /**
  * Builds a new reCAPTCHA Client for the given Site Key and timeout.
@@ -36,11 +38,22 @@ NS_ASSUME_NONNULL_BEGIN
  * @param timeout Timeout for getClient in milliseconds.
  * @param completion Callback function to return the RecaptchaClient or an error.
  */
-+ (void)getClientWithSiteKey:(nonnull NSString *)siteKey
-                 withTimeout:(double)timeout
-                  completion:(void (^)(id<RCARecaptchaClientProtocol> _Nullable recaptchaClient,
-                                       NSError *_Nullable error))completion
-    NS_SWIFT_NAME(getClient(withSiteKey:withTimeout:completion:));
++ (void)getClientWithSiteKey:(nonnull NSString
+
+*)
+siteKey
+        withTimeout
+:(double)
+timeout
+        completion
+:(void (^)(
+id <RCARecaptchaClientProtocol> _Nullable
+recaptchaClient,
+NSError *_Nullable
+error))
+completion
+        NS_SWIFT_NAME(getClient(withSiteKey
+:withTimeout:completion:));
 
 /**
  * Builds a new reCAPTCHA Client for the given Site Key.
@@ -53,10 +66,19 @@ NS_ASSUME_NONNULL_BEGIN
  * @param siteKey reCAPTCHA Site Key for the app.
  * @param completion Callback function to return the RecaptchaClient or an error.
  */
-+ (void)getClientWithSiteKey:(nonnull NSString *)siteKey
-                  completion:(void (^)(id<RCARecaptchaClientProtocol> _Nullable recaptchaClient,
-                                       NSError *_Nullable error))completion
-    NS_SWIFT_NAME(getClient(withSiteKey:completion:));
++ (void)getClientWithSiteKey:(nonnull NSString
+
+*)
+siteKey
+        completion
+:(void (^)(
+id <RCARecaptchaClientProtocol> _Nullable
+recaptchaClient,
+NSError *_Nullable
+error))
+completion
+        NS_SWIFT_NAME(getClient(withSiteKey
+:completion:));
 
 @end
 

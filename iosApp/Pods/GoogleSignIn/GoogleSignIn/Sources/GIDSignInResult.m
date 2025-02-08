@@ -22,14 +22,16 @@
 @implementation GIDSignInResult
 
 - (instancetype)initWithGoogleUser:(GIDGoogleUser *)user
-                    serverAuthCode:(nullable NSString *)serverAuthCode {
-  self = [super init];
-  if (self) {
-    _user = user;
-    _serverAuthCode = serverAuthCode;
-  }
-  
-  return self;
+                    serverAuthCode:(nullable NSString
+
+*)serverAuthCode {
+    self = [super init];
+    if (self) {
+        _user = user;
+        _serverAuthCode = serverAuthCode;
+    }
+
+    return self;
 }
 
 @end

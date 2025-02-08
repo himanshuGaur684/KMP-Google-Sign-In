@@ -31,81 +31,96 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation GIDConfiguration
 
 - (instancetype)initWithClientID:(NSString *)clientID {
-  return [self initWithClientID:clientID
-                 serverClientID:nil
-                   hostedDomain:nil
-                    openIDRealm:nil];
+    return [self initWithClientID:clientID
+                   serverClientID:nil
+                     hostedDomain:nil
+                      openIDRealm:nil];
 }
 
 - (instancetype)initWithClientID:(NSString *)clientID
-                  serverClientID:(nullable NSString *)serverClientID {
-  return [self initWithClientID:clientID
-                 serverClientID:serverClientID
-                   hostedDomain:nil
-                    openIDRealm:nil];
+                  serverClientID:(nullable NSString
+
+*)serverClientID {
+    return [self initWithClientID:clientID
+                   serverClientID:serverClientID
+                     hostedDomain:nil
+                      openIDRealm:nil];
 }
 
 - (instancetype)initWithClientID:(NSString *)clientID
-                  serverClientID:(nullable NSString *)serverClientID
-                    hostedDomain:(nullable NSString *)hostedDomain
-                     openIDRealm:(nullable NSString *)openIDRealm {
-  self = [super init];
-  if (self) {
-    _clientID = [clientID copy];
-    _serverClientID = [serverClientID copy];
-    _hostedDomain = [hostedDomain copy];
-    _openIDRealm = [openIDRealm copy];
-  }
-  return self;
+                  serverClientID:(nullable NSString
+
+*)
+serverClientID
+        hostedDomain
+:(
+nullable NSString
+*)
+hostedDomain
+        openIDRealm
+:(
+nullable NSString
+*)openIDRealm {
+    self = [super init];
+    if (self) {
+        _clientID = [clientID copy];
+        _serverClientID = [serverClientID copy];
+        _hostedDomain = [hostedDomain copy];
+        _openIDRealm = [openIDRealm copy];
+    }
+    return self;
 }
 
 // Extend NSObject's default description for easier debugging.
 - (NSString *)description {
-  return [NSString stringWithFormat:
-      @"<%@: %p, clientID: %@, serverClientID: %@, hostedDomain: %@, openIDRealm: %@>",
-      NSStringFromClass([self class]),
-      self,
-      _clientID,
-      _serverClientID,
-      _hostedDomain,
-      _openIDRealm];
+    return [NSString stringWithFormat:
+            @"<%@: %p, clientID: %@, serverClientID: %@, hostedDomain: %@, openIDRealm: %@>",
+            NSStringFromClass([self class]),
+            self,
+            _clientID,
+            _serverClientID,
+            _hostedDomain,
+            _openIDRealm];
 }
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(nullable NSZone *)zone {
-  // Instances of this class are immutable so return a reference to the original per NSCopying docs.
-  return self;
+- (instancetype)copyWithZone:(nullable NSZone
+
+*)zone {
+    // Instances of this class are immutable so return a reference to the original per NSCopying docs.
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder {
-  NSString *clientID = [coder decodeObjectOfClass:[NSString class] forKey:kClientIDKey];
-  NSString *serverClientID = [coder decodeObjectOfClass:[NSString class] forKey:kServerClientIDKey];
-  NSString *hostedDomain = [coder decodeObjectOfClass:[NSString class] forKey:kHostedDomainKey];
-  NSString *openIDRealm = [coder decodeObjectOfClass:[NSString class] forKey:kOpenIDRealmKey];
+    NSString * clientID = [coder decodeObjectOfClass:[NSString class] forKey:kClientIDKey];
+    NSString *
+    serverClientID = [coder decodeObjectOfClass:[NSString class] forKey:kServerClientIDKey];
+    NSString * hostedDomain = [coder decodeObjectOfClass:[NSString class] forKey:kHostedDomainKey];
+    NSString * openIDRealm = [coder decodeObjectOfClass:[NSString class] forKey:kOpenIDRealmKey];
 
-  // We must have a client ID.
-  if (!clientID) {
-    return nil;
-  }
+    // We must have a client ID.
+    if (!clientID) {
+        return nil;
+    }
 
-  return [self initWithClientID:clientID
-                 serverClientID:serverClientID
-                   hostedDomain:hostedDomain
-                    openIDRealm:openIDRealm];
+    return [self initWithClientID:clientID
+                   serverClientID:serverClientID
+                     hostedDomain:hostedDomain
+                      openIDRealm:openIDRealm];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [coder encodeObject:_clientID forKey:kClientIDKey];
-  [coder encodeObject:_serverClientID forKey:kServerClientIDKey];
-  [coder encodeObject:_hostedDomain forKey:kHostedDomainKey];
-  [coder encodeObject:_openIDRealm forKey:kOpenIDRealmKey];
+    [coder encodeObject:_clientID forKey:kClientIDKey];
+    [coder encodeObject:_serverClientID forKey:kServerClientIDKey];
+    [coder encodeObject:_hostedDomain forKey:kHostedDomainKey];
+    [coder encodeObject:_openIDRealm forKey:kOpenIDRealmKey];
 }
 
 @end

@@ -26,12 +26,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Default dispatch queue used for `FBLPromise`, which is `main` if a queue is not specified.
  */
-@property(class) dispatch_queue_t defaultDispatchQueue NS_REFINED_FOR_SWIFT;
+@property(class) dispatch_queue_t defaultDispatchQueue
+NS_REFINED_FOR_SWIFT;
 
 /**
  Creates a pending promise.
  */
-+ (instancetype)pendingPromise NS_REFINED_FOR_SWIFT;
++ (instancetype)pendingPromise
+
+NS_REFINED_FOR_SWIFT;
 
 /**
  Creates a resolved promise.
@@ -55,11 +58,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)reject:(NSError *)error NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new
+
+NS_UNAVAILABLE;
+
+- (instancetype)init
+
+NS_UNAVAILABLE;
 @end
 
-@interface FBLPromise<Value>()
+@interface FBLPromise<Value> ()
 
 /**
  Adds an object to the set of pending objects to keep strongly while the promise is pending.
@@ -77,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define FBL_PROMISES_DOT_SYNTAX
 #endif
 
-@interface FBLPromise<Value>(DotSyntaxAdditions)
+@interface FBLPromise<Value> (DotSyntaxAdditions)
 
 /**
  Convenience dot-syntax wrappers for FBLPromise.
@@ -85,8 +93,13 @@ NS_ASSUME_NONNULL_BEGIN
         FBLPromise.resolved(value)
 
  */
-+ (FBLPromise * (^)(void))pending FBL_PROMISES_DOT_SYNTAX NS_SWIFT_UNAVAILABLE("");
-+ (FBLPromise * (^)(id __nullable))resolved FBL_PROMISES_DOT_SYNTAX NS_SWIFT_UNAVAILABLE("");
++ (FBLPromise *(^)(void))pending FBL_PROMISES_DOT_SYNTAX
+
+NS_SWIFT_UNAVAILABLE("");
+
++ (FBLPromise *(^)(id __nullable))resolved FBL_PROMISES_DOT_SYNTAX
+
+NS_SWIFT_UNAVAILABLE("");
 
 @end
 

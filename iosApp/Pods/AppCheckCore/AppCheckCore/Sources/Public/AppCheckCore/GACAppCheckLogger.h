@@ -17,20 +17,23 @@
 #import "GACAppCheckErrors.h"
 
 /// Constants that specify the level of logging to perform in App Check Core.
-typedef NS_ENUM(NSInteger, GACAppCheckLogLevel) {
-  /// The debug log level; equivalent to `OS_LOG_TYPE_DEBUG`.
-  GACAppCheckLogLevelDebug = 1,
-  /// The informational log level; equivalent to `OS_LOG_TYPE_INFO`.
-  GACAppCheckLogLevelInfo = 2,
-  /// The warning log level; equivalent to `OS_LOG_TYPE_DEFAULT`.
-  GACAppCheckLogLevelWarning = 3,
-  /// The error log level; equivalent to `OS_LOG_TYPE_ERROR`.
-  GACAppCheckLogLevelError = 4,
-  /// The fault log level; equivalent to `OS_LOG_TYPE_FAULT`.
-  GACAppCheckLogLevelFault = 5
-} NS_SWIFT_NAME(AppCheckCoreLogLevel);
+typedef NS_ENUM(NSInteger, GACAppCheckLogLevel
+) {
+/// The debug log level; equivalent to `OS_LOG_TYPE_DEBUG`.
+GACAppCheckLogLevelDebug = 1,
+/// The informational log level; equivalent to `OS_LOG_TYPE_INFO`.
+GACAppCheckLogLevelInfo = 2,
+/// The warning log level; equivalent to `OS_LOG_TYPE_DEFAULT`.
+GACAppCheckLogLevelWarning = 3,
+/// The error log level; equivalent to `OS_LOG_TYPE_ERROR`.
+GACAppCheckLogLevelError = 4,
+/// The fault log level; equivalent to `OS_LOG_TYPE_FAULT`.
+GACAppCheckLogLevelFault = 5
+}
+NS_SWIFT_NAME(AppCheckCoreLogLevel);
 
 NS_SWIFT_NAME(AppCheckCoreLogger)
+
 @interface GACAppCheckLogger : NSObject
 
 /// The current logging level.
@@ -39,6 +42,8 @@ NS_SWIFT_NAME(AppCheckCoreLogger)
 /// Fault > Error > Warning > Info > Debug.
 @property(class, atomic, assign) GACAppCheckLogLevel logLevel;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end

@@ -103,7 +103,9 @@ NS_ASSUME_NONNULL_BEGIN
     @brief Unavailable. Please use
         initWithConfiguration:grantType:code:redirectURL:clientID:additionalParameters:additionalHeaders:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @param configuration The service's configuration.
     @param grantType the type of token being sent to the token endpoint, i.e. "authorization_code"
@@ -119,15 +121,44 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional token request parameters.
  */
 - (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
-               grantType:(NSString *)grantType
-       authorizationCode:(nullable NSString *)code
-             redirectURL:(nullable NSURL *)redirectURL
-                clientID:(NSString *)clientID
-            clientSecret:(nullable NSString *)clientSecret
-                  scopes:(nullable NSArray<NSString *> *)scopes
-            refreshToken:(nullable NSString *)refreshToken
-            codeVerifier:(nullable NSString *)codeVerifier
-    additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+                            grantType:(NSString *)grantType
+                    authorizationCode:(nullable NSString
+
+*)
+code
+        redirectURL
+:(
+nullable NSURL
+*)
+redirectURL
+        clientID
+:(NSString *)
+clientID
+        clientSecret
+:(
+nullable NSString
+*)
+clientSecret
+        scopes
+:(
+nullable NSArray<NSString *>
+*)
+scopes
+        refreshToken
+:(
+nullable NSString
+*)
+refreshToken
+        codeVerifier
+:(
+nullable NSString
+*)
+codeVerifier
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters;
 
 /*! @param configuration The service's configuration.
     @param grantType the type of token being sent to the token endpoint, i.e. "authorization_code"
@@ -144,15 +175,44 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional token request parameters.
  */
 - (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
-               grantType:(NSString *)grantType
-       authorizationCode:(nullable NSString *)code
-             redirectURL:(nullable NSURL *)redirectURL
-                clientID:(NSString *)clientID
-            clientSecret:(nullable NSString *)clientSecret
-                   scope:(nullable NSString *)scope
-            refreshToken:(nullable NSString *)refreshToken
-            codeVerifier:(nullable NSString *)codeVerifier
-    additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+                            grantType:(NSString *)grantType
+                    authorizationCode:(nullable NSString
+
+*)
+code
+        redirectURL
+:(
+nullable NSURL
+*)
+redirectURL
+        clientID
+:(NSString *)
+clientID
+        clientSecret
+:(
+nullable NSString
+*)
+clientSecret
+        scope
+:(
+nullable NSString
+*)
+scope
+        refreshToken
+:(
+nullable NSString
+*)
+refreshToken
+        codeVerifier
+:(
+nullable NSString
+*)
+codeVerifier
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters;
 
 /*! @param configuration The service's configuration.
     @param grantType the type of token being sent to the token endpoint, i.e. "authorization_code"
@@ -169,16 +229,49 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalHeaders The client's additional token request headers.
  */
 - (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
-               grantType:(NSString *)grantType
-       authorizationCode:(nullable NSString *)code
-             redirectURL:(nullable NSURL *)redirectURL
-                clientID:(NSString *)clientID
-            clientSecret:(nullable NSString *)clientSecret
-                  scopes:(nullable NSArray<NSString *> *)scopes
-            refreshToken:(nullable NSString *)refreshToken
-            codeVerifier:(nullable NSString *)codeVerifier
-    additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters
-       additionalHeaders:(nullable NSDictionary<NSString *, NSString *> *)additionalHeaders;
+                            grantType:(NSString *)grantType
+                    authorizationCode:(nullable NSString
+
+*)
+code
+        redirectURL
+:(
+nullable NSURL
+*)
+redirectURL
+        clientID
+:(NSString *)
+clientID
+        clientSecret
+:(
+nullable NSString
+*)
+clientSecret
+        scopes
+:(
+nullable NSArray<NSString *>
+*)
+scopes
+        refreshToken
+:(
+nullable NSString
+*)
+refreshToken
+        codeVerifier
+:(
+nullable NSString
+*)
+codeVerifier
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters
+        additionalHeaders
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalHeaders;
 
 /*! @brief Designated initializer.
     @param configuration The service's configuration.
@@ -197,17 +290,50 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalHeaders The client's additional token request headers.
  */
 - (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
-               grantType:(NSString *)grantType
-       authorizationCode:(nullable NSString *)code
-             redirectURL:(nullable NSURL *)redirectURL
-                clientID:(NSString *)clientID
-            clientSecret:(nullable NSString *)clientSecret
-                   scope:(nullable NSString *)scope
-            refreshToken:(nullable NSString *)refreshToken
-            codeVerifier:(nullable NSString *)codeVerifier
-    additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters
-       additionalHeaders:(nullable NSDictionary<NSString *, NSString *> *)additionalHeaders
-    NS_DESIGNATED_INITIALIZER;
+                            grantType:(NSString *)grantType
+                    authorizationCode:(nullable NSString
+
+*)
+code
+        redirectURL
+:(
+nullable NSURL
+*)
+redirectURL
+        clientID
+:(NSString *)
+clientID
+        clientSecret
+:(
+nullable NSString
+*)
+clientSecret
+        scope
+:(
+nullable NSString
+*)
+scope
+        refreshToken
+:(
+nullable NSString
+*)
+refreshToken
+        codeVerifier
+:(
+nullable NSString
+*)
+codeVerifier
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters
+        additionalHeaders
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalHeaders
+        NS_DESIGNATED_INITIALIZER;
 
 /*! @brief Designated initializer for NSSecureCoding.
     @param aDecoder Unarchiver object to decode

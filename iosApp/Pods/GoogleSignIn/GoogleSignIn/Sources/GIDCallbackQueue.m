@@ -17,18 +17,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GIDCallbackQueue () {
-  // Whether we are in the middle of firing callbacks loop.
-  BOOL _firing;
+    // Whether we are in the middle of firing callbacks loop.
+    BOOL _firing;
 
-  // Number of currently pending operations.
-  int _pending;  // number of pending operations
+    // Number of currently pending operations.
+    int _pending;  // number of pending operations
 
-  // The ordered list of callback blocks.
-  NSMutableArray *_queue;
+    // The ordered list of callback blocks.
+    NSMutableArray *_queue;
 
-  // A strong reference back to self to prevent it from being released when
-  // there is operation pending.
-  GIDCallbackQueue *_strongSelf;
+    // A strong reference back to self to prevent it from being released when
+    // there is operation pending.
+    GIDCallbackQueue *_strongSelf;
 }
 
 @end
@@ -36,62 +36,62 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation GIDCallbackQueue
 
 - (id)init {
-  self = [super init];
-  if (self) {
-    _queue = [NSMutableArray new];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _queue = [NSMutableArray new];
+    }
+    return self;
 }
 
 - (void)wait {
-  _pending++;
-  // The queue itself should be retained as long as there are pending
-  // operations.
-  _strongSelf = self;
+    _pending++;
+    // The queue itself should be retained as long as there are pending
+    // operations.
+    _strongSelf = self;
 }
 
 - (void)next {
-  if (!_pending) {
-    return;
-  }
-  _pending--;
-  if (!_pending) {
-    // Use an autoreleasing variable to hold self temporarily so it is not
-    // released while this method is executing.
-    __autoreleasing GIDCallbackQueue *autoreleasingSelf = self;
-    _strongSelf = nil;
-    [autoreleasingSelf fire];
-  }
+    if (!_pending) {
+        return;
+    }
+    _pending--;
+    if (!_pending) {
+        // Use an autoreleasing variable to hold self temporarily so it is not
+        // released while this method is executing.
+        __autoreleasing GIDCallbackQueue *autoreleasingSelf = self;
+        _strongSelf = nil;
+        [autoreleasingSelf fire];
+    }
 }
 
 - (void)reset {
-  [_queue removeAllObjects];
-  _pending = 0;
-  _strongSelf = nil;
+    [_queue removeAllObjects];
+    _pending = 0;
+    _strongSelf = nil;
 }
 
 - (void)addCallback:(GIDCallbackQueueCallback)callback {
-  if (!callback) {
-    return;
-  }
-  [_queue addObject:[callback copy]];
-  if (!_pending) {
-    [self fire];
-  }
+    if (!callback) {
+        return;
+    }
+    [_queue addObject:[callback copy]];
+    if (!_pending) {
+        [self fire];
+    }
 }
 
 // Fires the callbacks.
 - (void)fire {
-  if (_firing) {
-    return;
-  }
-  _firing = YES;
-  while (!_pending && [_queue count]) {
-    GIDCallbackQueueCallback callback = [_queue objectAtIndex:0];
-    [_queue removeObjectAtIndex:0];
-    callback();
-  }
-  _firing = NO;
+    if (_firing) {
+        return;
+    }
+    _firing = YES;
+    while (!_pending && [_queue count]) {
+        GIDCallbackQueueCallback callback = [_queue objectAtIndex:0];
+        [_queue removeObjectAtIndex:0];
+        callback();
+    }
+    _firing = NO;
 }
 
 @end

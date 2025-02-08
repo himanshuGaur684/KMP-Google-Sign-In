@@ -67,7 +67,8 @@ typedef void (^OIDTokenCallback)(OIDTokenResponse *_Nullable tokenResponse,
 /*! @brief Represents the type of dictionary used to specify additional querystring parameters
         when making authorization or token endpoint requests.
  */
-typedef NSDictionary<NSString *, NSString *> *_Nullable OIDTokenEndpointParameters;
+typedef NSDictionary<NSString *, NSString *> *_Nullable
+OIDTokenEndpointParameters;
 
 /*! @brief Represents the type of block used as a callback for various methods of
         @c OIDAuthorizationService.
@@ -93,7 +94,9 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
 /*! @internal
     @brief Unavailable. This class should not be initialized.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Convenience method for creating an authorization service configuration from an OpenID
         Connect compliant issuer URL.
@@ -125,9 +128,9 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
         receives a @c OIDExternalUserAgentSession.cancel message, or after processing a
         @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
  */
-+ (id<OIDExternalUserAgentSession>) presentAuthorizationRequest:(OIDAuthorizationRequest *)request
-    externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-             callback:(OIDAuthorizationCallback)callback;
++ (id <OIDExternalUserAgentSession>)presentAuthorizationRequest:(OIDAuthorizationRequest *)request
+                                              externalUserAgent:(id <OIDExternalUserAgent>)externalUserAgent
+                                                       callback:(OIDAuthorizationCallback)callback;
 
 /*! @brief Perform a logout request.
     @param request The end-session logout request.
@@ -138,10 +141,10 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
         @c OIDExternalUserAgentSession.resumeExternalUserAgentFlowWithURL: message.
     @see http://openid.net/specs/openid-connect-session-1_0.html#RPLogout
  */
-+ (id<OIDExternalUserAgentSession>)
-    presentEndSessionRequest:(OIDEndSessionRequest *)request
-           externalUserAgent:(id<OIDExternalUserAgent>)externalUserAgent
-                    callback:(OIDEndSessionCallback)callback;
++ (id <OIDExternalUserAgentSession>)
+presentEndSessionRequest:(OIDEndSessionRequest *)request
+       externalUserAgent:(id <OIDExternalUserAgent>)externalUserAgent
+                callback:(OIDEndSessionCallback)callback;
 
 /*! @brief Performs a token request.
     @param request The token request.
@@ -154,9 +157,9 @@ typedef void (^OIDRegistrationCompletion)(OIDRegistrationResponse *_Nullable reg
     @param authorizationResponse The original authorization response related to this token request.
     @param callback The method called when the request has completed or failed.
  */
-+ (void)performTokenRequest:(OIDTokenRequest *)request
-    originalAuthorizationResponse:(OIDAuthorizationResponse *_Nullable)authorizationResponse
-                         callback:(OIDTokenCallback)callback;
++ (void)  performTokenRequest:(OIDTokenRequest *)request
+originalAuthorizationResponse:(OIDAuthorizationResponse *_Nullable)authorizationResponse
+                     callback:(OIDTokenCallback)callback;
 
 /*! @brief Performs a registration request.
     @param request The registration request.

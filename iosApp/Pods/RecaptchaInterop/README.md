@@ -12,6 +12,7 @@ dependent SDK only if specified by the client.
 The major version of this SDK should always be 100. When a new interface is added, the minor version
 should be incremented. Clients should always enable minor version updates from the required minimum
 required minor version, `100.x`, e.g.:
+
 - Swift Package Manager: `"100.x" ..< "101.0"`
 - CocoaPods: `'~100.x'`
 

@@ -23,13 +23,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
     @brief A string constant identifying the Game Center identity provider.
  */
-extern NSString *const FIRGameCenterAuthProviderID NS_SWIFT_NAME(GameCenterAuthProviderID);
+extern NSString
+*
+const FIRGameCenterAuthProviderID NS_SWIFT_NAME(GameCenterAuthProviderID);
 
 /**
     @brief A string constant identifying the Game Center sign-in method.
  */
-extern NSString *const _Nonnull FIRGameCenterAuthSignInMethod NS_SWIFT_NAME(
-    GameCenterAuthSignInMethod);
+extern NSString *const _Nonnull
+FIRGameCenterAuthSignInMethod NS_SWIFT_NAME(
+        GameCenterAuthSignInMethod);
 
 /** @typedef FIRGameCenterCredentialCallback
     @brief The type of block invoked when the Game Center credential code has finished.
@@ -38,6 +41,7 @@ extern NSString *const _Nonnull FIRGameCenterAuthSignInMethod NS_SWIFT_NAME(
  */
 typedef void (^FIRGameCenterCredentialCallback)(FIRAuthCredential *_Nullable credential,
                                                 NSError *_Nullable error)
-    NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
+
+NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
 
 NS_ASSUME_NONNULL_END

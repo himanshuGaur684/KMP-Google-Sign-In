@@ -23,7 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief Represents a function which transforms incoming source values into instance variable
         values.
  */
-typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable value);
+typedef _Nullable
+
+id (^OIDFieldMappingConversionFunction)(NSObject *_Nullable value);
 
 /*! @brief Describes the mapping of a key/value pair to an iVar with an optional conversion
         function.
@@ -46,7 +48,9 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
 /*! @internal
     @brief Unavailable. Please use initWithName:type:conversion:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief The designated initializer.
     @param name The name of the instance variable the field should be mapped to.
@@ -60,7 +64,7 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
 - (instancetype)initWithName:(NSString *)name
                         type:(Class)type
                   conversion:(nullable OIDFieldMappingConversionFunction)conversion
-    NS_DESIGNATED_INITIALIZER;
+NS_DESIGNATED_INITIALIZER;
 
 /*! @brief A convenience initializer.
     @param name The name of the instance variable the field should be mapped to.
@@ -77,10 +81,17 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @param instance The instance whose variables should be set based on the mapping.
     @return A dictionary of parameter key/values which didn't map to instance variables.
  */
-+ (NSDictionary<NSString *, NSObject<NSCopying> *> *)remainingParametersWithMap:
-    (NSDictionary<NSString *, OIDFieldMapping *> *)map
-    parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters
-      instance:(id)instance;
++ (NSDictionary
+
+<NSString *, NSObject <NSCopying> *> *)remainingParametersWithMap:
+(NSDictionary<NSString *, OIDFieldMapping *> *)
+map
+        parameters
+:(NSDictionary<NSString *, NSObject < NSCopying> *> *)
+parameters
+        instance
+:(id)
+instance;
 
 /*! @brief This helper method for @c NSCoding implementations performs a serialization of fields
         defined in a field mapping.
@@ -89,8 +100,13 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @param instance The instance whose variables should be serialized based on the mapping.
  */
 + (void)encodeWithCoder:(NSCoder *)aCoder
-                    map:(NSDictionary<NSString *, OIDFieldMapping *> *)map
-               instance:(id)instance;
+                    map:(NSDictionary
+
+<NSString *, OIDFieldMapping *> *)
+map
+        instance
+:(id)
+instance;
 
 /*! @brief This helper method for @c NSCoding implementations performs a deserialization of
         fields defined in a field mapping.
@@ -99,8 +115,13 @@ typedef _Nullable id(^OIDFieldMappingConversionFunction)(NSObject *_Nullable val
     @param instance The instance whose variables should be deserialized based on the mapping.
  */
 + (void)decodeWithCoder:(NSCoder *)aCoder
-                    map:(NSDictionary<NSString *, OIDFieldMapping *> *)map
-               instance:(id)instance;
+                    map:(NSDictionary
+
+<NSString *, OIDFieldMapping *> *)
+map
+        instance
+:(id)
+instance;
 
 /*! @brief Returns an @c NSSet of classes suitable for deserializing JSON content in an
         @c NSSecureCoding context.

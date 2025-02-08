@@ -22,7 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** A block that takes a BOOL and has no return value. */
 typedef void (^FIRAppVoidBoolCallback)(BOOL success)
-    NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
+
+NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
 
 /**
  * The entry point of Firebase SDKs.
@@ -44,6 +45,7 @@ typedef void (^FIRAppVoidBoolCallback)(BOOL success)
  * `FirebaseConfiguration.shared.setLoggerLevel(_:)` with the desired level.
  */
 NS_SWIFT_NAME(FirebaseApp)
+
 @interface FIRApp : NSObject
 
 /**
@@ -61,7 +63,11 @@ NS_SWIFT_NAME(FirebaseApp)
  *
  * @param options The Firebase application options used to configure the service.
  */
-+ (void)configureWithOptions:(FIROptions *)options NS_SWIFT_NAME(configure(options:));
++ (void)configureWithOptions:(FIROptions *)options NS_SWIFT_NAME
+
+(
+configure(options
+:));
 
 /**
  * Configures a Firebase app with the given name and options. Raises an exception if any
@@ -73,19 +79,30 @@ NS_SWIFT_NAME(FirebaseApp)
  */
 // clang-format off
 + (void)configureWithName:(NSString *)name
-                  options:(FIROptions *)options NS_SWIFT_NAME(configure(name:options:));
+                  options:(FIROptions *)options NS_SWIFT_NAME
+
+(
+configure(name
+:options:));
 // clang-format on
 
 /**
  * Returns the default app, or `nil` if the default app does not exist.
  */
-+ (nullable FIRApp *)defaultApp NS_SWIFT_NAME(app());
++ (nullable FIRApp
+
+*)
+defaultApp NS_SWIFT_NAME(app());
 
 /**
  * Returns a previously created `FirebaseApp` instance with the given name, or `nil` if no such app
  * exists. This method is thread safe.
  */
-+ (nullable FIRApp *)appNamed:(NSString *)name NS_SWIFT_NAME(app(name:));
++ (nullable FIRApp
+
+*)appNamed:(NSString *)
+name NS_SWIFT_NAME(app(name
+:));
 
 /**
  * Returns the set of all extant `FirebaseApp` instances, or `nil` if there are no `FirebaseApp`
@@ -103,7 +120,9 @@ NS_SWIFT_NAME(FirebaseApp)
  * `FirebaseApp` instances should not be initialized directly. Call `FirebaseApp.configure()`,
  * `FirebaseApp.configure(options:)`, or `FirebaseApp.configure(name:options:)` directly.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /**
  * Gets the name of this app.
@@ -121,8 +140,7 @@ NS_SWIFT_NAME(FirebaseApp)
  * is persisted across runs of the app so that it can be set once when users have consented to
  * collection.
  */
-@property(nonatomic, readwrite, getter=isDataCollectionDefaultEnabled)
-    BOOL dataCollectionDefaultEnabled;
+@property(nonatomic, readwrite, getter=isDataCollectionDefaultEnabled) BOOL dataCollectionDefaultEnabled;
 
 @end
 

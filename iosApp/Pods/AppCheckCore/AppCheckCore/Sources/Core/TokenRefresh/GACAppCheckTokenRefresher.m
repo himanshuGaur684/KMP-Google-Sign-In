@@ -23,7 +23,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static const NSTimeInterval kInitialBackoffTimeInterval = 30;
+static const NSTimeInterval
+kInitialBackoffTimeInterval = 30;
 static const NSTimeInterval kMaximumBackoffTimeInterval = 16 * 60;
 
 static const NSTimeInterval kMinimumAutoRefreshTimeInterval = 60;  // 1 min.
@@ -36,10 +37,10 @@ static const double kAutoRefreshFraction = 0.5;
 
 @property(nonatomic, readonly) dispatch_queue_t refreshQueue;
 
-@property(nonatomic, readonly) id<GACAppCheckSettingsProtocol> settings;
+@property(nonatomic, readonly) id <GACAppCheckSettingsProtocol> settings;
 
 @property(nonatomic, readonly) GACTimerProvider timerProvider;
-@property(atomic, nullable) id<GACAppCheckTimerProtocol> timer;
+@property(atomic, nullable) id <GACAppCheckTimerProtocol> timer;
 @property(atomic) NSUInteger retryCount;
 
 /// Initial refresh result to be used when `tokenRefreshHandler` has been sent.
@@ -53,162 +54,166 @@ static const double kAutoRefreshFraction = 0.5;
 
 - (instancetype)initWithRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult
                         timerProvider:(GACTimerProvider)timerProvider
-                             settings:(id<GACAppCheckSettingsProtocol>)settings {
-  self = [super init];
-  if (self) {
-    _refreshQueue =
-        dispatch_queue_create("com.firebase.GACAppCheckTokenRefresher", DISPATCH_QUEUE_SERIAL);
-    _initialRefreshResult = refreshResult;
-    _timerProvider = timerProvider;
-    _settings = settings;
-  }
-  return self;
+                             settings:(id <GACAppCheckSettingsProtocol>)settings {
+    self = [super init];
+    if (self) {
+        _refreshQueue =
+                dispatch_queue_create("com.firebase.GACAppCheckTokenRefresher",
+                                      DISPATCH_QUEUE_SERIAL);
+        _initialRefreshResult = refreshResult;
+        _timerProvider = timerProvider;
+        _settings = settings;
+    }
+    return self;
 }
 
 - (instancetype)initWithRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult
-                             settings:(id<GACAppCheckSettingsProtocol>)settings {
-  return [self initWithRefreshResult:refreshResult
-                       timerProvider:[GACAppCheckTimer timerProvider]
-                            settings:settings];
+                             settings:(id <GACAppCheckSettingsProtocol>)settings {
+    return [self initWithRefreshResult:refreshResult
+                         timerProvider:[GACAppCheckTimer timerProvider]
+                              settings:settings];
 }
 
 - (void)dealloc {
-  [self cancelTimer];
+    [self cancelTimer];
 }
 
 - (void)setTokenRefreshHandler:(GACAppCheckTokenRefreshBlock)tokenRefreshHandler {
-  @synchronized(self) {
-    _tokenRefreshHandler = tokenRefreshHandler;
+    @synchronized (self) {
+        _tokenRefreshHandler = tokenRefreshHandler;
 
-    // Check if handler is being set for the first time and if yes then schedule first refresh.
-    if (tokenRefreshHandler && self.initialRefreshResult) {
-      GACAppCheckTokenRefreshResult *initialTokenRefreshResult = self.initialRefreshResult;
-      self.initialRefreshResult = nil;
-      [self scheduleWithTokenRefreshResult:initialTokenRefreshResult];
+        // Check if handler is being set for the first time and if yes then schedule first refresh.
+        if (tokenRefreshHandler && self.initialRefreshResult) {
+            GACAppCheckTokenRefreshResult *initialTokenRefreshResult = self.initialRefreshResult;
+            self.initialRefreshResult = nil;
+            [self scheduleWithTokenRefreshResult:initialTokenRefreshResult];
+        }
     }
-  }
 }
 
 - (GACAppCheckTokenRefreshBlock)tokenRefreshHandler {
-  @synchronized(self) {
-    return _tokenRefreshHandler;
-  }
+    @synchronized (self) {
+        return _tokenRefreshHandler;
+    }
 }
 
 - (void)updateWithRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult {
-  switch (refreshResult.status) {
-    case GACAppCheckTokenRefreshStatusNever:
-    case GACAppCheckTokenRefreshStatusSuccess:
-      self.retryCount = 0;
-      break;
+    switch (refreshResult.status) {
+        case GACAppCheckTokenRefreshStatusNever:
+        case GACAppCheckTokenRefreshStatusSuccess:
+            self.retryCount = 0;
+            break;
 
-    case GACAppCheckTokenRefreshStatusFailure:
-      self.retryCount += 1;
-      break;
-  }
+        case GACAppCheckTokenRefreshStatusFailure:
+            self.retryCount += 1;
+            break;
+    }
 
-  [self scheduleWithTokenRefreshResult:refreshResult];
+    [self scheduleWithTokenRefreshResult:refreshResult];
 }
 
 - (void)refresh {
-  if (self.tokenRefreshHandler == nil) {
-    return;
-  }
+    if (self.tokenRefreshHandler == nil) {
+        return;
+    }
 
-  if (!self.settings.isTokenAutoRefreshEnabled) {
-    return;
-  }
+    if (!self.settings.isTokenAutoRefreshEnabled) {
+        return;
+    }
 
-  __auto_type __weak weakSelf = self;
-  self.tokenRefreshHandler(^(GACAppCheckTokenRefreshResult *refreshResult) {
-    __auto_type strongSelf = weakSelf;
-    [strongSelf updateWithRefreshResult:refreshResult];
-  });
+    __auto_type __weak weakSelf = self;
+    self.tokenRefreshHandler(^(GACAppCheckTokenRefreshResult *refreshResult) {
+        __auto_type strongSelf = weakSelf;
+        [strongSelf updateWithRefreshResult:refreshResult];
+    });
 }
 
 - (void)scheduleWithTokenRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult {
-  // Schedule the refresh only when allowed.
-  if (self.settings.isTokenAutoRefreshEnabled) {
-    NSDate *refreshDate = [self nextRefreshDateWithTokenRefreshResult:refreshResult];
-    [self scheduleRefreshAtDate:refreshDate];
-  }
+    // Schedule the refresh only when allowed.
+    if (self.settings.isTokenAutoRefreshEnabled) {
+        NSDate *refreshDate = [self nextRefreshDateWithTokenRefreshResult:refreshResult];
+        [self scheduleRefreshAtDate:refreshDate];
+    }
 }
 
 - (void)scheduleRefreshAtDate:(NSDate *)refreshDate {
-  [self cancelTimer];
+    [self cancelTimer];
 
-  NSTimeInterval scheduleInSec = [refreshDate timeIntervalSinceNow];
+    NSTimeInterval scheduleInSec = [refreshDate timeIntervalSinceNow];
 
-  __auto_type __weak weakSelf = self;
-  dispatch_block_t refreshHandler = ^{
-    __auto_type strongSelf = weakSelf;
-    [strongSelf refresh];
-  };
+    __auto_type __weak weakSelf = self;
+    dispatch_block_t refreshHandler = ^{
+        __auto_type strongSelf = weakSelf;
+        [strongSelf refresh];
+    };
 
-  // Refresh straight away if the refresh time is too close.
-  if (scheduleInSec <= 0) {
-    dispatch_async(self.refreshQueue, refreshHandler);
-    return;
-  }
+    // Refresh straight away if the refresh time is too close.
+    if (scheduleInSec <= 0) {
+        dispatch_async(self.refreshQueue, refreshHandler);
+        return;
+    }
 
-  self.timer = self.timerProvider(refreshDate, self.refreshQueue, refreshHandler);
+    self.timer = self.timerProvider(refreshDate, self.refreshQueue, refreshHandler);
 }
 
 - (void)cancelTimer {
-  [self.timer invalidate];
+    [self.timer invalidate];
 }
 
 - (NSDate *)nextRefreshDateWithTokenRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult {
-  switch (refreshResult.status) {
-    case GACAppCheckTokenRefreshStatusSuccess: {
-      NSTimeInterval timeToLive = [refreshResult.tokenExpirationDate
-          timeIntervalSinceDate:refreshResult.tokenReceivedAtDate];
-      timeToLive = MAX(timeToLive, 0);
+    switch (refreshResult.status) {
+        case GACAppCheckTokenRefreshStatusSuccess: {
+            NSTimeInterval timeToLive = [refreshResult.tokenExpirationDate
+                    timeIntervalSinceDate:refreshResult.tokenReceivedAtDate];
+            timeToLive = MAX(timeToLive, 0);
 
-      // Refresh in 50% of TTL + 5 min.
-      NSTimeInterval targetRefreshSinceReceivedDate = timeToLive * kAutoRefreshFraction + 5 * 60;
-      NSDate *targetRefreshDate = [refreshResult.tokenReceivedAtDate
-          dateByAddingTimeInterval:targetRefreshSinceReceivedDate];
+            // Refresh in 50% of TTL + 5 min.
+            NSTimeInterval targetRefreshSinceReceivedDate =
+                    timeToLive * kAutoRefreshFraction + 5 * 60;
+            NSDate *targetRefreshDate = [refreshResult.tokenReceivedAtDate
+                    dateByAddingTimeInterval:targetRefreshSinceReceivedDate];
 
-      // Don't schedule later than expiration date.
-      NSDate *refreshDate = [targetRefreshDate earlierDate:refreshResult.tokenExpirationDate];
+            // Don't schedule later than expiration date.
+            NSDate *refreshDate = [targetRefreshDate earlierDate:refreshResult.tokenExpirationDate];
 
-      // Don't schedule a refresh earlier than in 1 min from now.
-      if ([refreshDate timeIntervalSinceNow] < kMinimumAutoRefreshTimeInterval) {
-        refreshDate = [NSDate dateWithTimeIntervalSinceNow:kMinimumAutoRefreshTimeInterval];
-      }
-      return refreshDate;
-    } break;
+            // Don't schedule a refresh earlier than in 1 min from now.
+            if ([refreshDate timeIntervalSinceNow] < kMinimumAutoRefreshTimeInterval) {
+                refreshDate = [NSDate dateWithTimeIntervalSinceNow:kMinimumAutoRefreshTimeInterval];
+            }
+            return refreshDate;
+        }
+            break;
 
-    case GACAppCheckTokenRefreshStatusFailure: {
-      // Repeat refresh attempt later.
-      NSTimeInterval backoffTime = [[self class] backoffTimeForRetryCount:self.retryCount];
-      return [NSDate dateWithTimeIntervalSinceNow:backoffTime];
-    } break;
+        case GACAppCheckTokenRefreshStatusFailure: {
+            // Repeat refresh attempt later.
+            NSTimeInterval backoffTime = [[self class] backoffTimeForRetryCount:self.retryCount];
+            return [NSDate dateWithTimeIntervalSinceNow:backoffTime];
+        }
+            break;
 
-    case GACAppCheckTokenRefreshStatusNever:
-      // Refresh ASAP.
-      return [NSDate date];
-      break;
-  }
+        case GACAppCheckTokenRefreshStatusNever:
+            // Refresh ASAP.
+            return [NSDate date];
+            break;
+    }
 }
 
 #pragma mark - Backoff
 
 + (NSTimeInterval)backoffTimeForRetryCount:(NSInteger)retryCount {
-  if (retryCount == 0) {
-    // No backoff for the first attempt.
-    return 0;
-  }
+    if (retryCount == 0) {
+        // No backoff for the first attempt.
+        return 0;
+    }
 
-  NSTimeInterval exponentialInterval =
-      kInitialBackoffTimeInterval * pow(2, retryCount - 1) + [self randomMilliseconds];
-  return MIN(exponentialInterval, kMaximumBackoffTimeInterval);
+    NSTimeInterval exponentialInterval =
+            kInitialBackoffTimeInterval * pow(2, retryCount - 1) + [self randomMilliseconds];
+    return MIN(exponentialInterval, kMaximumBackoffTimeInterval);
 }
 
 + (NSTimeInterval)randomMilliseconds {
-  int32_t random_millis = ABS(arc4random() % 1000);
-  return (double)random_millis * 0.001;
+    int32_t random_millis = ABS(arc4random() % 1000);
+    return (double) random_millis * 0.001;
 }
 
 @end

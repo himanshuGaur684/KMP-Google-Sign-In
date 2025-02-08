@@ -19,12 +19,12 @@
 @implementation GACURLSessionDataResponse
 
 - (instancetype)initWithResponse:(NSHTTPURLResponse *)response HTTPBody:(NSData *)body {
-  self = [super init];
-  if (self) {
-    _HTTPResponse = response;
-    _HTTPBody = body;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _HTTPResponse = response;
+        _HTTPBody = body;
+    }
+    return self;
 }
 
 @end

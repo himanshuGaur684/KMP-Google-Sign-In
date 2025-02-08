@@ -34,8 +34,15 @@ NS_ASSUME_NONNULL_BEGIN
     @return An \NSError representing the error code.
  */
 + (NSError *)errorWithCode:(OIDErrorCode)code
-           underlyingError:(nullable NSError *)underlyingError
-               description:(nullable NSString *)description;
+           underlyingError:(nullable NSError
+
+*)
+underlyingError
+        description
+:(
+nullable NSString
+*)
+description;
 
 /*! @brief Creates a standard \NSError from an @c ::OIDErrorCode and custom user info.
         Automatically populates the localized error description.
@@ -48,7 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSError *)OAuthErrorWithDomain:(NSString *)OAuthErrorDomain
                     OAuthResponse:(NSDictionary *)errorResponse
-                  underlyingError:(nullable NSError *)underlyingError;
+                  underlyingError:(nullable NSError
+
+*)
+underlyingError;
 
 /*! @brief Creates a \NSError indicating that the resource server responded with an authorization
         error.
@@ -58,8 +68,15 @@ NS_ASSUME_NONNULL_BEGIN
     @return An \NSError representing the authorization error from the resource server.
  */
 + (NSError *)resourceServerAuthorizationErrorWithCode:(NSInteger)code
-                                        errorResponse:(nullable NSDictionary *)errorResponse
-                                      underlyingError:(nullable NSError *)underlyingError;
+                                        errorResponse:(nullable NSDictionary
+
+*)
+errorResponse
+        underlyingError
+:(
+nullable NSError
+*)
+underlyingError;
 
 
 /*! @brief Creates a standard \NSError from an \NSHTTPURLResponse. Automatically
@@ -71,7 +88,10 @@ NS_ASSUME_NONNULL_BEGIN
     @return An \NSError representing the error.
  */
 + (NSError *)HTTPErrorWithHTTPResponse:(NSHTTPURLResponse *)HTTPURLResponse
-                                  data:(nullable NSData *)data;
+                                  data:(nullable NSData
+
+*)
+data;
 
 /*! @brief Raises an exception with the given name as both the name, and the message.
     @param name The name of the exception.
@@ -100,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
     @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
     @see https://tools.ietf.org/html/rfc6749#section-5.2
  */
-+ (BOOL)isOAuthErrorDomain:(NSString*)errorDomain;
++ (BOOL)isOAuthErrorDomain:(NSString *)errorDomain;
 
 @end
 

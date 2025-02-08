@@ -19,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// The type of network that the device is running with. Values should correspond to the NetworkType
 /// values in android/play/playlog/proto/clientanalytics.proto
 typedef NS_ENUM(NSInteger, GULNetworkType) {
-  GULNetworkTypeNone = -1,
-  GULNetworkTypeMobile = 0,
-  GULNetworkTypeWIFI = 1,
+    GULNetworkTypeNone = -1,
+    GULNetworkTypeMobile = 0,
+    GULNetworkTypeWIFI = 1,
 };
 
 /// Collection of utilities to read network status information

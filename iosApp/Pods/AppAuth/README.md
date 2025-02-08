@@ -8,16 +8,16 @@
 [![Pod Platform](https://img.shields.io/cocoapods/p/AppAuth.svg?style=flat)](https://cocoapods.org/pods/AppAuth)
 [![Catalyst compatible](https://img.shields.io/badge/Catalyst-compatible-brightgreen.svg?style=flat)](https://developer.apple.com/documentation/xcode/creating_a_mac_version_of_your_ipad_app)
 
-AppAuth for iOS and macOS, and tvOS is a client SDK for communicating with 
-[OAuth 2.0](https://tools.ietf.org/html/rfc6749) and 
-[OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers. 
+AppAuth for iOS and macOS, and tvOS is a client SDK for communicating with
+[OAuth 2.0](https://tools.ietf.org/html/rfc6749) and
+[OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers.
 It strives to
 directly map the requests and responses of those specifications, while following
 the idiomatic style of the implementation language. In addition to mapping the
 raw protocol flows, convenience methods are available to assist with common
 tasks like performing an action with fresh tokens.
 
-It follows the best practices set out in 
+It follows the best practices set out in
 [RFC 8252 - OAuth 2.0 for Native Apps](https://tools.ietf.org/html/rfc8252)
 including using `SFAuthenticationSession` and `SFSafariViewController` on iOS
 for the auth request. `UIWebView` and `WKWebView` are explicitly *not*
@@ -77,11 +77,15 @@ confidentiality of the client secrets may not work well.
 
 #### Supported Versions
 
-AppAuth supports tvOS 9.0 and above. Please note that while it is possible to run the standard AppAuth library on tvOS, the documentation below describes implementing [OAuth 2.0 Device Authorization Grant](https://tools.ietf.org/html/rfc8628) (AppAuthTV).
+AppAuth supports tvOS 9.0 and above. Please note that while it is possible to run the standard
+AppAuth library on tvOS, the documentation below describes
+implementing [OAuth 2.0 Device Authorization Grant](https://tools.ietf.org/html/rfc8628) (
+AppAuthTV).
 
 #### Authorization Server Requirements
 
-AppAuthTV is designed for servers that support the device authorization flow as documented in [RFC 8628](https://tools.ietf.org/html/rfc8628).
+AppAuthTV is designed for servers that support the device authorization flow as documented
+in [RFC 8628](https://tools.ietf.org/html/rfc8628).
 
 ## Try
 
@@ -110,10 +114,9 @@ Then, run `pod install`.
 
     pod 'AppAuth/TV'
 
-
 ### Swift Package Manager
 
-With [Swift Package Manager](https://swift.org/package-manager), 
+With [Swift Package Manager](https://swift.org/package-manager),
 add the following `dependency` to your `Package.swift`:
 
 ```swift
@@ -138,14 +141,14 @@ Then, run `carthage bootstrap`.
 ### Static Library
 
 You can also use AppAuth as a static library. This requires linking the library
-and your project, and including the headers.  Here is a suggested configuration:
+and your project, and including the headers. Here is a suggested configuration:
 
 1. Create an Xcode Workspace.
 2. Add `AppAuth.xcodeproj` to your Workspace.
 3. Include libAppAuth as a linked library for your target (in the "General ->
-Linked Framework and Libraries" section of your target).
+   Linked Framework and Libraries" section of your target).
 4. Add `AppAuth-iOS/Source` to your search paths of your target ("Build Settings ->
-"Header Search Paths").
+   "Header Search Paths").
 
 *Note: There is no static library for AppAuthTV.*
 
@@ -166,6 +169,7 @@ authorization state of the session.
 You can configure AppAuth by specifying the endpoints directly:
 
 <sub>Objective-C</sub>
+
 ```objc
 NSURL *authorizationEndpoint =
     [NSURL URLWithString:@"https://accounts.google.com/o/oauth2/v2/auth"];
@@ -181,6 +185,7 @@ OIDServiceConfiguration *configuration =
 ```
 
 <sub>Swift</sub>
+
 ```swift
 let authorizationEndpoint = URL(string: "https://accounts.google.com/o/oauth2/v2/auth")!
 let tokenEndpoint = URL(string: "https://www.googleapis.com/oauth2/v4/token")!
@@ -193,6 +198,7 @@ let configuration = OIDServiceConfiguration(authorizationEndpoint: authorization
 **tvOS**
 
 <sub>Objective-C</sub>
+
 ```objc
 NSURL *deviceAuthorizationEndpoint =
     [NSURL URLWithString:@"https://oauth2.googleapis.com/device/code"];
@@ -207,10 +213,10 @@ OIDTVServiceConfiguration *configuration =
 // perform the auth request...
 ```
 
-
 Or through discovery:
 
 <sub>Objective-C</sub>
+
 ```objc
 NSURL *issuer = [NSURL URLWithString:@"https://accounts.google.com"];
 
@@ -229,6 +235,7 @@ NSURL *issuer = [NSURL URLWithString:@"https://accounts.google.com"];
 ```
 
 <sub>Swift</sub>
+
 ```swift
 let issuer = URL(string: "https://accounts.google.com")!
 
@@ -246,6 +253,7 @@ OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) { configuration
 **tvOS**
 
 <sub>Objective-C</sub>
+
 ```objc
 NSURL *issuer = [NSURL URLWithString:@"https://accounts.google.com"];
 
@@ -272,6 +280,7 @@ a class named `AppDelegate`, if your app's application delegate has a different
 name, please update the class name in samples below accordingly.
 
 <sub>Objective-C</sub>
+
 ```objc
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 // property of the app's AppDelegate
@@ -280,6 +289,7 @@ name, please update the class name in samples below accordingly.
 ```
 
 <sub>Swift</sub>
+
 ```swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
   // property of the app's AppDelegate
@@ -287,22 +297,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-
 And your main class, a property to store the auth state:
 
 <sub>Objective-C</sub>
+
 ```objc
 // property of the containing class
 @property(nonatomic, strong, nullable) OIDAuthState *authState;
 ```
+
 <sub>Swift</sub>
+
 ```swift
 // property of the containing class
 private var authState: OIDAuthState?
 ```
 
-
-Then, initiate the authorization request. By using the 
+Then, initiate the authorization request. By using the
 `authStateByPresentingAuthorizationRequest` convenience method, the token
 exchange will be performed automatically, and everything will be protected with
 PKCE (if the server supports it). AppAuth also lets you perform these
@@ -310,6 +321,7 @@ requests manually. See the `authNoCodeExchange` method in the included Example
 app for a demonstration:
 
 <sub>Objective-C</sub>
+
 ```objc
 // builds authentication request
 OIDAuthorizationRequest *request =
@@ -341,6 +353,7 @@ appDelegate.currentAuthorizationFlow =
 ```
 
 <sub>Swift</sub>
+
 ```swift
 // builds authentication request
 let request = OIDAuthorizationRequest(configuration: configuration,
@@ -376,6 +389,7 @@ app delegate method, so you need to pipe this through to the current
 authorization session (created in the previous session):
 
 <sub>Objective-C</sub>
+
 ```objc
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
@@ -394,6 +408,7 @@ authorization session (created in the previous session):
 ```
 
 <sub>Swift</sub>
+
 ```swift
 func application(_ app: UIApplication,
                  open url: URL,
@@ -431,6 +446,7 @@ to have an instance variable in your main class to retain the HTTP redirect
 handler:
 
 <sub>Objective-C</sub>
+
 ```objc
 OIDRedirectHTTPHandler *_redirectHTTPHandler;
 ```
@@ -440,6 +456,7 @@ before building the authorization request, in order to get the exact redirect
 URI to use:
 
 <sub>Objective-C</sub>
+
 ```objc
 static NSString *const kSuccessURLString =
     @"http://openid.github.io/AppAuth-iOS/redirect/";
@@ -451,7 +468,7 @@ _redirectHTTPHandler = [[OIDRedirectHTTPHandler alloc] initWithSuccessURL:succes
 NSURL *redirectURI = [_redirectHTTPHandler startHTTPListener:nil];
 ```
 
-Then, initiate the authorization request. By using the 
+Then, initiate the authorization request. By using the
 `authStateByPresentingAuthorizationRequest` convenience method, the token
 exchange will be performed automatically, and everything will be protected with
 PKCE (if the server supports it). By assigning the return value to the
@@ -490,12 +507,14 @@ _redirectHTTPHandler.currentAuthorizationFlow =
 }];
 ```
 
-
 ### Authorizing – tvOS
 
-Ensure that your main class is a delegate of `OIDAuthStateChangeDelegate`, `OIDAuthStateErrorDelegate`, implement the corresponding methods, and include the following property and instance variable:
+Ensure that your main class is a delegate of `OIDAuthStateChangeDelegate`,
+`OIDAuthStateErrorDelegate`, implement the corresponding methods, and include the following property
+and instance variable:
 
 <sub>Objective-C</sub>
+
 ```objc
 // property of the containing class
 @property(nonatomic, strong, nullable) OIDAuthState *authState;
@@ -507,6 +526,7 @@ OIDTVAuthorizationCancelBlock _cancelBlock;
 Then, build and perform the authorization request.
 
 <sub>Objective-C</sub>
+
 ```objc
 // builds authentication request
 __weak __typeof(self) weakSelf = self;
@@ -556,6 +576,7 @@ recommend that users of the `OIDAuthState` convenience wrapper use the provided
 needing to worry about token freshness:
 
 <sub>Objective-C</sub>
+
 ```objc
 [_authState performActionWithFreshTokens:^(NSString *_Nonnull accessToken,
                                            NSString *_Nonnull idToken,
@@ -570,6 +591,7 @@ needing to worry about token freshness:
 ```
 
 <sub>Swift</sub>
+
 ```swift
 let userinfoEndpoint = URL(string:"https://openidconnect.googleapis.com/v1/userinfo")!
 self.authState?.performAction() { (accessToken, idToken, error) in
@@ -606,17 +628,21 @@ It is possible to change the user-agent that AppAuth uses, and even write your
 own - all without needing to fork the library.
 
 All implementations of the external user-agent, be they included or created by
-you need to conform to the 
-[`OIDExternalUserAgent`](http://openid.github.io/AppAuth-iOS/docs/latest/protocol_o_i_d_external_user_agent-p.html)
+you need to conform to the
+[
+`OIDExternalUserAgent`](http://openid.github.io/AppAuth-iOS/docs/latest/protocol_o_i_d_external_user_agent-p.html)
 protocol.
 
 Instances of the `OIDExternalUserAgent`are passed into
-[`OIDAuthState.authStateByPresentingAuthorizationRequest:externalUserAgent:callback`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_auth_state.html#ac762fe2bf95c116f0b437419be211fa1)
-and/or 
-[`OIDAuthorizationService.presentAuthorizationRequest:externalUserAgent:callback:`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_authorization_service.html#ae551f8e6887366a46e49b09b37389b8f)
-rather than using the platform-specific convenience methods (which use the 
-default user-agents for their respective platforms), like 
-[`OIDAuthState.authStateByPresentingAuthorizationRequest:presentingViewController:callback:`](http://openid.github.io/AppAuth-iOS/docs/latest/category_o_i_d_auth_state_07_i_o_s_08.html#ae32fd0732cd3192cd5219f2655a4c85c).
+[
+`OIDAuthState.authStateByPresentingAuthorizationRequest:externalUserAgent:callback`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_auth_state.html#ac762fe2bf95c116f0b437419be211fa1)
+and/or
+[
+`OIDAuthorizationService.presentAuthorizationRequest:externalUserAgent:callback:`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_authorization_service.html#ae551f8e6887366a46e49b09b37389b8f)
+rather than using the platform-specific convenience methods (which use the
+default user-agents for their respective platforms), like
+[
+`OIDAuthState.authStateByPresentingAuthorizationRequest:presentingViewController:callback:`](http://openid.github.io/AppAuth-iOS/docs/latest/category_o_i_d_auth_state_07_i_o_s_08.html#ae32fd0732cd3192cd5219f2655a4c85c).
 
 Popular use-cases for writing your own user-agent implementation include needing
 to style the user-agent in ways not supported by AppAuth, and implementing a
@@ -628,7 +654,8 @@ needs.
 
 AppAuth for iOS includes a few extra user-agent implementations which you can
 try, or use as a reference for your own implementation. One of them,
-[`OIDExternalUserAgentIOSCustomBrowser`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_external_user_agent_i_o_s_custom_browser.html)
+[
+`OIDExternalUserAgentIOSCustomBrowser`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_external_user_agent_i_o_s_custom_browser.html)
 enables you to use a different browser for authentication, like Chrome for iOS
 or Firefox for iOS.
 
@@ -653,6 +680,7 @@ if it's not installed (the default behavior of this user-agent). You only need
 to include the URL scheme of the actual browser you intend to use.
 
 <sub>Objective-C</sub>
+
 ```objc
 // performs authentication request
 AppDelegate *appDelegate =
@@ -676,6 +704,7 @@ appDelegate.currentAuthorizationFlow =
 ```
 
 <sub>Swift</sub>
+
 ```
 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             self.logMessage("Error accessing AppDelegate")
@@ -697,13 +726,15 @@ That's it! With those two changes (which you can try on the included sample),
 AppAuth will use Chrome iOS for the authorization request (and open Chrome in
 the App Store if it's not installed).
 
-⚠️**Note: the `OIDExternalUserAgentIOSCustomBrowser` user-agent is not intended for consumer apps**. It is designed for
+⚠️**Note: the `OIDExternalUserAgentIOSCustomBrowser` user-agent is not intended for consumer apps**.
+It is designed for
 advanced enterprise use-cases where the app developers have greater control over
 the operating environment and have special requirements that require a custom
 browser like Chrome.
 
 You don't need to stop with the included external user agents either! Since the
-[`OIDExternalUserAgent`](http://openid.github.io/AppAuth-iOS/docs/latest/protocol_o_i_d_external_user_agent-p.html)
+[
+`OIDExternalUserAgent`](http://openid.github.io/AppAuth-iOS/docs/latest/protocol_o_i_d_external_user_agent-p.html)
 protocol is part of AppAuth's public API, you can implement your own versions of
 it. In the above example,
 `userAgent = [OIDExternalUserAgentIOSCustomBrowser CustomBrowserChrome]` would
@@ -715,4 +746,5 @@ Browse the [API documentation](http://openid.github.io/AppAuth-iOS/docs/latest/a
 
 ## Included Samples
 
-Sample apps that explore core AppAuth features are available for iOS, macOS and tvOS; follow the instructions in [Examples/README.md](Examples/README.md) to get started.
+Sample apps that explore core AppAuth features are available for iOS, macOS and tvOS; follow the
+instructions in [Examples/README.md](Examples/README.md) to get started.

@@ -27,7 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @internal
     @brief Unavailable. This class should not be initialized.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Base64url-nopadding encodes the given data.
     @param data The input data.
@@ -42,7 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
         greater than the number of random bytes, due to the URL-safe encoding.
     @return Random data encoded with base64url.
  */
-+ (nullable NSString *)randomURLSafeStringWithSize:(NSUInteger)size;
++ (nullable NSString
+
+*)randomURLSafeStringWithSize:(NSUInteger)
+size;
 
 /*! @brief SHA256 hashes the input string.
     @param inputString The input string.
@@ -54,13 +59,18 @@ NS_ASSUME_NONNULL_BEGIN
     @param inputString The input string.
     @return Truncated string.
  */
-+ (nullable NSString *)redact:(nullable NSString *)inputString;
++ (nullable NSString
+
+*)redact:(
+nullable NSString
+*)
+inputString;
 
 /*! @brief Form url encode the input string by applying application/x-www-form-urlencoded algorithm
     @param inputString The input string.
     @return The encoded string.
  */
-+ (NSString*)formUrlEncode:(NSString*)inputString;
++ (NSString *)formUrlEncode:(NSString *)inputString;
 
 @end
 

@@ -24,60 +24,60 @@ NSTimeInterval const FBLPromiseRetryDefaultDelayInterval = 1.0;
 static void FBLPromiseRetryAttempt(FBLPromise *promise, dispatch_queue_t queue, NSInteger count,
                                    NSTimeInterval interval, FBLPromiseRetryPredicateBlock predicate,
                                    FBLPromiseRetryWorkBlock work) {
-  __auto_type retrier = ^(id __nullable value) {
-    if ([value isKindOfClass:[NSError class]]) {
-      if (count <= 0 || (predicate && !predicate(count, value))) {
-        [promise reject:value];
-      } else {
-        dispatch_after(dispatch_time(0, (int64_t)(interval * NSEC_PER_SEC)), queue, ^{
-          FBLPromiseRetryAttempt(promise, queue, count - 1, interval, predicate, work);
-        });
-      }
+    __auto_type retrier = ^(id __nullable value) {
+        if ([value isKindOfClass:[NSError class]]) {
+            if (count <= 0 || (predicate && !predicate(count, value))) {
+                [promise reject:value];
+            } else {
+                dispatch_after(dispatch_time(0, (int64_t)(interval * NSEC_PER_SEC)), queue, ^{
+                    FBLPromiseRetryAttempt(promise, queue, count - 1, interval, predicate, work);
+                });
+            }
+        } else {
+            [promise fulfill:value];
+        }
+    };
+    id value = work();
+    if ([value isKindOfClass:[FBLPromise class]]) {
+        [(FBLPromise *) value observeOnQueue:queue fulfill:retrier reject:retrier];
     } else {
-      [promise fulfill:value];
+        retrier(value);
     }
-  };
-  id value = work();
-  if ([value isKindOfClass:[FBLPromise class]]) {
-    [(FBLPromise *)value observeOnQueue:queue fulfill:retrier reject:retrier];
-  } else  {
-    retrier(value);
-  }
 }
 
 @implementation FBLPromise (RetryAdditions)
 
 + (instancetype)retry:(FBLPromiseRetryWorkBlock)work {
-  return [self onQueue:FBLPromise.defaultDispatchQueue retry:work];
+    return [self onQueue:FBLPromise.defaultDispatchQueue retry:work];
 }
 
 + (instancetype)onQueue:(dispatch_queue_t)queue retry:(FBLPromiseRetryWorkBlock)work {
-  return [self onQueue:queue attempts:FBLPromiseRetryDefaultAttemptsCount retry:work];
+    return [self onQueue:queue attempts:FBLPromiseRetryDefaultAttemptsCount retry:work];
 }
 
 + (instancetype)attempts:(NSInteger)count retry:(FBLPromiseRetryWorkBlock)work {
-  return [self onQueue:FBLPromise.defaultDispatchQueue attempts:count retry:work];
+    return [self onQueue:FBLPromise.defaultDispatchQueue attempts:count retry:work];
 }
 
 + (instancetype)onQueue:(dispatch_queue_t)queue
                attempts:(NSInteger)count
                   retry:(FBLPromiseRetryWorkBlock)work {
-  return [self onQueue:queue
-              attempts:count
-                 delay:FBLPromiseRetryDefaultDelayInterval
-             condition:nil
-                 retry:work];
+    return [self onQueue:queue
+                attempts:count
+                   delay:FBLPromiseRetryDefaultDelayInterval
+               condition:nil
+                   retry:work];
 }
 
 + (instancetype)attempts:(NSInteger)count
                    delay:(NSTimeInterval)interval
                condition:(nullable FBLPromiseRetryPredicateBlock)predicate
                    retry:(FBLPromiseRetryWorkBlock)work {
-  return [self onQueue:FBLPromise.defaultDispatchQueue
-              attempts:count
-                 delay:interval
-             condition:predicate
-                 retry:work];
+    return [self onQueue:FBLPromise.defaultDispatchQueue
+                attempts:count
+                   delay:interval
+               condition:predicate
+                   retry:work];
 }
 
 + (instancetype)onQueue:(dispatch_queue_t)queue
@@ -85,44 +85,48 @@ static void FBLPromiseRetryAttempt(FBLPromise *promise, dispatch_queue_t queue, 
                   delay:(NSTimeInterval)interval
               condition:(nullable FBLPromiseRetryPredicateBlock)predicate
                   retry:(FBLPromiseRetryWorkBlock)work {
-  NSParameterAssert(queue);
-  NSParameterAssert(work);
+    NSParameterAssert(queue);
+    NSParameterAssert(work);
 
-  FBLPromise *promise = [[self alloc] initPending];
-  FBLPromiseRetryAttempt(promise, queue, count, interval, predicate, work);
-  return promise;
+    FBLPromise *promise = [[self alloc] initPending];
+    FBLPromiseRetryAttempt(promise, queue, count, interval, predicate, work);
+    return promise;
 }
 
 @end
 
 @implementation FBLPromise (DotSyntax_RetryAdditions)
 
-+ (FBLPromise * (^)(FBLPromiseRetryWorkBlock))retry {
-  return ^id(FBLPromiseRetryWorkBlock work) {
-    return [self retry:work];
-  };
++ (FBLPromise *(^)(FBLPromiseRetryWorkBlock))retry {
+    return ^id(FBLPromiseRetryWorkBlock work) {
+        return [self retry:work];
+    };
 }
 
-+ (FBLPromise * (^)(dispatch_queue_t, FBLPromiseRetryWorkBlock))retryOn {
-  return ^id(dispatch_queue_t queue, FBLPromiseRetryWorkBlock work) {
-    return [self onQueue:queue retry:work];
-  };
++ (FBLPromise *(^)(dispatch_queue_t, FBLPromiseRetryWorkBlock))retryOn {
+    return ^id(dispatch_queue_t queue, FBLPromiseRetryWorkBlock work) {
+        return [self onQueue:queue retry:work];
+    };
 }
 
-+ (FBLPromise * (^)(NSInteger, NSTimeInterval, FBLPromiseRetryPredicateBlock,
-                    FBLPromiseRetryWorkBlock))retryAgain {
-  return ^id(NSInteger count, NSTimeInterval interval, FBLPromiseRetryPredicateBlock predicate,
-             FBLPromiseRetryWorkBlock work) {
-    return [self attempts:count delay:interval condition:predicate retry:work];
-  };
++ (FBLPromise *(^)(NSInteger, NSTimeInterval, FBLPromiseRetryPredicateBlock,
+FBLPromiseRetryWorkBlock
+
+))retryAgain {
+    return ^id(NSInteger count, NSTimeInterval interval, FBLPromiseRetryPredicateBlock predicate,
+               FBLPromiseRetryWorkBlock work) {
+        return [self attempts:count delay:interval condition:predicate retry:work];
+    };
 }
 
-+ (FBLPromise * (^)(dispatch_queue_t, NSInteger, NSTimeInterval, FBLPromiseRetryPredicateBlock,
-                    FBLPromiseRetryWorkBlock))retryAgainOn {
-  return ^id(dispatch_queue_t queue, NSInteger count, NSTimeInterval interval,
-             FBLPromiseRetryPredicateBlock predicate, FBLPromiseRetryWorkBlock work) {
-    return [self onQueue:queue attempts:count delay:interval condition:predicate retry:work];
-  };
++ (FBLPromise *(^)(dispatch_queue_t, NSInteger, NSTimeInterval, FBLPromiseRetryPredicateBlock,
+FBLPromiseRetryWorkBlock
+
+))retryAgainOn {
+    return ^id(dispatch_queue_t queue, NSInteger count, NSTimeInterval interval,
+               FBLPromiseRetryPredicateBlock predicate, FBLPromiseRetryWorkBlock work) {
+        return [self onQueue:queue attempts:count delay:interval condition:predicate retry:work];
+    };
 }
 
 @end

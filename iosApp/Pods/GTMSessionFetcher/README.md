@@ -11,6 +11,7 @@ operations. The fetcher is implemented as a wrapper on `NSURLSession`, so its
 behavior is asynchronous and uses operating-system settings.
 
 Features include:
+
 - Simple to build; only one source/header file pair is required
 - Simple to use: takes just two lines of code to fetch a request
 - Supports upload and download sessions

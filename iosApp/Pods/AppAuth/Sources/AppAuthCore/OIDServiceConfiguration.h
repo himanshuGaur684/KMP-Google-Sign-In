@@ -27,8 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
         by loading a @c OIDServiceDiscovery from an @c NSURL.
  */
 typedef void (^OIDServiceConfigurationCreated)
-    (OIDServiceConfiguration *_Nullable serviceConfiguration,
-     NSError *_Nullable error);
+        (OIDServiceConfiguration *_Nullable serviceConfiguration,
+         NSError *_Nullable error);
 
 /*! @brief Represents the information needed to construct a @c OIDAuthorizationService.
  */
@@ -62,7 +62,9 @@ typedef void (^OIDServiceConfigurationCreated)
     @brief Unavailable. Please use @c initWithAuthorizationEndpoint:tokenEndpoint: or
         @c initWithDiscoveryDocument:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @param authorizationEndpoint The authorization endpoint URI.
     @param tokenEndpoint The token exchange and refresh endpoint URI.
@@ -76,7 +78,10 @@ typedef void (^OIDServiceConfigurationCreated)
  */
 - (instancetype)initWithAuthorizationEndpoint:(NSURL *)authorizationEndpoint
                                 tokenEndpoint:(NSURL *)tokenEndpoint
-                         registrationEndpoint:(nullable NSURL *)registrationEndpoint;
+                         registrationEndpoint:(nullable NSURL
+
+*)
+registrationEndpoint;
 
 /*! @param authorizationEndpoint The authorization endpoint URI.
     @param tokenEndpoint The token exchange and refresh endpoint URI.
@@ -84,7 +89,10 @@ typedef void (^OIDServiceConfigurationCreated)
  */
 - (instancetype)initWithAuthorizationEndpoint:(NSURL *)authorizationEndpoint
                                 tokenEndpoint:(NSURL *)tokenEndpoint
-                                       issuer:(nullable NSURL *)issuer;
+                                       issuer:(nullable NSURL
+
+*)
+issuer;
 
 /*! @param authorizationEndpoint The authorization endpoint URI.
     @param tokenEndpoint The token exchange and refresh endpoint URI.
@@ -93,8 +101,15 @@ typedef void (^OIDServiceConfigurationCreated)
  */
 - (instancetype)initWithAuthorizationEndpoint:(NSURL *)authorizationEndpoint
                                 tokenEndpoint:(NSURL *)tokenEndpoint
-                                       issuer:(nullable NSURL *)issuer
-                         registrationEndpoint:(nullable NSURL *)registrationEndpoint;
+                                       issuer:(nullable NSURL
+
+*)
+issuer
+        registrationEndpoint
+:(
+nullable NSURL
+*)
+registrationEndpoint;
 
 /*! @param authorizationEndpoint The authorization endpoint URI.
     @param tokenEndpoint The token exchange and refresh endpoint URI.
@@ -104,9 +119,20 @@ typedef void (^OIDServiceConfigurationCreated)
  */
 - (instancetype)initWithAuthorizationEndpoint:(NSURL *)authorizationEndpoint
                                 tokenEndpoint:(NSURL *)tokenEndpoint
-                                       issuer:(nullable NSURL *)issuer
-                         registrationEndpoint:(nullable NSURL *)registrationEndpoint
-                           endSessionEndpoint:(nullable NSURL *)endSessionEndpoint;
+                                       issuer:(nullable NSURL
+
+*)
+issuer
+        registrationEndpoint
+:(
+nullable NSURL
+*)
+registrationEndpoint
+        endSessionEndpoint
+:(
+nullable NSURL
+*)
+endSessionEndpoint;
 
 /*! @param discoveryDocument The discovery document from which to extract the required OAuth
         configuration.

@@ -27,50 +27,54 @@ NS_ASSUME_NONNULL_BEGIN
 #if SWIFT_PACKAGE
 NSString *const GoogleSignInBundleName = @"GoogleSignIn_GoogleSignIn";
 #else
-NSString *const GoogleSignInBundleName = @"GoogleSignIn";
+        NSString
+*
+const GoogleSignInBundleName = @"GoogleSignIn";
 #endif
 
 @implementation NSBundle (GID3PAdditions)
 
-+ (nullable NSBundle *)gid_frameworkBundle {
-  // Look for the resource bundle in the main bundle.
-  NSString *path = [[NSBundle mainBundle] pathForResource:GoogleSignInBundleName
-                                                   ofType:@"bundle"];
-  if (!path) {
-    // If we can't find the resource bundle in the main bundle, look for it in the framework bundle.
-    path = [[NSBundle bundleForClass:[GIDSignIn class]] pathForResource:GoogleSignInBundleName
-                                                                 ofType:@"bundle"];
-  }
-  return [NSBundle bundleWithPath:path];
++ (nullable NSBundle
+
+*)gid_frameworkBundle {
+    // Look for the resource bundle in the main bundle.
+    NSString * path = [[NSBundle mainBundle] pathForResource:GoogleSignInBundleName
+                                                      ofType:@"bundle"];
+    if (!path) {
+        // If we can't find the resource bundle in the main bundle, look for it in the framework bundle.
+        path = [[NSBundle bundleForClass:[GIDSignIn class]] pathForResource:GoogleSignInBundleName
+                                                                     ofType:@"bundle"];
+    }
+    return [NSBundle bundleWithPath:path];
 }
 
 + (void)gid_registerFonts {
-  static dispatch_once_t once;
-  dispatch_once(&once, ^{
-    NSArray* allFontNames = @[ @"Roboto-Bold" ];
-    NSBundle* bundle = [self gid_frameworkBundle];
-    for (NSString *fontName in allFontNames) {
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        NSArray *allFontNames = @[@"Roboto-Bold"];
+        NSBundle *bundle = [self gid_frameworkBundle];
+        for (NSString *fontName in allFontNames) {
 #if TARGET_OS_IOS || TARGET_OS_MACCATALYST
-      // Check to see if the font is already here, and skip registration if so.
-      if ([UIFont fontWithName:fontName size:[UIFont systemFontSize]]) {  // size doesn't matter
-        continue;
-      }
+            // Check to see if the font is already here, and skip registration if so.
+            if ([UIFont fontWithName:fontName size:[UIFont systemFontSize]]) {  // size doesn't matter
+              continue;
+            }
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
 
-      // Load the font data file from the bundle.
-      NSString *path = [bundle pathForResource:fontName ofType:@"ttf"];
-      CGDataProviderRef provider = CGDataProviderCreateWithFilename([path UTF8String]);
-      CFErrorRef error;
-      CGFontRef newFont = CGFontCreateWithDataProvider(provider);
-      if (!newFont || !CTFontManagerRegisterGraphicsFont(newFont, &error)) {
+            // Load the font data file from the bundle.
+            NSString * path = [bundle pathForResource:fontName ofType:@"ttf"];
+            CGDataProviderRef provider = CGDataProviderCreateWithFilename([path UTF8String]);
+            CFErrorRef error;
+            CGFontRef newFont = CGFontCreateWithDataProvider(provider);
+            if (!newFont || !CTFontManagerRegisterGraphicsFont(newFont, &error)) {
 #ifdef DEBUG
-        NSLog(@"Unable to load font: %@", fontName);
+                NSLog(@"Unable to load font: %@", fontName);
 #endif
-      }
-      CGFontRelease(newFont);
-      CGDataProviderRelease(provider);
-    }
-  });
+            }
+            CGFontRelease(newFont);
+            CGDataProviderRelease(provider);
+        }
+    });
 }
 
 @end

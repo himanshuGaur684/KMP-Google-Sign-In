@@ -21,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSBundle (GID3PAdditions)
 
 // Gets the bundle for the SDK framework.
-+ (nullable NSBundle *)gid_frameworkBundle;
++ (nullable NSBundle
+
+*)
+gid_frameworkBundle;
 
 // Registers fonts needed for the SDK to work. Okay to call multiple times.
 + (void)gid_registerFonts;

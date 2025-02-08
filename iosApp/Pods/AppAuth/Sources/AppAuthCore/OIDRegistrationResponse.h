@@ -25,7 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Parameter name for the client id.
  */
-extern NSString *const OIDClientIDParam;
+extern NSString
+*
+const OIDClientIDParam;
 
 /*! @brief Parameter name for the client id issuance timestamp.
  */
@@ -102,13 +104,17 @@ extern NSString *const OIDRegistrationClientURIParam;
 
 /*! @brief Additional parameters returned from the token server.
  */
-@property(nonatomic, readonly, nullable) NSDictionary<NSString *, NSObject <NSCopying> *>
-    *additionalParameters;
+@property(nonatomic, readonly, nullable) NSDictionary<NSString *, NSObject < NSCopying> *
+>
+*
+additionalParameters;
 
 /*! @internal
     @brief Unavailable. Please use initWithRequest
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Designated initializer.
     @param request The serviced request.
@@ -118,8 +124,11 @@ extern NSString *const OIDRegistrationClientURIParam;
         @c #additionalParameters dictionary.
  */
 - (instancetype)initWithRequest:(OIDRegistrationRequest *)request
-                     parameters:(NSDictionary<NSString *, NSObject <NSCopying> *> *)parameters
-                     NS_DESIGNATED_INITIALIZER;
+                     parameters:(NSDictionary
+
+<NSString *, NSObject <NSCopying> *> *)
+parameters
+        NS_DESIGNATED_INITIALIZER;
 
 @end
 

@@ -24,7 +24,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(AppCheckCoreProtocol) @protocol GACAppCheckProtocol
+NS_SWIFT_NAME(AppCheckCoreProtocol)
+
+@protocol GACAppCheckProtocol
 
 /// Requests an App Check token.
 ///
@@ -37,7 +39,11 @@ NS_SWIFT_NAME(AppCheckCoreProtocol) @protocol GACAppCheckProtocol
 /// and an error if the request fails.
 - (void)tokenForcingRefresh:(BOOL)forcingRefresh
                  completion:(void (^)(GACAppCheckTokenResult *result))handler
-    NS_SWIFT_NAME(token(forcingRefresh:completion:));
+NS_SWIFT_NAME
+
+(
+token(forcingRefresh
+:completion:));
 
 /// Retrieve a new limited-use App Check token
 ///
@@ -53,9 +59,12 @@ NS_SWIFT_NAME(AppCheckCoreProtocol) @protocol GACAppCheckProtocol
 
 /// A class used to manage App Check tokens for a given resource.
 NS_SWIFT_NAME(AppCheckCore)
+
 @interface GACAppCheck : NSObject <GACAppCheckProtocol>
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// Returns an instance of `AppCheck` for an application.
 /// @param serviceName A unique identifier for the App Check instance, may be a Firebase App Name
@@ -70,10 +79,17 @@ NS_SWIFT_NAME(AppCheckCore)
 /// @return An instance of `AppCheckCore` with the specified token provider.
 - (instancetype)initWithServiceName:(NSString *)serviceName
                        resourceName:(NSString *)resourceName
-                   appCheckProvider:(id<GACAppCheckProvider>)appCheckProvider
-                           settings:(id<GACAppCheckSettingsProtocol>)settings
-                      tokenDelegate:(nullable id<GACAppCheckTokenDelegate>)tokenDelegate
-                keychainAccessGroup:(nullable NSString *)accessGroup;
+                   appCheckProvider:(id <GACAppCheckProvider>)appCheckProvider
+                           settings:(id <GACAppCheckSettingsProtocol>)settings
+                      tokenDelegate:(nullable id
+
+<GACAppCheckTokenDelegate>)
+tokenDelegate
+        keychainAccessGroup
+:(
+nullable NSString
+*)
+accessGroup;
 
 @end
 

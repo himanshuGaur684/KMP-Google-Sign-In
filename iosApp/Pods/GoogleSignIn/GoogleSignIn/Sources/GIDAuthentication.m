@@ -19,39 +19,43 @@
 #ifdef SWIFT_PACKAGE
 @import AppAuth;
 #else
+
 #import <AppAuth/AppAuth.h>
+
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kAuthStateKey = @"authState";
+static NSString
+*
+const kAuthStateKey = @"authState";
 
 @implementation GIDAuthentication
 
 - (instancetype)initWithAuthState:(OIDAuthState *)authState {
-  self = [super init];
-  if (self) {
-    _authState = authState;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _authState = authState;
+    }
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)decoder {
-  self = [super init];
-  if (self) {
-    _authState = [decoder decodeObjectOfClass:[OIDAuthState class] forKey:kAuthStateKey];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _authState = [decoder decodeObjectOfClass:[OIDAuthState class] forKey:kAuthStateKey];
+    }
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-  [encoder encodeObject:self.authState forKey:kAuthStateKey];
+    [encoder encodeObject:self.authState forKey:kAuthStateKey];
 }
 
 @end

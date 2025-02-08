@@ -15,19 +15,28 @@
 #import <Foundation/Foundation.h>
 
 #ifndef FIREBASE_BUILD_CMAKE
+
 @import FirebaseCoreInternal;
+
 #endif  // FIREBASE_BUILD_CMAKE
 
 #import "FirebaseCore/Extension/FIRAppInternal.h"
 #import "FirebaseCore/Extension/FIRHeartbeatLogger.h"
 
 #ifndef FIREBASE_BUILD_CMAKE
-NSString *_Nullable FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload *heartbeatsPayload) {
-  if ([heartbeatsPayload isEmpty]) {
-    return nil;
-  }
+NSString *_Nullable
+FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload
+*heartbeatsPayload) {
+if ([
+heartbeatsPayload isEmpty
+]) {
+return
+nil;
+}
 
-  return [heartbeatsPayload headerValue];
+return [
+heartbeatsPayload headerValue
+];
 }
 #endif  // FIREBASE_BUILD_CMAKE
 
@@ -35,77 +44,86 @@ NSString *_Nullable FIRHeaderValueFromHeartbeatsPayload(FIRHeartbeatsPayload *he
 #ifndef FIREBASE_BUILD_CMAKE
 @property(nonatomic, readonly) FIRHeartbeatController *heartbeatController;
 #endif  // FIREBASE_BUILD_CMAKE
-@property(copy, readonly) NSString * (^userAgentProvider)(void);
+@property(copy, readonly) NSString *(^userAgentProvider)(void);
 @end
 
 @implementation FIRHeartbeatLogger
 
 - (instancetype)initWithAppID:(NSString *)appID {
-  return [self initWithAppID:appID userAgentProvider:[[self class] currentUserAgentProvider]];
+    return [self initWithAppID:appID userAgentProvider:[[self class] currentUserAgentProvider]];
 }
 
 - (instancetype)initWithAppID:(NSString *)appID
-            userAgentProvider:(NSString * (^)(void))userAgentProvider {
-  self = [super init];
-  if (self) {
+            userAgentProvider:(NSString *(^)(void))userAgentProvider {
+    self = [super init];
+    if (self) {
 #ifndef FIREBASE_BUILD_CMAKE
-    _heartbeatController = [[FIRHeartbeatController alloc] initWithId:[appID copy]];
+        _heartbeatController = [[FIRHeartbeatController alloc] initWithId:[appID copy]];
 #endif  // FIREBASE_BUILD_CMAKE
-    _userAgentProvider = [userAgentProvider copy];
-  }
-  return self;
+        _userAgentProvider = [userAgentProvider copy];
+    }
+    return self;
 }
 
-+ (NSString * (^)(void))currentUserAgentProvider {
-  return ^NSString * {
-    return [FIRApp firebaseUserAgent];
-  };
++ (NSString *(^)(void))currentUserAgentProvider {
+    return ^NSString * {
+        return [FIRApp firebaseUserAgent];
+    };
 }
 
 - (void)log {
-  NSString *userAgent = _userAgentProvider();
+    NSString * userAgent = _userAgentProvider();
 #ifndef FIREBASE_BUILD_CMAKE
-  [_heartbeatController log:userAgent];
+    [_heartbeatController log:userAgent];
 #endif  // FIREBASE_BUILD_CMAKE
 }
 
 #ifndef FIREBASE_BUILD_CMAKE
+
 - (NSString *_Nullable)headerValue {
-  return FIRHeaderValueFromHeartbeatsPayload([self flushHeartbeatsIntoPayload]);
+    return FIRHeaderValueFromHeartbeatsPayload([self flushHeartbeatsIntoPayload]);
 }
 
-- (void)asyncHeaderValueWithCompletionHandler:(void (^)(NSString *_Nullable))completionHandler
-    API_AVAILABLE(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0)) {
-  [self flushHeartbeatsIntoPayloadWithCompletionHandler:^(FIRHeartbeatsPayload *payload) {
-    completionHandler(FIRHeaderValueFromHeartbeatsPayload(payload));
-  }];
+- (void)asyncHeaderValueWithCompletionHandler:(void (^)(NSString
+
+*_Nullable))
+
+completionHandler
+API_AVAILABLE(ios(
+
+13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0)) {
+    [self flushHeartbeatsIntoPayloadWithCompletionHandler:^(FIRHeartbeatsPayload *payload) {
+        completionHandler(FIRHeaderValueFromHeartbeatsPayload(payload));
+    }];
 }
 
 - (FIRHeartbeatsPayload *)flushHeartbeatsIntoPayload {
-  FIRHeartbeatsPayload *payload = [_heartbeatController flush];
-  return payload;
+    FIRHeartbeatsPayload * payload = [_heartbeatController flush];
+    return payload;
 }
 
 - (void)flushHeartbeatsIntoPayloadWithCompletionHandler:
-    (void (^)(FIRHeartbeatsPayload *))completionHandler
-    API_AVAILABLE(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0)) {
-  [_heartbeatController flushAsyncWithCompletionHandler:^(FIRHeartbeatsPayload *payload) {
-    completionHandler(payload);
-  }];
+        (void (^)(FIRHeartbeatsPayload *))completionHandler
+API_AVAILABLE
+
+(ios(13.0), macosx(10.15), macCatalyst(13.0), tvos(13.0), watchos(6.0)) {
+    [_heartbeatController flushAsyncWithCompletionHandler:^(FIRHeartbeatsPayload *payload) {
+        completionHandler(payload);
+    }];
 }
 #endif  // FIREBASE_BUILD_CMAKE
 
 - (FIRDailyHeartbeatCode)heartbeatCodeForToday {
 #ifndef FIREBASE_BUILD_CMAKE
-  FIRHeartbeatsPayload *todaysHeartbeatPayload = [_heartbeatController flushHeartbeatFromToday];
+    FIRHeartbeatsPayload * todaysHeartbeatPayload = [_heartbeatController flushHeartbeatFromToday];
 
-  if ([todaysHeartbeatPayload isEmpty]) {
-    return FIRDailyHeartbeatCodeNone;
-  } else {
-    return FIRDailyHeartbeatCodeSome;
-  }
+    if ([todaysHeartbeatPayload isEmpty]) {
+        return FIRDailyHeartbeatCodeNone;
+    } else {
+        return FIRDailyHeartbeatCodeSome;
+    }
 #else
-  return FIRDailyHeartbeatCodeNone;
+    return FIRDailyHeartbeatCodeNone;
 #endif  // FIREBASE_BUILD_CMAKE
 }
 

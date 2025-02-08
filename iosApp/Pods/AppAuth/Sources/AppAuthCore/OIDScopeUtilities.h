@@ -27,21 +27,29 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @internal
     @brief Unavailable. This class should not be initialized.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Converts an array of scope strings to a single scope string per the OAuth 2 spec.
     @param scopes An array of scope strings.
     @return A space-delimited string of scopes.
     @see https://tools.ietf.org/html/rfc6749#section-3.3
  */
-+ (NSString *)scopesWithArray:(NSArray<NSString *> *)scopes;
++ (NSString *)scopesWithArray:(NSArray
+
+<NSString *> *)
+scopes;
 
 /*! @brief Converts an OAuth 2 spec-compliant scope string to an array of scopes.
     @param scopes An OAuth 2 spec-compliant scope string.
     @return An array of scope strings.
     @see https://tools.ietf.org/html/rfc6749#section-3.3
  */
-+ (NSArray<NSString *> *)scopesArrayWithString:(NSString *)scopes;
++ (NSArray
+
+<NSString *> *)scopesArrayWithString:(NSString *)
+scopes;
 
 @end
 

@@ -25,7 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief The key for the @c discoveryDictionary property.
  */
-static NSString *const kDiscoveryDictionaryKey = @"discoveryDictionary";
+static NSString
+*
+const kDiscoveryDictionaryKey = @"discoveryDictionary";
 
 /*! Field keys associated with an OpenID Connect Discovery Document. */
 static NSString *const kIssuerKey = @"issuer";
@@ -43,27 +45,27 @@ static NSString *const kGrantTypesSupportedKey = @"grant_types_supported";
 static NSString *const kACRValuesSupportedKey = @"acr_values_supported";
 static NSString *const kSubjectTypesSupportedKey = @"subject_types_supported";
 static NSString *const kIDTokenSigningAlgorithmValuesSupportedKey =
-    @"id_token_signing_alg_values_supported";
+        @"id_token_signing_alg_values_supported";
 static NSString *const kIDTokenEncryptionAlgorithmValuesSupportedKey =
-    @"id_token_encryption_alg_values_supported";
+        @"id_token_encryption_alg_values_supported";
 static NSString *const kIDTokenEncryptionEncodingValuesSupportedKey =
-    @"id_token_encryption_enc_values_supported";
+        @"id_token_encryption_enc_values_supported";
 static NSString *const kUserinfoSigningAlgorithmValuesSupportedKey =
-    @"userinfo_signing_alg_values_supported";
+        @"userinfo_signing_alg_values_supported";
 static NSString *const kUserinfoEncryptionAlgorithmValuesSupportedKey =
-    @"userinfo_encryption_alg_values_supported";
+        @"userinfo_encryption_alg_values_supported";
 static NSString *const kUserinfoEncryptionEncodingValuesSupportedKey =
-    @"userinfo_encryption_enc_values_supported";
+        @"userinfo_encryption_enc_values_supported";
 static NSString *const kRequestObjectSigningAlgorithmValuesSupportedKey =
-    @"request_object_signing_alg_values_supported";
+        @"request_object_signing_alg_values_supported";
 static NSString *const kRequestObjectEncryptionAlgorithmValuesSupportedKey =
-    @"request_object_encryption_alg_values_supported";
+        @"request_object_encryption_alg_values_supported";
 static NSString *const kRequestObjectEncryptionEncodingValuesSupported =
-    @"request_object_encryption_enc_values_supported";
+        @"request_object_encryption_enc_values_supported";
 static NSString *const kTokenEndpointAuthMethodsSupportedKey =
-    @"token_endpoint_auth_methods_supported";
+        @"token_endpoint_auth_methods_supported";
 static NSString *const kTokenEndpointAuthSigningAlgorithmValuesSupportedKey =
-    @"token_endpoint_auth_signing_alg_values_supported";
+        @"token_endpoint_auth_signing_alg_values_supported";
 static NSString *const kDisplayValuesSupportedKey = @"display_values_supported";
 static NSString *const kClaimTypesSupportedKey = @"claim_types_supported";
 static NSString *const kClaimsSupportedKey = @"claims_supported";
@@ -78,47 +80,47 @@ static NSString *const kOPPolicyURIKey = @"op_policy_uri";
 static NSString *const kOPTosURIKey = @"op_tos_uri";
 
 @implementation OIDServiceDiscovery {
-  NSDictionary *_discoveryDictionary;
+    NSDictionary *_discoveryDictionary;
 }
 
 - (nonnull instancetype)init OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithDictionary:error:))
 
 - (nullable instancetype)initWithJSON:(NSString *)serviceDiscoveryJSON error:(NSError **)error {
-  NSData *jsonData = [serviceDiscoveryJSON dataUsingEncoding:NSUTF8StringEncoding];
-  return [self initWithJSONData:jsonData error:error];
+    NSData *jsonData = [serviceDiscoveryJSON dataUsingEncoding:NSUTF8StringEncoding];
+    return [self initWithJSONData:jsonData error:error];
 }
 
 - (nullable instancetype)initWithJSONData:(NSData *)serviceDiscoveryJSONData
                                     error:(NSError **_Nullable)error {
-  NSError *jsonError;
-  NSDictionary *json =
-      [NSJSONSerialization JSONObjectWithData:serviceDiscoveryJSONData options:0 error:&jsonError];
-  if (!json || jsonError) {
-    *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeJSONDeserializationError
-                              underlyingError:jsonError
-                                  description:jsonError.localizedDescription];
-    return nil;
-  }
-  if (![json isKindOfClass:[NSDictionary class]]) {
-    *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
-                              underlyingError:nil
-                                  description:@"Discovery document isn't a dictionary"];
-    return nil;
-  }
+    NSError * jsonError;
+    NSDictionary *json =
+            [NSJSONSerialization JSONObjectWithData:serviceDiscoveryJSONData options:0 error:&jsonError];
+    if (!json || jsonError) {
+        *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeJSONDeserializationError
+                                  underlyingError:jsonError
+                                      description:jsonError.localizedDescription];
+        return nil;
+    }
+    if (![json isKindOfClass:[NSDictionary class]]) {
+        *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
+                                  underlyingError:nil
+                                      description:@"Discovery document isn't a dictionary"];
+        return nil;
+    }
 
-  return [self initWithDictionary:json error:error];
+    return [self initWithDictionary:json error:error];
 }
 
 - (nullable instancetype)initWithDictionary:(NSDictionary *)serviceDiscoveryDictionary
                                       error:(NSError **_Nullable)error {
-  if (![[self class] dictionaryHasRequiredFields:serviceDiscoveryDictionary error:error]) {
-    return nil;
-  }
-  self = [super init];
-  if (self) {
-    _discoveryDictionary = [serviceDiscoveryDictionary copy];
-  }
-  return self;
+    if (![[self class] dictionaryHasRequiredFields:serviceDiscoveryDictionary error:error]) {
+        return nil;
+    }
+    self = [super init];
+    if (self) {
+        _discoveryDictionary = [serviceDiscoveryDictionary copy];
+    }
+    return self;
 }
 
 #pragma mark -
@@ -129,263 +131,331 @@ static NSString *const kOPTosURIKey = @"op_tos_uri";
         their value was @c none.) We are just testing to make sure we can meet the nullability
         contract we promised in the header.
  */
-+ (BOOL)dictionaryHasRequiredFields:(NSDictionary<NSString *, id> *)dictionary
-                              error:(NSError **_Nullable)error {
-  static NSString *const kMissingFieldErrorText = @"Missing field: %@";
-  static NSString *const kInvalidURLFieldErrorText = @"Invalid URL: %@";
++ (BOOL)dictionaryHasRequiredFields:(NSDictionary
 
-  NSArray *requiredFields = @[
-    kIssuerKey,
-    kAuthorizationEndpointKey,
-    kTokenEndpointKey,
-    kJWKSURLKey,
-    kResponseTypesSupportedKey,
-    kSubjectTypesSupportedKey,
-    kIDTokenSigningAlgorithmValuesSupportedKey
-  ];
+<NSString *, id> *)
+dictionary
+        error
+:(
+NSError **_Nullable
+)error {
+    static NSString *const kMissingFieldErrorText = @"Missing field: %@";
+    static NSString *const kInvalidURLFieldErrorText = @"Invalid URL: %@";
 
-  for (NSString *field in requiredFields) {
-    if (!dictionary[field]) {
-      if (error) {
-        NSString *errorText = [NSString stringWithFormat:kMissingFieldErrorText, field];
-        *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
-                                  underlyingError:nil
-                                      description:errorText];
-      }
-      return NO;
+    NSArray *requiredFields = @[
+            kIssuerKey,
+            kAuthorizationEndpointKey,
+            kTokenEndpointKey,
+            kJWKSURLKey,
+            kResponseTypesSupportedKey,
+            kSubjectTypesSupportedKey,
+            kIDTokenSigningAlgorithmValuesSupportedKey
+    ];
+
+    for (NSString *field in requiredFields) {
+        if (!dictionary[field]) {
+            if (error) {
+                NSString * errorText = [NSString stringWithFormat:kMissingFieldErrorText, field];
+                *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
+                                          underlyingError:nil
+                                              description:errorText];
+            }
+            return NO;
+        }
     }
-  }
 
-  // Check required URL fields are valid URLs.
-  NSArray *requiredURLFields = @[
-    kIssuerKey,
-    kTokenEndpointKey,
-    kJWKSURLKey
-  ];
+    // Check required URL fields are valid URLs.
+    NSArray *requiredURLFields = @[
+            kIssuerKey,
+            kTokenEndpointKey,
+            kJWKSURLKey
+    ];
 
-  for (NSString *field in requiredURLFields) {
-    if (![NSURL URLWithString:dictionary[field]]) {
-      if (error) {
-        NSString *errorText = [NSString stringWithFormat:kInvalidURLFieldErrorText, field];
-        *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
-                                  underlyingError:nil
-                                      description:errorText];
-      }
-      return NO;
+    for (NSString *field in requiredURLFields) {
+        if (![NSURL URLWithString:dictionary[field]]) {
+            if (error) {
+                NSString * errorText = [NSString stringWithFormat:kInvalidURLFieldErrorText, field];
+                *error = [OIDErrorUtilities errorWithCode:OIDErrorCodeInvalidDiscoveryDocument
+                                          underlyingError:nil
+                                              description:errorText];
+            }
+            return NO;
+        }
     }
-  }
 
-  return YES;
+    return YES;
 }
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(nullable NSZone *)zone {
-  // The documentation for NSCopying specifically advises us to return a reference to the original
-  // instance in the case where instances are immutable (as ours is):
-  // "Implement NSCopying by retaining the original instead of creating a new copy when the class
-  // and its contents are immutable."
-  return self;
+- (instancetype)copyWithZone:(nullable NSZone
+
+*)zone {
+    // The documentation for NSCopying specifically advises us to return a reference to the original
+    // instance in the case where instances are immutable (as ours is):
+    // "Implement NSCopying by retaining the original instead of creating a new copy when the class
+    // and its contents are immutable."
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-  NSError *error;
-  NSDictionary *dictionary;
-  if ([aDecoder containsValueForKey:kDiscoveryDictionaryKey]) {
-    // We're decoding a collection type (NSDictionary) from NSJSONSerialization's
-    // +JSONObjectWithData, so we need to include all classes that could potentially be contained
-    // within.
-    NSSet<Class> *allowedClasses = [NSSet setWithArray:@[[NSDictionary class],
-                                                         [NSArray class],
-                                                         [NSString class],
-                                                         [NSNumber class],
-                                                         [NSNull class]]];
-    dictionary = [aDecoder decodeObjectOfClasses:allowedClasses
-                                          forKey:kDiscoveryDictionaryKey];
-  } else {
-    // Decode using the old encoding which delegated to NSDictionary's encodeWithCoder:
-    // implementation:
-    //
-    // - (void)encodeWithCoder:(NSCoder *)aCoder {
-    //   [_discoveryDictionary encodeWithCoder:aCoder];
-    // }
-    dictionary = [[NSDictionary alloc] initWithCoder:aDecoder];
-  }
-  self = [self initWithDictionary:dictionary error:&error];
-  if (error) {
-    return nil;
-  }
-  return self;
+    NSError * error;
+    NSDictionary *dictionary;
+    if ([aDecoder containsValueForKey:kDiscoveryDictionaryKey]) {
+        // We're decoding a collection type (NSDictionary) from NSJSONSerialization's
+        // +JSONObjectWithData, so we need to include all classes that could potentially be contained
+        // within.
+        NSSet <Class> *allowedClasses = [NSSet setWithArray:@[[NSDictionary class],
+                                                              [NSArray class],
+                                                              [NSString class],
+                                                              [NSNumber class],
+                                                              [NSNull class]]];
+        dictionary = [aDecoder decodeObjectOfClasses:allowedClasses
+                                              forKey:kDiscoveryDictionaryKey];
+    } else {
+        // Decode using the old encoding which delegated to NSDictionary's encodeWithCoder:
+        // implementation:
+        //
+        // - (void)encodeWithCoder:(NSCoder *)aCoder {
+        //   [_discoveryDictionary encodeWithCoder:aCoder];
+        // }
+        dictionary = [[NSDictionary alloc] initWithCoder:aDecoder];
+    }
+    self = [self initWithDictionary:dictionary error:&error];
+    if (error) {
+        return nil;
+    }
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:_discoveryDictionary forKey:kDiscoveryDictionaryKey];
-  // Provide forward compatibilty by continuing to add the old encoding.
-  [_discoveryDictionary encodeWithCoder:aCoder];
+    [aCoder encodeObject:_discoveryDictionary forKey:kDiscoveryDictionaryKey];
+    // Provide forward compatibilty by continuing to add the old encoding.
+    [_discoveryDictionary encodeWithCoder:aCoder];
 }
 
 #pragma mark - Properties
 
-- (NSDictionary<NSString *, NSString *> *)discoveryDictionary {
-  return _discoveryDictionary;
+- (NSDictionary
+
+<NSString *, NSString *> *)discoveryDictionary {
+    return _discoveryDictionary;
 }
 
 - (NSURL *)issuer {
-  return [NSURL URLWithString:_discoveryDictionary[kIssuerKey]];
+    return [NSURL URLWithString:_discoveryDictionary[kIssuerKey]];
 }
 
 - (NSURL *)authorizationEndpoint {
-  return [NSURL URLWithString:_discoveryDictionary[kAuthorizationEndpointKey]];
+    return [NSURL URLWithString:_discoveryDictionary[kAuthorizationEndpointKey]];
 }
 
-- (nullable NSURL *)deviceAuthorizationEndpoint {
-  return [NSURL URLWithString:_discoveryDictionary[kDeviceAuthorizationEndpointKey]];
+- (nullable NSURL
+
+*)deviceAuthorizationEndpoint {
+    return [NSURL URLWithString:_discoveryDictionary[kDeviceAuthorizationEndpointKey]];
 }
 
 - (NSURL *)tokenEndpoint {
-  return [NSURL URLWithString:_discoveryDictionary[kTokenEndpointKey]];
+    return [NSURL URLWithString:_discoveryDictionary[kTokenEndpointKey]];
 }
 
-- (nullable NSURL *)userinfoEndpoint {
-  return [NSURL URLWithString:_discoveryDictionary[kUserinfoEndpointKey]];
+- (nullable NSURL
+
+*)userinfoEndpoint {
+    return [NSURL URLWithString:_discoveryDictionary[kUserinfoEndpointKey]];
 }
 
 - (NSURL *)jwksURL {
-  return [NSURL URLWithString:_discoveryDictionary[kJWKSURLKey]];
+    return [NSURL URLWithString:_discoveryDictionary[kJWKSURLKey]];
 }
 
-- (nullable NSURL *)registrationEndpoint {
-  return [NSURL URLWithString:_discoveryDictionary[kRegistrationEndpointKey]];
+- (nullable NSURL
+
+*)registrationEndpoint {
+    return [NSURL URLWithString:_discoveryDictionary[kRegistrationEndpointKey]];
 }
 
-- (nullable NSURL *)endSessionEndpoint {
+- (nullable NSURL
+
+*)endSessionEndpoint {
     return [NSURL URLWithString:_discoveryDictionary[kEndSessionEndpointKey]];
 }
 
-- (nullable NSArray<NSString *> *)scopesSupported {
-  return _discoveryDictionary[kScopesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)scopesSupported {
+    return _discoveryDictionary[kScopesSupportedKey];
 }
 
-- (NSArray<NSString *> *)responseTypesSupported {
-  return _discoveryDictionary[kResponseTypesSupportedKey];
+- (NSArray
+
+<NSString *> *)responseTypesSupported {
+    return _discoveryDictionary[kResponseTypesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)responseModesSupported {
-  return _discoveryDictionary[kResponseModesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)responseModesSupported {
+    return _discoveryDictionary[kResponseModesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)grantTypesSupported {
-  return _discoveryDictionary[kGrantTypesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)grantTypesSupported {
+    return _discoveryDictionary[kGrantTypesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)acrValuesSupported {
-  return _discoveryDictionary[kACRValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)acrValuesSupported {
+    return _discoveryDictionary[kACRValuesSupportedKey];
 }
 
-- (NSArray<NSString *> *)subjectTypesSupported {
-  return _discoveryDictionary[kSubjectTypesSupportedKey];
+- (NSArray
+
+<NSString *> *)subjectTypesSupported {
+    return _discoveryDictionary[kSubjectTypesSupportedKey];
 }
 
-- (NSArray<NSString *> *) IDTokenSigningAlgorithmValuesSupported {
-  return _discoveryDictionary[kIDTokenSigningAlgorithmValuesSupportedKey];
+- (NSArray
+
+<NSString *> *) IDTokenSigningAlgorithmValuesSupported {
+    return _discoveryDictionary[kIDTokenSigningAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)IDTokenEncryptionAlgorithmValuesSupported {
-  return _discoveryDictionary[kIDTokenEncryptionAlgorithmValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)IDTokenEncryptionAlgorithmValuesSupported {
+    return _discoveryDictionary[kIDTokenEncryptionAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)IDTokenEncryptionEncodingValuesSupported {
-  return _discoveryDictionary[kIDTokenEncryptionEncodingValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)IDTokenEncryptionEncodingValuesSupported {
+    return _discoveryDictionary[kIDTokenEncryptionEncodingValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)userinfoSigningAlgorithmValuesSupported {
-  return _discoveryDictionary[kUserinfoSigningAlgorithmValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)userinfoSigningAlgorithmValuesSupported {
+    return _discoveryDictionary[kUserinfoSigningAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)userinfoEncryptionAlgorithmValuesSupported {
-  return _discoveryDictionary[kUserinfoEncryptionAlgorithmValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)userinfoEncryptionAlgorithmValuesSupported {
+    return _discoveryDictionary[kUserinfoEncryptionAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)userinfoEncryptionEncodingValuesSupported {
-  return _discoveryDictionary[kUserinfoEncryptionEncodingValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)userinfoEncryptionEncodingValuesSupported {
+    return _discoveryDictionary[kUserinfoEncryptionEncodingValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)requestObjectSigningAlgorithmValuesSupported {
-  return _discoveryDictionary[kRequestObjectSigningAlgorithmValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)requestObjectSigningAlgorithmValuesSupported {
+    return _discoveryDictionary[kRequestObjectSigningAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *) requestObjectEncryptionAlgorithmValuesSupported {
-  return _discoveryDictionary[kRequestObjectEncryptionAlgorithmValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *) requestObjectEncryptionAlgorithmValuesSupported {
+    return _discoveryDictionary[kRequestObjectEncryptionAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *) requestObjectEncryptionEncodingValuesSupported {
-  return _discoveryDictionary[kRequestObjectEncryptionEncodingValuesSupported];
+- (nullable NSArray
+
+<NSString *> *) requestObjectEncryptionEncodingValuesSupported {
+    return _discoveryDictionary[kRequestObjectEncryptionEncodingValuesSupported];
 }
 
-- (nullable NSArray<NSString *> *)tokenEndpointAuthMethodsSupported {
-  return _discoveryDictionary[kTokenEndpointAuthMethodsSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)tokenEndpointAuthMethodsSupported {
+    return _discoveryDictionary[kTokenEndpointAuthMethodsSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)tokenEndpointAuthSigningAlgorithmValuesSupported {
-  return _discoveryDictionary[kTokenEndpointAuthSigningAlgorithmValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)tokenEndpointAuthSigningAlgorithmValuesSupported {
+    return _discoveryDictionary[kTokenEndpointAuthSigningAlgorithmValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)displayValuesSupported {
-  return _discoveryDictionary[kDisplayValuesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)displayValuesSupported {
+    return _discoveryDictionary[kDisplayValuesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)claimTypesSupported {
-  return _discoveryDictionary[kClaimTypesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)claimTypesSupported {
+    return _discoveryDictionary[kClaimTypesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)claimsSupported {
-  return _discoveryDictionary[kClaimsSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)claimsSupported {
+    return _discoveryDictionary[kClaimsSupportedKey];
 }
 
-- (nullable NSURL *)serviceDocumentation {
-  return [NSURL URLWithString:_discoveryDictionary[kServiceDocumentationKey]];
+- (nullable NSURL
+
+*)serviceDocumentation {
+    return [NSURL URLWithString:_discoveryDictionary[kServiceDocumentationKey]];
 }
 
-- (nullable NSArray<NSString *> *)claimsLocalesSupported {
-  return _discoveryDictionary[kClaimsLocalesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)claimsLocalesSupported {
+    return _discoveryDictionary[kClaimsLocalesSupportedKey];
 }
 
-- (nullable NSArray<NSString *> *)UILocalesSupported {
-  return _discoveryDictionary[kUILocalesSupportedKey];
+- (nullable NSArray
+
+<NSString *> *)UILocalesSupported {
+    return _discoveryDictionary[kUILocalesSupportedKey];
 }
 
 - (BOOL)claimsParameterSupported {
-  return [_discoveryDictionary[kClaimsParameterSupportedKey] boolValue];
+    return [_discoveryDictionary[kClaimsParameterSupportedKey] boolValue];
 }
 
 - (BOOL)requestParameterSupported {
-  return [_discoveryDictionary[kRequestParameterSupportedKey] boolValue];
+    return [_discoveryDictionary[kRequestParameterSupportedKey] boolValue];
 }
 
 - (BOOL)requestURIParameterSupported {
-  // Default is true/YES.
-  if (!_discoveryDictionary[kRequestURIParameterSupportedKey]) {
-    return YES;
-  }
-  return [_discoveryDictionary[kRequestURIParameterSupportedKey] boolValue];
+    // Default is true/YES.
+    if (!_discoveryDictionary[kRequestURIParameterSupportedKey]) {
+        return YES;
+    }
+    return [_discoveryDictionary[kRequestURIParameterSupportedKey] boolValue];
 }
 
 - (BOOL)requireRequestURIRegistration {
-  return [_discoveryDictionary[kRequireRequestURIRegistrationKey] boolValue];
+    return [_discoveryDictionary[kRequireRequestURIRegistrationKey] boolValue];
 }
 
-- (nullable NSURL *)OPPolicyURI {
-  return [NSURL URLWithString:_discoveryDictionary[kOPPolicyURIKey]];
+- (nullable NSURL
+
+*)OPPolicyURI {
+    return [NSURL URLWithString:_discoveryDictionary[kOPPolicyURIKey]];
 }
 
-- (nullable NSURL *)OPTosURI {
-  return [NSURL URLWithString:_discoveryDictionary[kOPTosURIKey]];
+- (nullable NSURL
+
+*)OPTosURI {
+    return [NSURL URLWithString:_discoveryDictionary[kOPTosURIKey]];
 }
 
 @end

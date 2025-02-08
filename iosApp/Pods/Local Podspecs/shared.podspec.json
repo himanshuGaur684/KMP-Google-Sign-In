@@ -15,10 +15,8 @@
   },
   "dependencies": {
     "FirebaseAuth": [
-
     ],
     "GoogleSignIn": [
-
     ]
   },
   "xcconfig": {

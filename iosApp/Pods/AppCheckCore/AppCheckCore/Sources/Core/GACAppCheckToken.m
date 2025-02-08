@@ -27,17 +27,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithToken:(NSString *)token
                expirationDate:(NSDate *)expirationDate
                receivedAtDate:(NSDate *)receivedAtDate {
-  self = [super init];
-  if (self) {
-    _token = [token copy];
-    _expirationDate = expirationDate;
-    _receivedAtDate = receivedAtDate;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _token = [token copy];
+        _expirationDate = expirationDate;
+        _receivedAtDate = receivedAtDate;
+    }
+    return self;
 }
 
 - (instancetype)initWithToken:(NSString *)token expirationDate:(NSDate *)expirationDate {
-  return [self initWithToken:token expirationDate:expirationDate receivedAtDate:[NSDate date]];
+    return [self initWithToken:token expirationDate:expirationDate receivedAtDate:[NSDate date]];
 }
 
 @end

@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param resourceName The name of the resource protected by App Check; for a Firebase App this is
 /// "projects/{project_id}/apps/{app_id}". See https://google.aip.dev/122 for more details about
 /// resource names.
-- (instancetype)initWithAPIService:(id<GACAppCheckAPIServiceProtocol>)APIService
+- (instancetype)initWithAPIService:(id <GACAppCheckAPIServiceProtocol>)APIService
                       resourceName:(NSString *)resourceName;
 
 @end

@@ -17,39 +17,40 @@
 #import "FirebaseCore/Sources/FIRAnalyticsConfiguration.h"
 
 extern void FIRSetLoggerLevel(FIRLoggerLevel loggerLevel);
+
 extern FIRLoggerLevel FIRGetLoggerLevel(void);
 
 @implementation FIRConfiguration
 
 + (instancetype)sharedInstance {
-  static FIRConfiguration *sharedInstance = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    sharedInstance = [[FIRConfiguration alloc] init];
-  });
-  return sharedInstance;
+    static FIRConfiguration *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[FIRConfiguration alloc] init];
+    });
+    return sharedInstance;
 }
 
 - (instancetype)init {
-  self = [super init];
-  if (self) {
-    _analyticsConfiguration = [FIRAnalyticsConfiguration sharedInstance];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _analyticsConfiguration = [FIRAnalyticsConfiguration sharedInstance];
+    }
+    return self;
 }
 
 - (void)setLoggerLevel:(FIRLoggerLevel)loggerLevel {
-  NSAssert(loggerLevel <= FIRLoggerLevelMax && loggerLevel >= FIRLoggerLevelMin,
-           @"Invalid logger level, %ld", (long)loggerLevel);
-  @synchronized(self) {
-    FIRSetLoggerLevel(loggerLevel);
-  }
+    NSAssert(loggerLevel <= FIRLoggerLevelMax && loggerLevel >= FIRLoggerLevelMin,
+             @"Invalid logger level, %ld", (long) loggerLevel);
+    @synchronized (self) {
+        FIRSetLoggerLevel(loggerLevel);
+    }
 }
 
 - (FIRLoggerLevel)loggerLevel {
-  @synchronized(self) {
-    return FIRGetLoggerLevel();
-  }
+    @synchronized (self) {
+        return FIRGetLoggerLevel();
+    }
 }
 
 @end

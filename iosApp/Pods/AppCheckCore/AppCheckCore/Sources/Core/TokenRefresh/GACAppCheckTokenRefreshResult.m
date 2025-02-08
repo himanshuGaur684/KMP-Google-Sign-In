@@ -21,42 +21,55 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GACAppCheckTokenRefreshResult ()
 
 - (instancetype)initWithStatus:(GACAppCheckTokenRefreshStatus)status
-                expirationDate:(nullable NSDate *)tokenExpirationDate
-                receivedAtDate:(nullable NSDate *)tokenReceivedAtDate NS_DESIGNATED_INITIALIZER;
+                expirationDate:(nullable NSDate
+
+*)
+tokenExpirationDate
+        receivedAtDate
+:(
+nullable NSDate
+*)
+tokenReceivedAtDate NS_DESIGNATED_INITIALIZER;
 
 @end
 
 @implementation GACAppCheckTokenRefreshResult
 
 - (instancetype)initWithStatus:(GACAppCheckTokenRefreshStatus)status
-                expirationDate:(nullable NSDate *)tokenExpirationDate
-                receivedAtDate:(nullable NSDate *)tokenReceivedAtDate {
-  self = [super init];
-  if (self) {
-    _status = status;
-    _tokenExpirationDate = tokenExpirationDate;
-    _tokenReceivedAtDate = tokenReceivedAtDate;
-  }
-  return self;
+                expirationDate:(nullable NSDate
+
+*)
+tokenExpirationDate
+        receivedAtDate
+:(
+nullable NSDate
+*)tokenReceivedAtDate {
+    self = [super init];
+    if (self) {
+        _status = status;
+        _tokenExpirationDate = tokenExpirationDate;
+        _tokenReceivedAtDate = tokenReceivedAtDate;
+    }
+    return self;
 }
 
 - (instancetype)initWithStatusNever {
-  return [self initWithStatus:GACAppCheckTokenRefreshStatusNever
-               expirationDate:nil
-               receivedAtDate:nil];
+    return [self initWithStatus:GACAppCheckTokenRefreshStatusNever
+                 expirationDate:nil
+                 receivedAtDate:nil];
 }
 
 - (instancetype)initWithStatusFailure {
-  return [self initWithStatus:GACAppCheckTokenRefreshStatusFailure
-               expirationDate:nil
-               receivedAtDate:nil];
+    return [self initWithStatus:GACAppCheckTokenRefreshStatusFailure
+                 expirationDate:nil
+                 receivedAtDate:nil];
 }
 
 - (instancetype)initWithStatusSuccessAndExpirationDate:(NSDate *)tokenExpirationDate
                                         receivedAtDate:(NSDate *)tokenReceivedAtDate {
-  return [self initWithStatus:GACAppCheckTokenRefreshStatusSuccess
-               expirationDate:tokenExpirationDate
-               receivedAtDate:tokenReceivedAtDate];
+    return [self initWithStatus:GACAppCheckTokenRefreshStatusSuccess
+                 expirationDate:tokenExpirationDate
+                 receivedAtDate:tokenReceivedAtDate];
 }
 
 @end

@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// `registerAsComponentRegistrant` call. These classes should conform to `ComponentRegistrant`
 /// in order to properly register components for Core.
 NS_SWIFT_NAME(FirebaseComponentContainer)
+
 @interface FIRComponentContainer : NSObject
 
 /// A weak reference to the app that an instance of the container belongs to.
@@ -39,10 +40,14 @@ NS_SWIFT_NAME(FirebaseComponentContainer)
 
 // TODO: See if we can get improved type safety here.
 /// A Swift only API for fetching an instance since the top macro isn't available.
-- (nullable id)__instanceForProtocol:(Protocol *)protocol NS_SWIFT_NAME(instance(for:));
+- (nullable id)__instanceForProtocol:(Protocol *)protocol NS_SWIFT_NAME
+
+(instance(for:));
 
 /// Unavailable. Use the `container` property on `FirebaseApp`.
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

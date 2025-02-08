@@ -25,7 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 // @param token The token String.
 // @param expirationDate The expiration date of the token.
 - (instancetype)initWithTokenString:(NSString *)tokenString
-                     expirationDate:(nullable NSDate *)expirationDate;
+                     expirationDate:(nullable NSDate
+
+*)
+expirationDate;
 
 @end
 

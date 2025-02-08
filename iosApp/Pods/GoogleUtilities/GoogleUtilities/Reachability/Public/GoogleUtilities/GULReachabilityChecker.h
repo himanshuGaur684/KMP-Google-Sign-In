@@ -15,21 +15,25 @@
  */
 
 #import <Foundation/Foundation.h>
+
 #if !TARGET_OS_WATCH
+
 #import <SystemConfiguration/SystemConfiguration.h>
+
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Reachability Status
 typedef enum {
-  kGULReachabilityUnknown,  ///< Have not yet checked or been notified whether host is reachable.
-  kGULReachabilityNotReachable,  ///< Host is not reachable.
-  kGULReachabilityViaWifi,       ///< Host is reachable via Wifi.
-  kGULReachabilityViaCellular,   ///< Host is reachable via cellular.
+    kGULReachabilityUnknown,  ///< Have not yet checked or been notified whether host is reachable.
+    kGULReachabilityNotReachable,  ///< Host is not reachable.
+    kGULReachabilityViaWifi,       ///< Host is reachable via Wifi.
+    kGULReachabilityViaCellular,   ///< Host is reachable via cellular.
 } GULReachabilityStatus;
 
-const NSString *GULReachabilityStatusString(GULReachabilityStatus status);
+const NSString *GULReachabilityStatusString(GULReachabilityStatus
+status);
 
 @class GULReachabilityChecker;
 
@@ -50,7 +54,7 @@ const NSString *GULReachabilityStatusString(GULReachabilityStatus status);
 /// The host to which reachability status is to be checked.
 @property(nonatomic, copy, readonly) NSString *host;
 /// The delegate to be notified of reachability status changes.
-@property(nonatomic, weak) id<GULReachabilityDelegate> reachabilityDelegate;
+@property(nonatomic, weak) id <GULReachabilityDelegate> reachabilityDelegate;
 /// `YES` if the reachability checker is active, `NO` otherwise.
 @property(nonatomic, readonly) BOOL isActive;
 
@@ -62,10 +66,12 @@ const NSString *GULReachabilityStatusString(GULReachabilityStatus status);
 ///
 /// @param host The name of the host.
 ///
-- (instancetype)initWithReachabilityDelegate:(id<GULReachabilityDelegate>)reachabilityDelegate
+- (instancetype)initWithReachabilityDelegate:(id <GULReachabilityDelegate>)reachabilityDelegate
                                     withHost:(NSString *)host;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// Start checking for reachability to the specified host. This has no effect if the status
 /// checker is already checking for connectivity.

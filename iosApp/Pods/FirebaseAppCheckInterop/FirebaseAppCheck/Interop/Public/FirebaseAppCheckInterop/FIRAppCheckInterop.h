@@ -21,15 +21,22 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(AppCheckTokenHandlerInterop)
-typedef void (^FIRAppCheckTokenHandlerInterop)(id<FIRAppCheckTokenResultInterop> tokenResult);
 
-NS_SWIFT_NAME(AppCheckInterop) @protocol FIRAppCheckInterop<NSObject>
+typedef void (^FIRAppCheckTokenHandlerInterop)(id <FIRAppCheckTokenResultInterop> tokenResult);
+
+NS_SWIFT_NAME(AppCheckInterop)
+
+@protocol FIRAppCheckInterop <NSObject>
 
 /// Retrieve a cached or generate a new FAA Token. If forcingRefresh == YES always generates a new
 /// token and updates the cache.
 - (void)getTokenForcingRefresh:(BOOL)forcingRefresh
                     completion:(FIRAppCheckTokenHandlerInterop)handler
-    NS_SWIFT_NAME(getToken(forcingRefresh:completion:));
+NS_SWIFT_NAME
+
+(
+getToken(forcingRefresh
+:completion:));
 
 /// A notification with the specified name is sent to the default notification center
 /// (`NotificationCenter.default`) each time a Firebase app check token is refreshed.
@@ -39,6 +46,7 @@ NS_SWIFT_NAME(AppCheckInterop) @protocol FIRAppCheckInterop<NSObject>
 
 /// `userInfo` key for the FAC token in a notification for `tokenDidChangeNotificationName`.
 - (NSString *)notificationTokenKey;
+
 /// `userInfo` key for the `FirebaseApp.name` in a notification for
 /// `tokenDidChangeNotificationName`.
 - (NSString *)notificationAppNameKey;
@@ -49,7 +57,11 @@ NS_SWIFT_NAME(AppCheckInterop) @protocol FIRAppCheckInterop<NSObject>
 
 /// Retrieve a new limited-use Firebase App Check token
 - (void)getLimitedUseTokenWithCompletion:(FIRAppCheckTokenHandlerInterop)handler
-    NS_SWIFT_NAME(getLimitedUseToken(completion:));
+NS_SWIFT_NAME
+
+(
+getLimitedUseToken(completion
+:));
 
 @end
 

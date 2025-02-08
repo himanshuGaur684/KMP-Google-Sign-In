@@ -51,140 +51,148 @@ static NSUInteger const kStateSizeBytes = 32;
 /*! @brief Assertion text for missing end_session_endpoint.
  */
 static NSString *const OIDMissingEndSessionEndpointMessage =
-@"The service configuration is missing an end_session_endpoint.";
+        @"The service configuration is missing an end_session_endpoint.";
 
 @implementation OIDEndSessionRequest
 
-- (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(
+- (instancetype)init OID_UNAVAILABLE_USE_INITIALIZER(
         @selector(initWithConfiguration:
-                            idTokenHint:
-                  postLogoutRedirectURL:
-                   additionalParameters:)
-    )
+                idTokenHint:
+                postLogoutRedirectURL:
+                additionalParameters:)
+)
 
 - (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
                           idTokenHint:(NSString *)idTokenHint
                 postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
                                 state:(NSString *)state
-                 additionalParameters:(NSDictionary<NSString *,NSString *> *)additionalParameters
+                 additionalParameters:(NSDictionary
+
+<NSString *,NSString *> *)additionalParameters
 {
-  self = [super init];
-  if (self) {
-      _configuration = [configuration copy];
-      _idTokenHint = [idTokenHint copy];
-      _postLogoutRedirectURL = [postLogoutRedirectURL copy];
-      _state = [state copy];
-      _additionalParameters =
-          [[NSDictionary alloc] initWithDictionary:additionalParameters copyItems:YES];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _configuration = [configuration copy];
+        _idTokenHint = [idTokenHint copy];
+        _postLogoutRedirectURL = [postLogoutRedirectURL copy];
+        _state = [state copy];
+        _additionalParameters =
+                [[NSDictionary alloc] initWithDictionary:additionalParameters copyItems:YES];
+    }
+    return self;
 }
 
 - (instancetype)initWithConfiguration:(OIDServiceConfiguration *)configuration
                           idTokenHint:(NSString *)idTokenHint
                 postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
-                 additionalParameters:(NSDictionary<NSString *,NSString *> *)additionalParameters
+                 additionalParameters:(NSDictionary
+
+<NSString *,NSString *> *)additionalParameters
 {
-  return [self initWithConfiguration:configuration
-                         idTokenHint:idTokenHint
-               postLogoutRedirectURL:postLogoutRedirectURL
-                               state:[[self class] generateState]
-                additionalParameters:additionalParameters];
+    return [self initWithConfiguration:configuration
+                           idTokenHint:idTokenHint
+                 postLogoutRedirectURL:postLogoutRedirectURL
+                                 state:[[self class] generateState]
+                  additionalParameters:additionalParameters];
 }
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(nullable NSZone *)zone {
-  // The documentation for NSCopying specifically advises us to return a reference to the original
-  // instance in the case where instances are immutable (as ours is):
-  // "Implement NSCopying by retaining the original instead of creating a new copy when the class
-  // and its contents are immutable."
-  return self;
+- (instancetype)copyWithZone:(nullable NSZone
+
+*)zone {
+    // The documentation for NSCopying specifically advises us to return a reference to the original
+    // instance in the case where instances are immutable (as ours is):
+    // "Implement NSCopying by retaining the original instead of creating a new copy when the class
+    // and its contents are immutable."
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDServiceConfiguration *configuration = [aDecoder decodeObjectOfClass:[OIDServiceConfiguration class] forKey:kConfigurationKey];
+    OIDServiceConfiguration *configuration = [aDecoder decodeObjectOfClass:[OIDServiceConfiguration class] forKey:kConfigurationKey];
 
-  NSString *idTokenHint = [aDecoder decodeObjectOfClass:[NSString class] forKey:kIdTokenHintKey];
-  NSURL *postLogoutRedirectURL = [aDecoder decodeObjectOfClass:[NSURL class] forKey:kPostLogoutRedirectURLKey];
-  NSString *state = [aDecoder decodeObjectOfClass:[NSString class] forKey:kStateKey];
-  NSSet *additionalParameterCodingClasses = [NSSet setWithArray:@[
-                                                                  [NSDictionary class],
-                                                                  [NSString class]
-                                                                  ]];
-  NSDictionary *additionalParameters = [aDecoder decodeObjectOfClasses:additionalParameterCodingClasses
-                           forKey:kAdditionalParametersKey];
+    NSString * idTokenHint = [aDecoder decodeObjectOfClass:[NSString class] forKey:kIdTokenHintKey];
+    NSURL *
+    postLogoutRedirectURL = [aDecoder decodeObjectOfClass:[NSURL class] forKey:kPostLogoutRedirectURLKey];
+    NSString * state = [aDecoder decodeObjectOfClass:[NSString class] forKey:kStateKey];
+    NSSet *additionalParameterCodingClasses = [NSSet setWithArray:@[
+            [NSDictionary class],
+            [NSString class]
+    ]];
+    NSDictionary *additionalParameters = [aDecoder decodeObjectOfClasses:additionalParameterCodingClasses
+                                                                  forKey:kAdditionalParametersKey];
 
-  self = [self initWithConfiguration:configuration
-                         idTokenHint:idTokenHint
-               postLogoutRedirectURL:postLogoutRedirectURL
-                               state:state
-                additionalParameters:additionalParameters];
-  return self;
+    self = [self initWithConfiguration:configuration
+                           idTokenHint:idTokenHint
+                 postLogoutRedirectURL:postLogoutRedirectURL
+                                 state:state
+                  additionalParameters:additionalParameters];
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:_configuration forKey:kConfigurationKey];
-  [aCoder encodeObject:_idTokenHint forKey:kIdTokenHintKey];
-  [aCoder encodeObject:_postLogoutRedirectURL forKey:kPostLogoutRedirectURLKey];
-  [aCoder encodeObject:_state forKey:kStateKey];
-  [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
+    [aCoder encodeObject:_configuration forKey:kConfigurationKey];
+    [aCoder encodeObject:_idTokenHint forKey:kIdTokenHintKey];
+    [aCoder encodeObject:_postLogoutRedirectURL forKey:kPostLogoutRedirectURLKey];
+    [aCoder encodeObject:_state forKey:kStateKey];
+    [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
 
 #pragma mark - NSObject overrides
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"<%@: %p, request: %@>",
-          NSStringFromClass([self class]),
-          (void *)self,
-          self.endSessionRequestURL];
+    return [NSString stringWithFormat:@"<%@: %p, request: %@>",
+                                      NSStringFromClass([self class]),
+                                      (void *) self,
+                                      self.endSessionRequestURL];
 }
 
-+ (nullable NSString *)generateState {
-  return [OIDTokenUtilities randomURLSafeStringWithSize:kStateSizeBytes];
++ (nullable NSString
+
+*)generateState {
+    return [OIDTokenUtilities randomURLSafeStringWithSize:kStateSizeBytes];
 }
 
 #pragma mark - OIDExternalUserAgentRequest
 
-- (NSURL*)externalUserAgentRequestURL {
-  return [self endSessionRequestURL];
+- (NSURL *)externalUserAgentRequestURL {
+    return [self endSessionRequestURL];
 }
 
 - (NSString *)redirectScheme {
-  return [_postLogoutRedirectURL scheme];
+    return [_postLogoutRedirectURL scheme];
 }
 
 #pragma mark -
 
 - (NSURL *)endSessionRequestURL {
-  OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] init];
+    OIDURLQueryComponent *query = [[OIDURLQueryComponent alloc] init];
 
-  // Add any additional parameters the client has specified.
-  [query addParameters:_additionalParameters];
+    // Add any additional parameters the client has specified.
+    [query addParameters:_additionalParameters];
 
-  // Add optional parameters, as applicable.
-  if (_idTokenHint) {
-    [query addParameter:kIdTokenHintKey value:_idTokenHint];
-  }
+    // Add optional parameters, as applicable.
+    if (_idTokenHint) {
+        [query addParameter:kIdTokenHintKey value:_idTokenHint];
+    }
 
-  if (_postLogoutRedirectURL) {
-    [query addParameter:kPostLogoutRedirectURLKey value:_postLogoutRedirectURL.absoluteString];
-  }
+    if (_postLogoutRedirectURL) {
+        [query addParameter:kPostLogoutRedirectURLKey value:_postLogoutRedirectURL.absoluteString];
+    }
 
-  if (_state) {
-    [query addParameter:kStateKey value:_state];
-  }
+    if (_state) {
+        [query addParameter:kStateKey value:_state];
+    }
 
-  NSAssert(_configuration.endSessionEndpoint, OIDMissingEndSessionEndpointMessage);
+    NSAssert(_configuration.endSessionEndpoint, OIDMissingEndSessionEndpointMessage);
 
-  // Construct the URL
-  return [query URLByReplacingQueryInURL:_configuration.endSessionEndpoint];
+    // Construct the URL
+    return [query URLByReplacingQueryInURL:_configuration.endSessionEndpoint];
 }
 
 @end

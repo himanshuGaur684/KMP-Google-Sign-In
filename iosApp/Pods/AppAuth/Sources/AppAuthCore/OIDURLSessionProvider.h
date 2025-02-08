@@ -37,4 +37,5 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)setSession:(NSURLSession *)session;
 @end
+
 NS_ASSUME_NONNULL_END

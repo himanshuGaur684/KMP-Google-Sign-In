@@ -16,7 +16,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kLSOServer = @"accounts.google.com";
+static NSString
+*
+const kLSOServer = @"accounts.google.com";
 static NSString *const kTokenServer = @"oauth2.googleapis.com";
 static NSString *const kUserInfoServer = @"www.googleapis.com";
 
@@ -46,52 +48,52 @@ static NSString *const kAppleEnvironmentMacOSMacCatalyst = @"macos-cat";
 
 // The prefixed sdk version string to differentiate gid version values used with the legacy gpsdk
 // logging key.
-NSString* GIDVersion(void) {
-  return [NSString stringWithFormat:@"gid-%@", @STR(GID_SDK_VERSION)];
+NSString *GIDVersion(void) {
+    return [NSString stringWithFormat:@"gid-%@", @STR(GID_SDK_VERSION)];
 }
 
 // Get the current Apple execution environment.
-NSString* GIDEnvironment(void) {
-  NSString *appleEnvironment = kAppleEnvironmentUnknown;
+NSString *GIDEnvironment(void) {
+    NSString * appleEnvironment = kAppleEnvironmentUnknown;
 
 #if TARGET_OS_MACCATALYST
-  appleEnvironment = kAppleEnvironmentMacOSMacCatalyst;
+    appleEnvironment = kAppleEnvironmentMacOSMacCatalyst;
 #elif TARGET_OS_IOS
 #if TARGET_OS_SIMULATOR
-  appleEnvironment = kAppleEnvironmentIOSSimulator;
+    appleEnvironment = kAppleEnvironmentIOSSimulator;
 #else // TARGET_OS_SIMULATOR
 #if defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
-  if (@available(iOS 14.0, *)) {
-    if ([NSProcessInfo.processInfo respondsToSelector:@selector(isiOSAppOnMac)]) {
-      appleEnvironment = NSProcessInfo.processInfo.iOSAppOnMac ? kAppleEnvironmentMacOSIOSOnMac :
-          kAppleEnvironmentIOS;
-    } else {
-      appleEnvironment = kAppleEnvironmentIOS;
+    if (@available(iOS 14.0, *)) {
+      if ([NSProcessInfo.processInfo respondsToSelector:@selector(isiOSAppOnMac)]) {
+        appleEnvironment = NSProcessInfo.processInfo.iOSAppOnMac ? kAppleEnvironmentMacOSIOSOnMac :
+            kAppleEnvironmentIOS;
+      } else {
+        appleEnvironment = kAppleEnvironmentIOS;
+      }
     }
-  }
 #else // defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
-  appleEnvironment = kAppleEnvironmentIOS;
+    appleEnvironment = kAppleEnvironmentIOS;
 #endif // defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
 #endif // TARGET_OS_SIMULATOR
 #elif TARGET_OS_OSX
-  appleEnvironment = kAppleEnvironmentMacOS;
+    appleEnvironment = kAppleEnvironmentMacOS;
 #endif // TARGET_OS_MACCATALYST
 
-  return appleEnvironment;
+    return appleEnvironment;
 }
 
 @implementation GIDSignInPreferences
 
 + (NSString *)googleAuthorizationServer {
-  return kLSOServer;
+    return kLSOServer;
 }
 
 + (NSString *)googleTokenServer {
-  return kTokenServer;
+    return kTokenServer;
 }
 
 + (NSString *)googleUserInfoServer {
-  return kUserInfoServer;
+    return kUserInfoServer;
 }
 
 @end

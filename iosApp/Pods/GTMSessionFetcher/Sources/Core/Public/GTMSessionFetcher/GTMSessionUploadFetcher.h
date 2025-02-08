@@ -43,7 +43,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 // The value to use for file size parameters when the file size is not yet known.
-extern int64_t const kGTMSessionUploadFetcherUnknownFileSize;
+extern int64_t
+const kGTMSessionUploadFetcherUnknownFileSize;
 
 // Unless an application knows it needs a smaller chunk size, it should use the standard
 // chunk size, which sends the entire file as a single chunk to minimize upload overhead.
@@ -73,11 +74,15 @@ extern NSString *const kGTMSessionFetcherUploadInitialBackoffStartedNotification
 typedef void (^GTMSessionUploadFetcherDataProviderResponse)(NSData *_Nullable data,
                                                             int64_t fullUploadLength,
                                                             NSError *_Nullable error);
+
 // Do not call the response with an NSData object with less data than the requested length unless
 // you are passing the fullUploadLength to the fetcher for the first time and it is the last chunk
 // of data in the file being uploaded.
 typedef void (^GTMSessionUploadFetcherDataProvider)(
-    int64_t offset, int64_t length, GTMSessionUploadFetcherDataProviderResponse response);
+        int64_t
+offset,
+int64_t length, GTMSessionUploadFetcherDataProviderResponse
+response);
 
 // Block to be notified about the final status of the cancellation request started in stopFetching.
 //
@@ -101,19 +106,46 @@ typedef void (^GTMSessionUploadFetcherCancellationHandler)(GTMSessionFetcher *_N
 + (instancetype)uploadFetcherWithRequest:(NSURLRequest *)request
                           uploadMIMEType:(NSString *)uploadMIMEType
                                chunkSize:(int64_t)chunkSize
-                          fetcherService:(nullable GTMSessionFetcherService *)fetcherServiceOrNil;
+                          fetcherService:(nullable GTMSessionFetcherService
+
+*)
+fetcherServiceOrNil;
 
 // Allows cellular access.
-+ (instancetype)uploadFetcherWithLocation:(nullable NSURL *)uploadLocationURL
-                           uploadMIMEType:(NSString *)uploadMIMEType
-                                chunkSize:(int64_t)chunkSize
-                           fetcherService:(nullable GTMSessionFetcherService *)fetcherServiceOrNil;
++ (instancetype)uploadFetcherWithLocation:(nullable NSURL
 
-+ (instancetype)uploadFetcherWithLocation:(nullable NSURL *)uploadLocationURL
-                           uploadMIMEType:(NSString *)uploadMIMEType
-                                chunkSize:(int64_t)chunkSize
-                     allowsCellularAccess:(BOOL)allowsCellularAccess
-                           fetcherService:(nullable GTMSessionFetcherService *)fetcherServiceOrNil;
+*)
+uploadLocationURL
+        uploadMIMEType
+:(NSString *)
+uploadMIMEType
+        chunkSize
+:(int64_t)
+chunkSize
+        fetcherService
+:(
+nullable GTMSessionFetcherService
+*)
+fetcherServiceOrNil;
+
++ (instancetype)uploadFetcherWithLocation:(nullable NSURL
+
+*)
+uploadLocationURL
+        uploadMIMEType
+:(NSString *)
+uploadMIMEType
+        chunkSize
+:(int64_t)
+chunkSize
+        allowsCellularAccess
+:(BOOL)
+allowsCellularAccess
+        fetcherService
+:(
+nullable GTMSessionFetcherService
+*)
+fetcherServiceOrNil;
 
 // Allows dataProviders for files of unknown length. Pass kGTMSessionUploadFetcherUnknownFileSize as
 // |fullLength| if the length is unknown.
@@ -121,10 +153,13 @@ typedef void (^GTMSessionUploadFetcherCancellationHandler)(GTMSessionFetcher *_N
                    provider:(nullable GTMSessionUploadFetcherDataProvider)block;
 
 + (NSArray *)uploadFetchersForBackgroundSessions;
+
 + (nullable instancetype)uploadFetcherForSessionIdentifier:(NSString *)sessionIdentifier;
 
 - (void)pauseFetching;
+
 - (void)resumeFetching;
+
 - (BOOL)isPaused;
 
 @property(atomic, strong, nullable) NSURL *uploadLocationURL;

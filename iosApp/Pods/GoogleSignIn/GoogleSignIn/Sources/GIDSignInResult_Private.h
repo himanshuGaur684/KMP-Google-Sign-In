@@ -26,7 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 // @param severAuthCode The one-time authorization code for backend to exchange
 //     access and refresh tokens.
 - (instancetype)initWithGoogleUser:(GIDGoogleUser *)user
-                    serverAuthCode:(nullable NSString *)serverAuthCode;
+                    serverAuthCode:(nullable NSString
+
+*)
+serverAuthCode;
 
 @end
 

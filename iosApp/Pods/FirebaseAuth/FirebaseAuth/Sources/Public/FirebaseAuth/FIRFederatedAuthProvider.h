@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 typedef void (^FIRAuthCredentialCallback)(FIRAuthCredential *_Nullable credential,
                                           NSError *_Nullable error)
-    NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
+
+NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
 
 NS_ASSUME_NONNULL_END

@@ -24,7 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) NSHTTPURLResponse *HTTPResponse;
 @property(nonatomic, nullable, readonly) NSData *HTTPBody;
 
-- (instancetype)initWithResponse:(NSHTTPURLResponse *)response HTTPBody:(nullable NSData *)body;
+- (instancetype)initWithResponse:(NSHTTPURLResponse *)response HTTPBody:(nullable NSData
+
+*)
+body;
 
 @end
 

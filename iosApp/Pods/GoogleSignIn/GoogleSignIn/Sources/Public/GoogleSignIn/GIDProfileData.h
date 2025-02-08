@@ -40,7 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param dimension The desired height (and width) of the profile image.
 /// @return The URL of the user's profile image.
-- (nullable NSURL *)imageURLWithDimension:(NSUInteger)dimension;
+- (nullable NSURL
+
+*)imageURLWithDimension:(NSUInteger)
+dimension;
 
 @end
 

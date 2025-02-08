@@ -25,27 +25,27 @@ static NSString *const kPlaceholderTokenValue = @"eyJlcnJvciI6IlVOS05PV05fRVJST1
 @implementation GACAppCheckTokenResult
 
 - (instancetype)initWithToken:(GACAppCheckToken *)token error:(NSError *)error {
-  if (self = [super init]) {
-    _token = token;
-    _error = error;
-  }
+    if (self = [super init]) {
+        _token = token;
+        _error = error;
+    }
 
-  return self;
+    return self;
 }
 
 - (instancetype)initWithToken:(GACAppCheckToken *)token {
-  return [self initWithToken:token error:nil];
+    return [self initWithToken:token error:nil];
 }
 
 - (instancetype)initWithError:(NSError *)error {
-  return [self initWithToken:[GACAppCheckTokenResult placeholderToken] error:error];
+    return [self initWithToken:[GACAppCheckTokenResult placeholderToken] error:error];
 }
 
 #pragma mark - Internal
 
 + (GACAppCheckToken *)placeholderToken {
-  return [[GACAppCheckToken alloc] initWithToken:kPlaceholderTokenValue
-                                  expirationDate:[NSDate distantPast]];
+    return [[GACAppCheckToken alloc] initWithToken:kPlaceholderTokenValue
+                                    expirationDate:[NSDate distantPast]];
 }
 
 @end

@@ -28,7 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Firebase App Check token.
 @property(nonatomic, readonly) GACAppCheckToken *token;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 - (instancetype)initWithArtifact:(NSData *)artifact
                            token:(GACAppCheckToken *)token NS_DESIGNATED_INITIALIZER;

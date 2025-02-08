@@ -22,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief The error domain for all NSErrors returned from the AppAuth library.
  */
-extern NSString *const OIDGeneralErrorDomain;
+extern NSString
+*
+const OIDGeneralErrorDomain;
 
 /*! @brief The error domain for OAuth specific errors on the authorization endpoint.
     @discussion This error domain is used when the server responds to an authorization request
@@ -93,64 +95,65 @@ extern NSString *const OIDOAuthErrorFieldErrorURI;
 
 /*! @brief The various error codes returned from the AppAuth library.
  */
-typedef NS_ENUM(NSInteger, OIDErrorCode) {
-  /*! @brief Indicates a problem parsing an OpenID Connect Service Discovery document.
-   */
-  OIDErrorCodeInvalidDiscoveryDocument = -2,
+typedef NS_ENUM(NSInteger, OIDErrorCode
+) {
+/*! @brief Indicates a problem parsing an OpenID Connect Service Discovery document.
+ */
+OIDErrorCodeInvalidDiscoveryDocument = -2,
 
-  /*! @brief Indicates the user manually canceled the OAuth authorization code flow.
-   */
-  OIDErrorCodeUserCanceledAuthorizationFlow = -3,
+/*! @brief Indicates the user manually canceled the OAuth authorization code flow.
+ */
+OIDErrorCodeUserCanceledAuthorizationFlow = -3,
 
-  /*! @brief Indicates an OAuth authorization flow was programmatically cancelled.
-   */
-  OIDErrorCodeProgramCanceledAuthorizationFlow = -4,
+/*! @brief Indicates an OAuth authorization flow was programmatically cancelled.
+ */
+OIDErrorCodeProgramCanceledAuthorizationFlow = -4,
 
-  /*! @brief Indicates a network error or server error occurred.
-   */
-  OIDErrorCodeNetworkError = -5,
+/*! @brief Indicates a network error or server error occurred.
+ */
+OIDErrorCodeNetworkError = -5,
 
-  /*! @brief Indicates a server error occurred.
-   */
-  OIDErrorCodeServerError = -6,
+/*! @brief Indicates a server error occurred.
+ */
+OIDErrorCodeServerError = -6,
 
-  /*! @brief Indicates a problem occurred deserializing the response/JSON.
-   */
-  OIDErrorCodeJSONDeserializationError = -7,
+/*! @brief Indicates a problem occurred deserializing the response/JSON.
+ */
+OIDErrorCodeJSONDeserializationError = -7,
 
-  /*! @brief Indicates a problem occurred constructing the token response from the JSON.
-   */
-  OIDErrorCodeTokenResponseConstructionError = -8,
+/*! @brief Indicates a problem occurred constructing the token response from the JSON.
+ */
+OIDErrorCodeTokenResponseConstructionError = -8,
 
-  /*! @brief @c UIApplication.openURL: returned NO when attempting to open the authorization
-          request in mobile Safari.
-   */
-  OIDErrorCodeSafariOpenError = -9,
+/*! @brief @c UIApplication.openURL: returned NO when attempting to open the authorization
+        request in mobile Safari.
+ */
+OIDErrorCodeSafariOpenError = -9,
 
-  /*! @brief @c NSWorkspace.openURL returned NO when attempting to open the authorization
-          request in the default browser.
-   */
-  OIDErrorCodeBrowserOpenError = -10,
+/*! @brief @c NSWorkspace.openURL returned NO when attempting to open the authorization
+        request in the default browser.
+ */
+OIDErrorCodeBrowserOpenError = -10,
 
-  /*! @brief Indicates a problem when trying to refresh the tokens.
-   */
-  OIDErrorCodeTokenRefreshError = -11,
+/*! @brief Indicates a problem when trying to refresh the tokens.
+ */
+OIDErrorCodeTokenRefreshError = -11,
 
-  /*! @brief Indicates a problem occurred constructing the registration response from the JSON.
-   */
-  OIDErrorCodeRegistrationResponseConstructionError = -12,
+/*! @brief Indicates a problem occurred constructing the registration response from the JSON.
+ */
+OIDErrorCodeRegistrationResponseConstructionError = -12,
 
-  /*! @brief Indicates a problem occurred deserializing the response/JSON.
-   */
-  OIDErrorCodeJSONSerializationError = -13,
+/*! @brief Indicates a problem occurred deserializing the response/JSON.
+ */
+OIDErrorCodeJSONSerializationError = -13,
 
-  /*! @brief The ID Token did not parse.
-   */
-  OIDErrorCodeIDTokenParsingError = -14,
+/*! @brief The ID Token did not parse.
+ */
+OIDErrorCodeIDTokenParsingError = -14,
 
-  /*! @brief The ID Token did not pass validation (e.g. issuer, audience checks).
-   */
-  OIDErrorCodeIDTokenFailedValidationError = -15,
+/*! @brief The ID Token did not pass validation (e.g. issuer, audience checks).
+ */
+OIDErrorCodeIDTokenFailedValidationError = -15,
 };
 
 /*! @brief Enum of all possible OAuth error codes as defined by RFC6749
@@ -161,222 +164,226 @@ typedef NS_ENUM(NSInteger, OIDErrorCode) {
     @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
     @see https://tools.ietf.org/html/rfc6749#section-5.2
  */
-typedef NS_ENUM(NSInteger, OIDErrorCodeOAuth) {
+typedef NS_ENUM(NSInteger, OIDErrorCodeOAuth
+) {
 
-  /*! @remarks invalid_request
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthInvalidRequest = -2,
+/*! @remarks invalid_request
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthInvalidRequest = -2,
 
-  /*! @remarks unauthorized_client
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthUnauthorizedClient = -3,
+/*! @remarks unauthorized_client
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthUnauthorizedClient = -3,
 
-  /*! @remarks access_denied
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAccessDenied = -4,
+/*! @remarks access_denied
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAccessDenied = -4,
 
-  /*! @remarks unsupported_response_type
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthUnsupportedResponseType = -5,
+/*! @remarks unsupported_response_type
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthUnsupportedResponseType = -5,
 
-  /*! @remarks invalid_scope
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthInvalidScope = -6,
+/*! @remarks invalid_scope
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthInvalidScope = -6,
 
-  /*! @remarks server_error
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthServerError = -7,
+/*! @remarks server_error
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthServerError = -7,
 
-  /*! @remarks temporarily_unavailable
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthTemporarilyUnavailable = -8,
+/*! @remarks temporarily_unavailable
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthTemporarilyUnavailable = -8,
 
-  /*! @remarks invalid_client
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthInvalidClient = -9,
+/*! @remarks invalid_client
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthInvalidClient = -9,
 
-  /*! @remarks invalid_grant
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthInvalidGrant = -10,
+/*! @remarks invalid_grant
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthInvalidGrant = -10,
 
-  /*! @remarks unsupported_grant_type
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthUnsupportedGrantType = -11,
+/*! @remarks unsupported_grant_type
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthUnsupportedGrantType = -11,
 
-  /*! @remarks invalid_redirect_uri
-      @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
-   */
-  OIDErrorCodeOAuthInvalidRedirectURI = -12,
+/*! @remarks invalid_redirect_uri
+    @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
+ */
+OIDErrorCodeOAuthInvalidRedirectURI = -12,
 
-  /*! @remarks invalid_client_metadata
-      @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
-   */
-  OIDErrorCodeOAuthInvalidClientMetadata = -13,
+/*! @remarks invalid_client_metadata
+    @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
+ */
+OIDErrorCodeOAuthInvalidClientMetadata = -13,
 
-  /*! @brief An authorization error occurring on the client rather than the server. For example,
-        due to a state mismatch or misconfiguration. Should be treated as an unrecoverable
-        authorization error.
-   */
-  OIDErrorCodeOAuthClientError = -0xEFFF,
+/*! @brief An authorization error occurring on the client rather than the server. For example,
+      due to a state mismatch or misconfiguration. Should be treated as an unrecoverable
+      authorization error.
+ */
+OIDErrorCodeOAuthClientError = -0xEFFF,
 
-  /*! @brief An OAuth error not known to this library
-      @discussion Indicates an OAuth error as per RFC6749, but the error code was not in our
-          list. It could be a custom error code, or one from an OAuth extension. See the "error" key
-          of the \NSError_userInfo property. Such errors are assumed to invalidate the
-          authentication state
-   */
-  OIDErrorCodeOAuthOther = -0xF000,
+/*! @brief An OAuth error not known to this library
+    @discussion Indicates an OAuth error as per RFC6749, but the error code was not in our
+        list. It could be a custom error code, or one from an OAuth extension. See the "error" key
+        of the \NSError_userInfo property. Such errors are assumed to invalidate the
+        authentication state
+ */
+OIDErrorCodeOAuthOther = -0xF000,
 };
 
 /*! @brief The error codes for the @c ::OIDOAuthAuthorizationErrorDomain error domain
     @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
  */
-typedef NS_ENUM(NSInteger, OIDErrorCodeOAuthAuthorization) {
-  /*! @remarks invalid_request
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationInvalidRequest = OIDErrorCodeOAuthInvalidRequest,
+typedef NS_ENUM(NSInteger, OIDErrorCodeOAuthAuthorization
+) {
+/*! @remarks invalid_request
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationInvalidRequest = OIDErrorCodeOAuthInvalidRequest,
 
-  /*! @remarks unauthorized_client
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationUnauthorizedClient = OIDErrorCodeOAuthUnauthorizedClient,
+/*! @remarks unauthorized_client
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationUnauthorizedClient = OIDErrorCodeOAuthUnauthorizedClient,
 
-  /*! @remarks access_denied
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationAccessDenied =
-      OIDErrorCodeOAuthAccessDenied,
+/*! @remarks access_denied
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationAccessDenied =
+OIDErrorCodeOAuthAccessDenied,
 
-  /*! @remarks unsupported_response_type
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationUnsupportedResponseType =
-      OIDErrorCodeOAuthUnsupportedResponseType,
+/*! @remarks unsupported_response_type
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationUnsupportedResponseType =
+OIDErrorCodeOAuthUnsupportedResponseType,
 
-  /*! @brief Indicates a network error or server error occurred.
-      @remarks invalid_scope
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationAuthorizationInvalidScope = OIDErrorCodeOAuthInvalidScope,
+/*! @brief Indicates a network error or server error occurred.
+    @remarks invalid_scope
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationAuthorizationInvalidScope = OIDErrorCodeOAuthInvalidScope,
 
-  /*! @brief Indicates a server error occurred.
-      @remarks server_error
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationServerError = OIDErrorCodeOAuthServerError,
+/*! @brief Indicates a server error occurred.
+    @remarks server_error
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationServerError = OIDErrorCodeOAuthServerError,
 
-  /*! @remarks temporarily_unavailable
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationTemporarilyUnavailable = OIDErrorCodeOAuthTemporarilyUnavailable,
+/*! @remarks temporarily_unavailable
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationTemporarilyUnavailable = OIDErrorCodeOAuthTemporarilyUnavailable,
 
-  /*! @brief An authorization error occurring on the client rather than the server. For example,
-        due to a state mismatch or client misconfiguration. Should be treated as an unrecoverable
-        authorization error.
-   */
-  OIDErrorCodeOAuthAuthorizationClientError = OIDErrorCodeOAuthClientError,
+/*! @brief An authorization error occurring on the client rather than the server. For example,
+      due to a state mismatch or client misconfiguration. Should be treated as an unrecoverable
+      authorization error.
+ */
+OIDErrorCodeOAuthAuthorizationClientError = OIDErrorCodeOAuthClientError,
 
-  /*! @brief An authorization OAuth error not known to this library
-      @discussion this indicates an OAuth error as per RFC6749, but the error code was not in our
-          list. It could be a custom error code, or one from an OAuth extension. See the "error" key
-          of the \NSError_userInfo property. We assume such errors are not transient.
-      @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
-   */
-  OIDErrorCodeOAuthAuthorizationOther = OIDErrorCodeOAuthOther,
+/*! @brief An authorization OAuth error not known to this library
+    @discussion this indicates an OAuth error as per RFC6749, but the error code was not in our
+        list. It could be a custom error code, or one from an OAuth extension. See the "error" key
+        of the \NSError_userInfo property. We assume such errors are not transient.
+    @see https://tools.ietf.org/html/rfc6749#section-4.1.2.1
+ */
+OIDErrorCodeOAuthAuthorizationOther = OIDErrorCodeOAuthOther,
 };
 
 
 /*! @brief The error codes for the @c ::OIDOAuthTokenErrorDomain error domain
     @see https://tools.ietf.org/html/rfc6749#section-5.2
  */
-typedef NS_ENUM(NSInteger, OIDErrorCodeOAuthToken) {
-  /*! @remarks invalid_request
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenInvalidRequest = OIDErrorCodeOAuthInvalidRequest,
+typedef NS_ENUM(NSInteger, OIDErrorCodeOAuthToken
+) {
+/*! @remarks invalid_request
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenInvalidRequest = OIDErrorCodeOAuthInvalidRequest,
 
-  /*! @remarks invalid_client
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenInvalidClient = OIDErrorCodeOAuthInvalidClient,
+/*! @remarks invalid_client
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenInvalidClient = OIDErrorCodeOAuthInvalidClient,
 
-  /*! @remarks invalid_grant
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenInvalidGrant = OIDErrorCodeOAuthInvalidGrant,
+/*! @remarks invalid_grant
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenInvalidGrant = OIDErrorCodeOAuthInvalidGrant,
 
-  /*! @remarks unauthorized_client
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenUnauthorizedClient = OIDErrorCodeOAuthUnauthorizedClient,
+/*! @remarks unauthorized_client
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenUnauthorizedClient = OIDErrorCodeOAuthUnauthorizedClient,
 
-  /*! @remarks unsupported_grant_type
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenUnsupportedGrantType = OIDErrorCodeOAuthUnsupportedGrantType,
+/*! @remarks unsupported_grant_type
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenUnsupportedGrantType = OIDErrorCodeOAuthUnsupportedGrantType,
 
-  /*! @remarks invalid_scope
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenInvalidScope = OIDErrorCodeOAuthInvalidScope,
+/*! @remarks invalid_scope
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenInvalidScope = OIDErrorCodeOAuthInvalidScope,
 
-  /*! @brief An unrecoverable token error occurring on the client rather than the server.
-   */
-  OIDErrorCodeOAuthTokenClientError = OIDErrorCodeOAuthClientError,
+/*! @brief An unrecoverable token error occurring on the client rather than the server.
+ */
+OIDErrorCodeOAuthTokenClientError = OIDErrorCodeOAuthClientError,
 
-  /*! @brief A token endpoint OAuth error not known to this library
-      @discussion this indicates an OAuth error as per RFC6749, but the error code was not in our
-          list. It could be a custom error code, or one from an OAuth extension. See the "error" key
-          of the \NSError_userInfo property. We assume such errors are not transient.
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthTokenOther = OIDErrorCodeOAuthOther,
+/*! @brief A token endpoint OAuth error not known to this library
+    @discussion this indicates an OAuth error as per RFC6749, but the error code was not in our
+        list. It could be a custom error code, or one from an OAuth extension. See the "error" key
+        of the \NSError_userInfo property. We assume such errors are not transient.
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthTokenOther = OIDErrorCodeOAuthOther,
 };
 
 /*! @brief The error codes for the @c ::OIDOAuthRegistrationErrorDomain error domain
     @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
  */
-typedef NS_ENUM(NSInteger, OIDErrorCodeOAuthRegistration) {
-  /*! @remarks invalid_request
-      @see http://tools.ietf.org/html/rfc6750#section-3.1
-   */
-  OIDErrorCodeOAuthRegistrationInvalidRequest = OIDErrorCodeOAuthInvalidRequest,
+typedef NS_ENUM(NSInteger, OIDErrorCodeOAuthRegistration
+) {
+/*! @remarks invalid_request
+    @see http://tools.ietf.org/html/rfc6750#section-3.1
+ */
+OIDErrorCodeOAuthRegistrationInvalidRequest = OIDErrorCodeOAuthInvalidRequest,
 
-  /*! @remarks invalid_redirect_uri
-      @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
-   */
-  OIDErrorCodeOAuthRegistrationInvalidRedirectURI = OIDErrorCodeOAuthInvalidRedirectURI,
+/*! @remarks invalid_redirect_uri
+    @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
+ */
+OIDErrorCodeOAuthRegistrationInvalidRedirectURI = OIDErrorCodeOAuthInvalidRedirectURI,
 
-  /*! @remarks invalid_client_metadata
-      @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
-   */
-  OIDErrorCodeOAuthRegistrationInvalidClientMetadata = OIDErrorCodeOAuthInvalidClientMetadata,
+/*! @remarks invalid_client_metadata
+    @see https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError
+ */
+OIDErrorCodeOAuthRegistrationInvalidClientMetadata = OIDErrorCodeOAuthInvalidClientMetadata,
 
-  /*! @brief An unrecoverable token error occurring on the client rather than the server.
-   */
-  OIDErrorCodeOAuthRegistrationClientError = OIDErrorCodeOAuthClientError,
+/*! @brief An unrecoverable token error occurring on the client rather than the server.
+ */
+OIDErrorCodeOAuthRegistrationClientError = OIDErrorCodeOAuthClientError,
 
-  /*! @brief A registration endpoint OAuth error not known to this library
-      @discussion this indicates an OAuth error, but the error code was not in our
-          list. It could be a custom error code, or one from an OAuth extension. See the "error" key
-          of the \NSError_userInfo property. We assume such errors are not transient.
-      @see https://tools.ietf.org/html/rfc6749#section-5.2
-   */
-  OIDErrorCodeOAuthRegistrationOther = OIDErrorCodeOAuthOther,
+/*! @brief A registration endpoint OAuth error not known to this library
+    @discussion this indicates an OAuth error, but the error code was not in our
+        list. It could be a custom error code, or one from an OAuth extension. See the "error" key
+        of the \NSError_userInfo property. We assume such errors are not transient.
+    @see https://tools.ietf.org/html/rfc6749#section-5.2
+ */
+OIDErrorCodeOAuthRegistrationOther = OIDErrorCodeOAuthOther,
 };
 
 

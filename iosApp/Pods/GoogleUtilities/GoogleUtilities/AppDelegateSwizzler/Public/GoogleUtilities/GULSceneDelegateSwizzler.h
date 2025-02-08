@@ -27,7 +27,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *const GULSceneDelegateInterceptorID;
+typedef NSString
+*
+const GULSceneDelegateInterceptorID;
 
 /** This class contains methods that isa swizzle the scene delegate. */
 @interface GULSceneDelegateSwizzler : NSProxy

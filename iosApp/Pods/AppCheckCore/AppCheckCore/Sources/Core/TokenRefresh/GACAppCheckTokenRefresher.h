@@ -31,7 +31,8 @@ typedef void (^GACAppCheckTokenRefreshCompletion)(GACAppCheckTokenRefreshResult 
 /** The block that will be called by `GACAppCheckTokenRefresher` to trigger the token refresh.
  *  @param completion The block that the client must call when the token refresh was completed.
  */
-typedef void (^GACAppCheckTokenRefreshBlock)(GACAppCheckTokenRefreshCompletion completion);
+typedef void (^GACAppCheckTokenRefreshBlock)(GACAppCheckTokenRefreshCompletion
+completion);
 
 @protocol GACAppCheckTokenRefresherProtocol <NSObject>
 
@@ -50,19 +51,21 @@ typedef void (^GACAppCheckTokenRefreshBlock)(GACAppCheckTokenRefreshCompletion c
 /// exchange overhead for product requests.
 @interface GACAppCheckTokenRefresher : NSObject <GACAppCheckTokenRefresherProtocol>
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// The designated initializer.
 /// @param refreshResult A previous token refresh attempt result.
 /// @param settings An object that handles Firebase app check settings.
 - (instancetype)initWithRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult
                         timerProvider:(GACTimerProvider)timerProvider
-                             settings:(id<GACAppCheckSettingsProtocol>)settings
-    NS_DESIGNATED_INITIALIZER;
+                             settings:(id <GACAppCheckSettingsProtocol>)settings
+NS_DESIGNATED_INITIALIZER;
 
 /// A convenience initializer with a timer provider returning an instance of  `GACAppCheckTimer`.
 - (instancetype)initWithRefreshResult:(GACAppCheckTokenRefreshResult *)refreshResult
-                             settings:(id<GACAppCheckSettingsProtocol>)settings;
+                             settings:(id <GACAppCheckSettingsProtocol>)settings;
 
 @end
 

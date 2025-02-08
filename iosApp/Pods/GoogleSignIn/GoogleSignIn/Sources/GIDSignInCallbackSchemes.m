@@ -17,7 +17,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation GIDSignInCallbackSchemes {
-  NSString *_clientIdentifier;
+    NSString *_clientIdentifier;
 }
 
 /**
@@ -28,57 +28,57 @@ NS_ASSUME_NONNULL_BEGIN
  * @remarks Branched from google3/googlemac/iPhone/Firebase/Source/GGLBundleUtil.m
  */
 + (NSArray *)relevantURLSchemes {
-  NSMutableArray *result = [NSMutableArray array];
-  NSBundle *bundle = [NSBundle mainBundle];
-  NSArray *urlTypes = [bundle objectForInfoDictionaryKey:@"CFBundleURLTypes"];
-  for (NSDictionary *urlType in urlTypes) {
-    NSArray *urlTypeSchemes = urlType[@"CFBundleURLSchemes"];
-    for (NSString *urlTypeScheme in urlTypeSchemes) {
-      [result addObject:urlTypeScheme.lowercaseString];
+    NSMutableArray *result = [NSMutableArray array];
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSArray *urlTypes = [bundle objectForInfoDictionaryKey:@"CFBundleURLTypes"];
+    for (NSDictionary *urlType in urlTypes) {
+        NSArray *urlTypeSchemes = urlType[@"CFBundleURLSchemes"];
+        for (NSString *urlTypeScheme in urlTypeSchemes) {
+            [result addObject:urlTypeScheme.lowercaseString];
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 - (instancetype)initWithClientIdentifier:(NSString *)clientIdentifier {
-  self = [super init];
-  if (self) {
-    _clientIdentifier = [clientIdentifier copy];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _clientIdentifier = [clientIdentifier copy];
+    }
+    return self;
 }
 
 - (NSString *)clientIdentifierScheme {
-  NSArray *clientIdentifierParts = [_clientIdentifier componentsSeparatedByString:@"."];
-  NSString *reversedClientIdentifier =
-      [[clientIdentifierParts reverseObjectEnumerator].allObjects componentsJoinedByString:@"."];
-  return reversedClientIdentifier.lowercaseString;
+    NSArray *clientIdentifierParts = [_clientIdentifier componentsSeparatedByString:@"."];
+    NSString *reversedClientIdentifier =
+            [[clientIdentifierParts reverseObjectEnumerator].allObjects componentsJoinedByString:@"."];
+    return reversedClientIdentifier.lowercaseString;
 }
 
 - (NSArray *)allSchemes {
-  NSMutableArray *schemes = [NSMutableArray array];
-  NSString *clientIdentifierScheme = [self clientIdentifierScheme];
-  if (clientIdentifierScheme) {
-    [schemes addObject:clientIdentifierScheme];
-  }
-  return schemes;
+    NSMutableArray *schemes = [NSMutableArray array];
+    NSString *clientIdentifierScheme = [self clientIdentifierScheme];
+    if (clientIdentifierScheme) {
+        [schemes addObject:clientIdentifierScheme];
+    }
+    return schemes;
 }
 
 - (NSMutableArray *)unsupportedSchemes {
-  NSMutableArray *unsupportedSchemes = [NSMutableArray arrayWithArray:[self allSchemes]];
-  NSArray *supportedSchemes = [[self class] relevantURLSchemes];
-  [unsupportedSchemes removeObjectsInArray:supportedSchemes];
-  return unsupportedSchemes;
+    NSMutableArray *unsupportedSchemes = [NSMutableArray arrayWithArray:[self allSchemes]];
+    NSArray *supportedSchemes = [[self class] relevantURLSchemes];
+    [unsupportedSchemes removeObjectsInArray:supportedSchemes];
+    return unsupportedSchemes;
 }
 
 - (BOOL)URLSchemeIsCallbackScheme:(NSURL *)URL {
-  NSString *incomingURLScheme = URL.scheme.lowercaseString;
-  for (NSString *scheme in [self allSchemes]) {
-    if ([incomingURLScheme isEqual:scheme]) {
-      return YES;
+    NSString *incomingURLScheme = URL.scheme.lowercaseString;
+    for (NSString *scheme in [self allSchemes]) {
+        if ([incomingURLScheme isEqual:scheme]) {
+            return YES;
+        }
     }
-  }
-  return NO;
+    return NO;
 }
 
 @end

@@ -21,7 +21,9 @@
 #if __has_include(<FBLPromises/FBLPromises.h>)
 #import <FBLPromises/FBLPromises.h>
 #else
+
 #import "FBLPromises.h"
+
 #endif
 
 #import "AppCheckCore/Sources/Public/AppCheckCore/GACDeviceCheckProvider.h"
@@ -37,120 +39,134 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GACDeviceCheckProvider ()
-@property(nonatomic, readonly) id<GACDeviceCheckAPIServiceProtocol> APIService;
-@property(nonatomic, readonly) id<GACDeviceCheckTokenGenerator> deviceTokenGenerator;
-@property(nonatomic, readonly) id<GACAppCheckBackoffWrapperProtocol> backoffWrapper;
+@property(nonatomic, readonly) id <GACDeviceCheckAPIServiceProtocol> APIService;
+@property(nonatomic, readonly) id <GACDeviceCheckTokenGenerator> deviceTokenGenerator;
+@property(nonatomic, readonly) id <GACAppCheckBackoffWrapperProtocol> backoffWrapper;
 
-- (instancetype)initWithAPIService:(id<GACDeviceCheckAPIServiceProtocol>)APIService
-              deviceTokenGenerator:(id<GACDeviceCheckTokenGenerator>)deviceTokenGenerator
-                    backoffWrapper:(id<GACAppCheckBackoffWrapperProtocol>)backoffWrapper
-    NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithAPIService:(id <GACDeviceCheckAPIServiceProtocol>)APIService
+              deviceTokenGenerator:(id <GACDeviceCheckTokenGenerator>)deviceTokenGenerator
+                    backoffWrapper:(id <GACAppCheckBackoffWrapperProtocol>)backoffWrapper
+NS_DESIGNATED_INITIALIZER;
 
 @end
 
 @implementation GACDeviceCheckProvider
 
-- (instancetype)initWithAPIService:(id<GACDeviceCheckAPIServiceProtocol>)APIService
-              deviceTokenGenerator:(id<GACDeviceCheckTokenGenerator>)deviceTokenGenerator
-                    backoffWrapper:(id<GACAppCheckBackoffWrapperProtocol>)backoffWrapper {
-  self = [super init];
-  if (self) {
-    _APIService = APIService;
-    _deviceTokenGenerator = deviceTokenGenerator;
-    _backoffWrapper = backoffWrapper;
-  }
-  return self;
+- (instancetype)initWithAPIService:(id <GACDeviceCheckAPIServiceProtocol>)APIService
+              deviceTokenGenerator:(id <GACDeviceCheckTokenGenerator>)deviceTokenGenerator
+                    backoffWrapper:(id <GACAppCheckBackoffWrapperProtocol>)backoffWrapper {
+    self = [super init];
+    if (self) {
+        _APIService = APIService;
+        _deviceTokenGenerator = deviceTokenGenerator;
+        _backoffWrapper = backoffWrapper;
+    }
+    return self;
 }
 
-- (instancetype)initWithAPIService:(id<GACDeviceCheckAPIServiceProtocol>)APIService {
-  GACAppCheckBackoffWrapper *backoffWrapper = [[GACAppCheckBackoffWrapper alloc] init];
-  return [self initWithAPIService:APIService
-             deviceTokenGenerator:[DCDevice currentDevice]
-                   backoffWrapper:backoffWrapper];
+- (instancetype)initWithAPIService:(id <GACDeviceCheckAPIServiceProtocol>)APIService {
+    GACAppCheckBackoffWrapper *backoffWrapper = [[GACAppCheckBackoffWrapper alloc] init];
+    return [self initWithAPIService:APIService
+               deviceTokenGenerator:[DCDevice currentDevice]
+                     backoffWrapper:backoffWrapper];
 }
 
 - (instancetype)initWithServiceName:(NSString *)serviceName
                        resourceName:(NSString *)resourceName
                              APIKey:(NSString *)APIKey
-                       requestHooks:(nullable NSArray<GACAppCheckAPIRequestHook> *)requestHooks {
-  NSURLSession *URLSession = [NSURLSession
-      sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
+                       requestHooks:(nullable NSArray
 
-  GACAppCheckAPIService *APIService =
-      [[GACAppCheckAPIService alloc] initWithURLSession:URLSession
-                                                baseURL:nil
-                                                 APIKey:APIKey
-                                           requestHooks:requestHooks];
+<GACAppCheckAPIRequestHook> *)requestHooks {
+    NSURLSession *URLSession = [NSURLSession
+            sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
 
-  GACDeviceCheckAPIService *deviceCheckAPIService =
-      [[GACDeviceCheckAPIService alloc] initWithAPIService:APIService resourceName:resourceName];
+    GACAppCheckAPIService *APIService =
+            [[GACAppCheckAPIService alloc] initWithURLSession:URLSession
+                                                      baseURL:nil
+                                                       APIKey:APIKey
+                                                 requestHooks:requestHooks];
 
-  return [self initWithAPIService:deviceCheckAPIService];
+    GACDeviceCheckAPIService *deviceCheckAPIService =
+            [[GACDeviceCheckAPIService alloc] initWithAPIService:APIService resourceName:resourceName];
+
+    return [self initWithAPIService:deviceCheckAPIService];
 }
 
 #pragma mark - GACAppCheckProvider
 
-- (void)getTokenWithCompletion:(void (^)(GACAppCheckToken *_Nullable, NSError *_Nullable))handler {
-  [self getTokenWithLimitedUse:NO completion:handler];
+- (void)getTokenWithCompletion:(void (^)(GACAppCheckToken *_Nullable, NSError
+
+*_Nullable))handler {
+    [self getTokenWithLimitedUse:NO completion:handler];
 }
 
 - (void)getLimitedUseTokenWithCompletion:(void (^)(GACAppCheckToken *_Nullable,
-                                                   NSError *_Nullable))handler {
-  [self getTokenWithLimitedUse:YES completion:handler];
+        NSError
+
+*_Nullable))handler {
+    [self getTokenWithLimitedUse:YES completion:handler];
 }
 
 #pragma mark - Internal
 
 - (void)getTokenWithLimitedUse:(BOOL)limitedUse
                     completion:(void (^)(GACAppCheckToken *_Nullable token,
-                                         NSError *_Nullable error))handler {
-  [self.backoffWrapper
-      applyBackoffToOperation:^FBLPromise *_Nonnull {
+                            NSError
+
+*
+_Nullable error
+))handler {
+    [self.backoffWrapper
+            applyBackoffToOperation:^FBLPromise *
+    _Nonnull
+    {
         return [self getTokenPromiseWithLimitedUse:limitedUse];
-      }
-                 errorHandler:[self.backoffWrapper defaultAppCheckProviderErrorHandler]]
-      // Call the handler with either token or error.
-      .then(^id(GACAppCheckToken *appCheckToken) {
+    }
+    errorHandler:
+    [self.backoffWrapper defaultAppCheckProviderErrorHandler]]
+    // Call the handler with either token or error.
+    .then(^id(GACAppCheckToken *appCheckToken) {
         handler(appCheckToken, nil);
         return nil;
-      })
-      .catch(^void(NSError *error) {
-        handler(nil, error);
-      });
+    })
+            .catch(^void(NSError *error) {
+                handler(nil, error);
+            });
 }
 
 - (FBLPromise<GACAppCheckToken *> *)getTokenPromiseWithLimitedUse:(BOOL)limitedUse {
-  // Get DeviceCheck token
-  return [self deviceToken]
-      // Exchange DeviceCheck token for FAC token.
-      .then(^FBLPromise<GACAppCheckToken *> *(NSData *deviceToken) {
-        return [self.APIService appCheckTokenWithDeviceToken:deviceToken limitedUse:limitedUse];
-      });
+    // Get DeviceCheck token
+    return [self deviceToken]
+            // Exchange DeviceCheck token for FAC token.
+            .then(^FBLPromise<GACAppCheckToken *> *(NSData *deviceToken) {
+                return [self.APIService appCheckTokenWithDeviceToken:deviceToken limitedUse:limitedUse];
+            });
 }
 
 #pragma mark - DeviceCheck
 
 - (FBLPromise<NSData *> *)deviceToken {
-  return [self isDeviceCheckSupported].then(^FBLPromise<NSData *> *(NSNull *ignored) {
-    return [FBLPromise
-        wrapObjectOrErrorCompletion:^(FBLPromiseObjectOrErrorCompletion _Nonnull handler) {
-          [self.deviceTokenGenerator generateTokenWithCompletionHandler:handler];
-        }];
-  });
+    return [self isDeviceCheckSupported].then(^FBLPromise<NSData *> *(NSNull *ignored) {
+        return [FBLPromise
+                wrapObjectOrErrorCompletion:^(FBLPromiseObjectOrErrorCompletion _Nonnull handler) {
+                    [self.deviceTokenGenerator generateTokenWithCompletionHandler:handler];
+                }];
+    });
 }
 
 #pragma mark - Helpers
 
 /// Returns a resolved promise if DeviceCheck is supported and a rejected promise if it is not.
 - (FBLPromise<NSNull *> *)isDeviceCheckSupported {
-  if (self.deviceTokenGenerator.isSupported) {
-    return [FBLPromise resolvedWith:[NSNull null]];
-  } else {
-    NSError *error = [GACAppCheckErrorUtil unsupportedAttestationProvider:@"DeviceCheckProvider"];
-    FBLPromise *rejectedPromise = [FBLPromise pendingPromise];
-    [rejectedPromise reject:error];
-    return rejectedPromise;
-  }
+    if (self.deviceTokenGenerator.isSupported) {
+        return [FBLPromise resolvedWith:[NSNull null]];
+    } else {
+        NSError *
+        error = [GACAppCheckErrorUtil unsupportedAttestationProvider:@"DeviceCheckProvider"];
+        FBLPromise *rejectedPromise = [FBLPromise pendingPromise];
+        [rejectedPromise reject:error];
+        return rejectedPromise;
+    }
 }
 
 @end

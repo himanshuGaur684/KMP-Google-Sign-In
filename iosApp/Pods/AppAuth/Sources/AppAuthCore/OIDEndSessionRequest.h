@@ -25,7 +25,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIDEndSessionRequest : NSObject
-    <NSCopying, NSSecureCoding, OIDExternalUserAgentRequest>
+        <NSCopying, NSSecureCoding, OIDExternalUserAgentRequest>
 
 /*! @brief The service's configuration.
     @remarks This configuration specifies how to connect to a particular OAuth provider.
@@ -64,7 +64,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @internal
     @brief Unavailable. Please use @c initWithConfiguration:clientId:scopes:redirectURL:additionalParameters:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Creates an authorization request with opinionated defaults (a secure @c state).
     @param configuration The service's configuration.
@@ -74,10 +76,13 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional authorization parameters.
 */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
-              idTokenHint:(NSString *)idTokenHint
-    postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
-     additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+initWithConfiguration:(OIDServiceConfiguration *)configuration
+          idTokenHint:(NSString *)idTokenHint
+postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
+ additionalParameters:(nullable NSDictionary
+
+<NSString *, NSString *> *)
+additionalParameters;
 
 /*! @brief Designated initializer.
     @param configuration The service's configuration.
@@ -88,12 +93,15 @@ NS_ASSUME_NONNULL_BEGIN
     @param additionalParameters The client's additional authorization parameters.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
-              idTokenHint:(NSString *)idTokenHint
-    postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
-                    state:(NSString *)state
-     additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters
-    NS_DESIGNATED_INITIALIZER;
+initWithConfiguration:(OIDServiceConfiguration *)configuration
+          idTokenHint:(NSString *)idTokenHint
+postLogoutRedirectURL:(NSURL *)postLogoutRedirectURL
+                state:(NSString *)state
+ additionalParameters:(nullable NSDictionary
+
+<NSString *, NSString *> *)
+additionalParameters
+        NS_DESIGNATED_INITIALIZER;
 
 /*! @brief Constructs the request URI by adding the request parameters to the query component of the
         authorization endpoint URI using the "application/x-www-form-urlencoded" format.

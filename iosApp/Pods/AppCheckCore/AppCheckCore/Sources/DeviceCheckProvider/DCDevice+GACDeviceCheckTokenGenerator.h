@@ -23,6 +23,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 GAC_DEVICE_CHECK_PROVIDER_AVAILABILITY
+
 @interface DCDevice (GACDeviceCheckTokenGenerator) <GACDeviceCheckTokenGenerator>
 
 @end

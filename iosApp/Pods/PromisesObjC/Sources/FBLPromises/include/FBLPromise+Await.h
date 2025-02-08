@@ -26,7 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
  @return Value the promise was fulfilled with. If the promise was rejected, the return value
          is always `nil`, but the error out arg is not.
  */
-FOUNDATION_EXTERN id __nullable FBLPromiseAwait(FBLPromise *promise,
-                                                NSError **error) NS_REFINED_FOR_SWIFT;
+FOUNDATION_EXTERN
+id __nullable
+FBLPromiseAwait(FBLPromise
+*promise,
+NSError **error
+)
+NS_REFINED_FOR_SWIFT;
 
 NS_ASSUME_NONNULL_END

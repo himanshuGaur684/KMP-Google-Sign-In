@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param appDelegate The object that needs to be isa swizzled. This should conform to the
  *      application delegate protocol.
  */
-+ (void)proxyAppDelegate:(id<GULApplicationDelegate>)appDelegate;
++ (void)proxyAppDelegate:(id <GULApplicationDelegate>)appDelegate;
 
 /** Returns a dictionary containing interceptor IDs mapped to a GULZeroingWeakContainer.
  *
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return The original app delegate instance that was proxied.
  */
-+ (id<GULApplicationDelegate>)originalDelegate;
++ (id <GULApplicationDelegate>)originalDelegate;
 
 @end
 

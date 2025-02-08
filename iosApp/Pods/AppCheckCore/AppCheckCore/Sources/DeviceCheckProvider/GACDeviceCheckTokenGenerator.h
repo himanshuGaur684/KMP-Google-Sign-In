@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(getter=isSupported, readonly) BOOL supported;
 
-- (void)generateTokenWithCompletionHandler:(void (^)(NSData* _Nullable token,
-                                                     NSError* _Nullable error))completion;
+- (void)generateTokenWithCompletionHandler:(void (^)(NSData *_Nullable token,
+                                                     NSError *_Nullable error))completion;
 
 @end
 

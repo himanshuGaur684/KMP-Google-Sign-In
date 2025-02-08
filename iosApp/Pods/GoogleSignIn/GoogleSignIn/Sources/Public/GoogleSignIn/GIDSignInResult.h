@@ -30,10 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, nullable) NSString *serverAuthCode;
 
 /// Unsupported.
-+ (instancetype)new NS_UNAVAILABLE;
++ (instancetype)new
+
+NS_UNAVAILABLE;
 
 /// Unsupported.
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

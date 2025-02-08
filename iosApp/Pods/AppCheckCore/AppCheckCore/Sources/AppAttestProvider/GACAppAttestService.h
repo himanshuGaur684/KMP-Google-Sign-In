@@ -30,8 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                    NSError *error))completionHandler;
 
 - (void)attestKey:(NSString *)keyId
-       clientDataHash:(NSData *)clientDataHash
-    completionHandler:(void (^)(NSData *attestationObject, NSError *error))completionHandler;
+   clientDataHash:(NSData *)clientDataHash
+completionHandler:(void (^)(NSData *attestationObject, NSError *error))completionHandler;
 
 - (void)generateAssertion:(NSString *)keyId
            clientDataHash:(NSData *)clientDataHash

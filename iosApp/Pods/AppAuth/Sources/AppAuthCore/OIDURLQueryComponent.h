@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
         even on non-iOS 7 devices and simulators. Useful for testing the iOS 7 code paths on the
         simulator. Defaults to NO.
  */
-extern BOOL gOIDURLQueryComponentForceIOS7Handling;
+extern BOOL
+gOIDURLQueryComponentForceIOS7Handling;
 
 /*! @brief A utility class for creating and parsing URL query components encoded with the
         application/x-www-form-urlencoded format.
@@ -48,7 +49,9 @@ extern BOOL gOIDURLQueryComponentForceIOS7Handling;
     @remarks All values are @c NSString except for parameters which contain multiple values, in
         which case the value is an @c NSArray<NSString *> *.
  */
-@property(nonatomic, readonly) NSDictionary<NSString *, NSObject<NSCopying> *> *dictionaryValue;
+@property(nonatomic, readonly) NSDictionary<NSString *, NSObject < NSCopying> *
+> *
+dictionaryValue;
 
 /*! @brief Creates an @c OIDURLQueryComponent by parsing the query string in a URL.
     @param URL The URL from which to extract a query component.
@@ -59,7 +62,10 @@ extern BOOL gOIDURLQueryComponentForceIOS7Handling;
     @param parameter The parameter name. Case sensitive.
     @return The value (or values) for a named parameter in the query.
  */
-- (NSArray<NSString *> *)valuesForParameter:(NSString *)parameter;
+- (NSArray
+
+<NSString *> *)valuesForParameter:(NSString *)
+parameter;
 
 /*! @brief Adds a parameter value to the query.
     @param parameter The name of the parameter. Case sensitive.
@@ -70,7 +76,10 @@ extern BOOL gOIDURLQueryComponentForceIOS7Handling;
 /*! @brief Adds multiple parameters with associated values to the query.
     @param parameters The parameter name value pairs to add to the query.
  */
-- (void)addParameters:(NSDictionary<NSString *, NSString *> *)parameters;
+- (void)addParameters:(NSDictionary
+
+<NSString *, NSString *> *)
+parameters;
 
 /*! @param URL The URL to add the query component to.
     @return The original URL with the query component replaced by the parameters from this query.

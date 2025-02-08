@@ -27,6 +27,6 @@
 #define STR(x) STR_EXPAND(x)
 #define STR_EXPAND(x) #x
 
-NSString* FIRFirebaseVersion(void) {
-  return @STR(Firebase_VERSION);
+NSString *FIRFirebaseVersion(void) {
+    return @STR(Firebase_VERSION);
 }

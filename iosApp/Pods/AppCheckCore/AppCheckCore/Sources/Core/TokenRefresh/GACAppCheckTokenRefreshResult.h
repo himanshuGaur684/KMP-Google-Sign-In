@@ -21,14 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// Represents possible results of a Firebase App Check token refresh attempt that matter for
 /// `GACAppCheckTokenRefresher`.
 typedef NS_ENUM(NSInteger, GACAppCheckTokenRefreshStatus) {
-  // The token has not been refreshed.
-  GACAppCheckTokenRefreshStatusNever,
+    // The token has not been refreshed.
+    GACAppCheckTokenRefreshStatusNever,
 
-  // The token was successfully refreshed.
-  GACAppCheckTokenRefreshStatusSuccess,
+            // The token was successfully refreshed.
+            GACAppCheckTokenRefreshStatusSuccess,
 
-  // The token refresh failed.
-  GACAppCheckTokenRefreshStatusFailure
+            // The token refresh failed.
+            GACAppCheckTokenRefreshStatusFailure
 };
 
 /// An object to pass the possible results of a Firebase App Check token refresh attempt and
@@ -44,7 +44,9 @@ typedef NS_ENUM(NSInteger, GACAppCheckTokenRefreshStatus) {
 /// A date when the new Firebase App Check token was received from the server.
 @property(nonatomic, readonly, nullable) NSDate *tokenReceivedAtDate;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// Initializes the instance with `GACAppCheckTokenRefreshStatusNever`.
 - (instancetype)initWithStatusNever;

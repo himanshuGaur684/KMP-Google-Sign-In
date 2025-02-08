@@ -31,8 +31,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, FIRConfigType) {
-  FIRConfigTypeCore = 1,
-  FIRConfigTypeSDK = 2,
+    FIRConfigTypeCore = 1,
+            FIRConfigTypeSDK = 2,
 };
 
 extern NSString *const kFIRDefaultAppName;
@@ -136,7 +136,14 @@ extern NSString *const FIRAuthStateDidChangeInternalNotificationUIDKey;
  * @param name Name of the library.
  * @param version Version of the library.
  */
-+ (void)registerLibrary:(nonnull NSString *)name withVersion:(nonnull NSString *)version;
++ (void)registerLibrary:(nonnull NSString
+
+*)
+name withVersion
+:(
+nonnull NSString
+*)
+version;
 
 /**
  * Registers a given internal library to be reported for analytics.
@@ -144,8 +151,15 @@ extern NSString *const FIRAuthStateDidChangeInternalNotificationUIDKey;
  * @param library Optional parameter for component registration.
  * @param name Name of the library.
  */
-+ (void)registerInternalLibrary:(nonnull Class<FIRLibrary>)library
-                       withName:(nonnull NSString *)name;
++ (void)registerInternalLibrary:(nonnull Class
+
+<FIRLibrary>)
+library
+        withName
+:(
+nonnull NSString
+*)
+name;
 
 /**
  * Registers a given internal library with the given version number to be reported for
@@ -156,9 +170,20 @@ extern NSString *const FIRAuthStateDidChangeInternalNotificationUIDKey;
  * @param name Name of the library.
  * @param version Version of the library.
  */
-+ (void)registerInternalLibrary:(nonnull Class<FIRLibrary>)library
-                       withName:(nonnull NSString *)name
-                    withVersion:(nonnull NSString *)version;
++ (void)registerInternalLibrary:(nonnull Class
+
+<FIRLibrary>)
+library
+        withName
+:(
+nonnull NSString
+*)
+name
+        withVersion
+:(
+nonnull NSString
+*)
+version;
 
 /**
  * A concatenated string representing all the third-party libraries and version numbers.

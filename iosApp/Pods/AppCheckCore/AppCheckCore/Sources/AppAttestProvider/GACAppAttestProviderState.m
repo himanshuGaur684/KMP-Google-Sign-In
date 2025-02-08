@@ -19,39 +19,39 @@
 @implementation GACAppAttestProviderState
 
 - (instancetype)initUnsupportedWithError:(NSError *)error {
-  self = [super init];
-  if (self) {
-    _state = GACAppAttestAttestationStateUnsupported;
-    _appAttestUnsupportedError = error;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _state = GACAppAttestAttestationStateUnsupported;
+        _appAttestUnsupportedError = error;
+    }
+    return self;
 }
 
 - (instancetype)initWithSupportedInitialState {
-  self = [super init];
-  if (self) {
-    _state = GACAppAttestAttestationStateSupportedInitial;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _state = GACAppAttestAttestationStateSupportedInitial;
+    }
+    return self;
 }
 
 - (instancetype)initWithGeneratedKeyID:(NSString *)keyID {
-  self = [super init];
-  if (self) {
-    _state = GACAppAttestAttestationStateKeyGenerated;
-    _appAttestKeyID = keyID;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _state = GACAppAttestAttestationStateKeyGenerated;
+        _appAttestKeyID = keyID;
+    }
+    return self;
 }
 
 - (instancetype)initWithRegisteredKeyID:(NSString *)keyID artifact:(NSData *)artifact {
-  self = [super init];
-  if (self) {
-    _state = GACAppAttestAttestationStateKeyRegistered;
-    _appAttestKeyID = keyID;
-    _attestationArtifact = artifact;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _state = GACAppAttestAttestationStateKeyRegistered;
+        _appAttestKeyID = keyID;
+        _attestationArtifact = artifact;
+    }
+    return self;
 }
 
 @end

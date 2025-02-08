@@ -22,15 +22,24 @@ NS_ASSUME_NONNULL_BEGIN
     @brief A string constant identifying the phone identity provider.
         This constant is available on iOS only.
  */
-extern NSString *const FIRPhoneAuthProviderID NS_SWIFT_NAME(PhoneAuthProviderID)
-    API_UNAVAILABLE(macos, tvos, watchos);
+extern NSString
+*
+
+const FIRPhoneAuthProviderID NS_SWIFT_NAME(PhoneAuthProviderID)
+
+API_UNAVAILABLE(macos, tvos, watchos
+);
 
 /** @var FIRPhoneAuthProviderID
     @brief A string constant identifying the phone sign-in method.
         This constant is available on iOS only.
  */
-extern NSString *const _Nonnull FIRPhoneAuthSignInMethod NS_SWIFT_NAME(PhoneAuthSignInMethod)
-    API_UNAVAILABLE(macos, tvos, watchos);
+extern NSString *const _Nonnull
+
+FIRPhoneAuthSignInMethod NS_SWIFT_NAME(PhoneAuthSignInMethod)
+
+API_UNAVAILABLE(macos, tvos, watchos
+);
 
 /** @typedef FIRVerificationResultCallback
     @brief The type of block invoked when a request to send a verification code has finished.
@@ -39,9 +48,12 @@ extern NSString *const _Nonnull FIRPhoneAuthSignInMethod NS_SWIFT_NAME(PhoneAuth
     @param verificationID On success, the verification ID provided, nil otherwise.
     @param error On error, the error that occurred, nil otherwise.
  */
-typedef void (^FIRVerificationResultCallback)(NSString *_Nullable verificationID,
-                                              NSError *_Nullable error)
-    NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.")
-        API_UNAVAILABLE(macos, tvos, watchos);
+typedef void (^FIRVerificationResultCallback)(NSString * _Nullable
+verificationID,
+NSError *_Nullable
+error)
+NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.")
+API_UNAVAILABLE(macos, tvos, watchos
+);
 
 NS_ASSUME_NONNULL_END

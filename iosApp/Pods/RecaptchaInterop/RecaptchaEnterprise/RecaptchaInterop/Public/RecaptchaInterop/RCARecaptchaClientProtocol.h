@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** Interface to interact with reCAPTCHA. */
 @protocol RCARecaptchaClientProtocol
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /**
  * Executes reCAPTCHA on a user action.
@@ -32,10 +34,22 @@ NS_ASSUME_NONNULL_BEGIN
  * @param timeout Timeout for execute in milliseconds.
  * @param completion Callback function to return the execute result.
  */
-- (void)execute:(nonnull id<RCAActionProtocol>)action
-    withTimeout:(double)timeout
-     completion:(void (^)(NSString *_Nullable token, NSError *_Nullable error))completion
-    NS_SWIFT_NAME(execute(withAction:withTimeout:completion:));
+- (void)execute:(nonnull id
+
+<RCAActionProtocol>)
+action
+        withTimeout
+:(double)
+timeout
+        completion
+:(void (^)(
+NSString *_Nullable
+token,
+NSError *_Nullable
+error))
+completion
+        NS_SWIFT_NAME(execute(withAction
+:withTimeout:completion:));
 
 /**
  * Executes reCAPTCHA on a user action.
@@ -45,9 +59,19 @@ NS_ASSUME_NONNULL_BEGIN
  * @param action The user action to protect.
  * @param completion Callback function to return the execute result.
  */
-- (void)execute:(nonnull id<RCAActionProtocol>)action
-     completion:(void (^)(NSString *_Nullable token, NSError *_Nullable error))completion
-    NS_SWIFT_NAME(execute(withAction:completion:));
+- (void)execute:(nonnull id
+
+<RCAActionProtocol>)
+action
+        completion
+:(void (^)(
+NSString *_Nullable
+token,
+NSError *_Nullable
+error))
+completion
+        NS_SWIFT_NAME(execute(withAction
+:completion:));
 
 @end
 

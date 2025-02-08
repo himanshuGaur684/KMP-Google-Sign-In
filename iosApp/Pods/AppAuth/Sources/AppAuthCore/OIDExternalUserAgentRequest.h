@@ -25,7 +25,7 @@
 /*! @brief Method to create and return the complete request URL instance.
     @return A @c NSURL instance which contains the URL to be opened in an external UI (i.e. browser)
  */
-- (NSURL*)externalUserAgentRequestURL;
+- (NSURL *)externalUserAgentRequestURL;
 
 /*! @brief If this external user-agent request has a redirect URL, this should return its scheme.
         Since some external requests have optional callbacks (such as the end session endpoint), the
@@ -33,5 +33,5 @@
     @return A @c NSString instance that contains the scheme of a callback url, or nil if there is
         no callback url for this request.
  */
-- (NSString*)redirectScheme;
+- (NSString *)redirectScheme;
 @end

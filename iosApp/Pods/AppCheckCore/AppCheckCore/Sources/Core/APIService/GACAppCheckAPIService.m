@@ -18,7 +18,9 @@
 #if __has_include(<FBLPromises/FBLPromises.h>)
 #import <FBLPromises/FBLPromises.h>
 #else
+
 #import "FBLPromises.h"
+
 #endif
 
 #import "AppCheckCore/Sources/Core/APIService/GACAppCheckToken+APIResponse.h"
@@ -31,7 +33,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kAPIKeyHeaderKey = @"X-Goog-Api-Key";
+static NSString
+*
+const kAPIKeyHeaderKey = @"X-Goog-Api-Key";
 static NSString *const kBundleIdKey = @"X-Ios-Bundle-Identifier";
 
 static NSString *const kDefaultBaseURL = @"https://firebaseappcheck.googleapis.com/v1";
@@ -50,116 +54,146 @@ static NSString *const kDefaultBaseURL = @"https://firebaseappcheck.googleapis.c
 @synthesize baseURL = _baseURL;
 
 - (instancetype)initWithURLSession:(NSURLSession *)session
-                           baseURL:(nullable NSString *)baseURL
-                            APIKey:(nullable NSString *)APIKey
-                      requestHooks:(nullable NSArray<GACAppCheckAPIRequestHook> *)requestHooks {
-  self = [super init];
-  if (self) {
-    _URLSession = session;
-    _APIKey = APIKey;
-    _requestHooks = requestHooks ? [requestHooks copy] : @[];
-    _baseURL = baseURL ?: kDefaultBaseURL;
-  }
-  return self;
+                           baseURL:(nullable NSString
+
+*)
+baseURL
+        APIKey
+:(
+nullable NSString
+*)
+APIKey
+        requestHooks
+:(
+nullable NSArray<GACAppCheckAPIRequestHook>
+*)requestHooks {
+    self = [super init];
+    if (self) {
+        _URLSession = session;
+        _APIKey = APIKey;
+        _requestHooks = requestHooks ? [requestHooks copy] : @[];
+        _baseURL = baseURL ?: kDefaultBaseURL;
+    }
+    return self;
 }
 
 - (FBLPromise<GACURLSessionDataResponse *> *)
-    sendRequestWithURL:(NSURL *)requestURL
-            HTTPMethod:(NSString *)HTTPMethod
-                  body:(nullable NSData *)body
-     additionalHeaders:(nullable NSDictionary<NSString *, NSString *> *)additionalHeaders {
-  return [self requestWithURL:requestURL
-                    HTTPMethod:HTTPMethod
-                          body:body
-             additionalHeaders:additionalHeaders]
-      .then(^id _Nullable(NSURLRequest *_Nullable request) {
+sendRequestWithURL:(NSURL *)requestURL
+        HTTPMethod:(NSString *)HTTPMethod
+              body:(nullable NSData
+
+*)
+body
+        additionalHeaders
+:(
+nullable NSDictionary<NSString * , NSString * >
+*)additionalHeaders {
+    return [self requestWithURL:requestURL
+                     HTTPMethod:HTTPMethod
+                           body:body
+              additionalHeaders:additionalHeaders]
+            .then(^id
+    _Nullable(NSURLRequest * _Nullable
+    request) {
         return [self sendURLRequest:request];
-      })
-      .then(^id _Nullable(GACURLSessionDataResponse *_Nullable response) {
+    })
+    .then(^id
+    _Nullable(GACURLSessionDataResponse * _Nullable
+    response) {
         return [self validateHTTPResponseStatusCode:response];
-      });
+    });
 }
 
 - (FBLPromise<NSURLRequest *> *)requestWithURL:(NSURL *)requestURL
                                     HTTPMethod:(NSString *)HTTPMethod
                                           body:(NSData *)body
-                             additionalHeaders:(nullable NSDictionary<NSString *, NSString *> *)
-                                                   additionalHeaders {
-  return [FBLPromise
-      onQueue:[self defaultQueue]
-           do:^id _Nullable {
-             __block NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-             request.HTTPMethod = HTTPMethod;
-             request.HTTPBody = body;
-             // App Check should ignore cached data to prevent reusing
-             // previously received artifacts (e.g. App Attest challenge).
-             request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+                             additionalHeaders:(nullable NSDictionary
 
-             if (self.APIKey) {
-               [request setValue:self.APIKey forHTTPHeaderField:kAPIKeyHeaderKey];
-             }
+<NSString *, NSString *> *)
+additionalHeaders {
+    return [FBLPromise
+            onQueue:[self defaultQueue]
+                 do:^id
+    _Nullable
+    {
+        __block NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+        request.HTTPMethod = HTTPMethod;
+        request.HTTPBody = body;
+        // App Check should ignore cached data to prevent reusing
+        // previously received artifacts (e.g. App Attest challenge).
+        request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 
-             [request setValue:[[NSBundle mainBundle] bundleIdentifier]
-                 forHTTPHeaderField:kBundleIdKey];
+        if (self.APIKey) {
+            [request setValue:self.APIKey forHTTPHeaderField:kAPIKeyHeaderKey];
+        }
 
-             [additionalHeaders
-                 enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull key, NSString *_Nonnull obj,
-                                                     BOOL *_Nonnull stop) {
-                   [request setValue:obj forHTTPHeaderField:key];
-                 }];
+        [request setValue:[[NSBundle mainBundle] bundleIdentifier]
+       forHTTPHeaderField:kBundleIdKey];
 
-             for (GACAppCheckAPIRequestHook requestHook in self.requestHooks) {
-               requestHook(request);
-             }
+        [additionalHeaders
+                enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull key, NSString *_Nonnull obj,
+                                                    BOOL *_Nonnull stop) {
+                    [request setValue:obj forHTTPHeaderField:key];
+                }];
 
-             return [request copy];
-           }];
+        for (GACAppCheckAPIRequestHook requestHook in self.requestHooks) {
+            requestHook(request);
+        }
+
+        return [request copy];
+    }];
 }
 
 - (FBLPromise<GACURLSessionDataResponse *> *)sendURLRequest:(NSURLRequest *)request {
-  return [self.URLSession gac_dataTaskPromiseWithRequest:request]
-      .recover(^id(NSError *networkError) {
-        // Wrap raw network error into App Check domain error.
-        return [GACAppCheckErrorUtil APIErrorWithNetworkError:networkError];
-      })
-      .then(^id _Nullable(GACURLSessionDataResponse *response) {
+    return [self.URLSession gac_dataTaskPromiseWithRequest:request]
+            .recover(^id(NSError *networkError) {
+                // Wrap raw network error into App Check domain error.
+                return [GACAppCheckErrorUtil APIErrorWithNetworkError:networkError];
+            })
+            .then(^id
+    _Nullable(GACURLSessionDataResponse * response)
+    {
         return [self validateHTTPResponseStatusCode:response];
-      });
+    });
 }
 
 - (FBLPromise<GACURLSessionDataResponse *> *)validateHTTPResponseStatusCode:
-    (GACURLSessionDataResponse *)response {
-  NSInteger statusCode = response.HTTPResponse.statusCode;
-  return [FBLPromise do:^id _Nullable {
-    if (statusCode < 200 || statusCode >= 300) {
-      NSString *logMessage = [NSString
-          stringWithFormat:@"Unexpected API response: %@, body: %@.", response.HTTPResponse,
-                           [[NSString alloc] initWithData:response.HTTPBody
-                                                 encoding:NSUTF8StringEncoding]];
-      GACAppCheckLogDebug(GACLoggerAppCheckMessageCodeUnexpectedHTTPCode, logMessage);
-      return [GACAppCheckErrorUtil APIErrorWithHTTPResponse:response.HTTPResponse
-                                                       data:response.HTTPBody];
-    }
-    return response;
-  }];
+        (GACURLSessionDataResponse *)response {
+    NSInteger statusCode = response.HTTPResponse.statusCode;
+    return [FBLPromise do:^id
+    _Nullable
+    {
+        if (statusCode < 200 || statusCode >= 300) {
+            NSString * logMessage = [NSString
+                    stringWithFormat:@"Unexpected API response: %@, body: %@.", response.HTTPResponse,
+                                     [[NSString alloc] initWithData:response.HTTPBody
+                                                           encoding:NSUTF8StringEncoding]];
+            GACAppCheckLogDebug(GACLoggerAppCheckMessageCodeUnexpectedHTTPCode, logMessage);
+            return [GACAppCheckErrorUtil APIErrorWithHTTPResponse:response.HTTPResponse
+                                                             data:response.HTTPBody];
+        }
+        return response;
+    }];
 }
 
 - (FBLPromise<GACAppCheckToken *> *)appCheckTokenWithAPIResponse:
-    (GACURLSessionDataResponse *)response {
-  return [FBLPromise onQueue:[self defaultQueue]
-                          do:^id _Nullable {
-                            NSError *error;
+        (GACURLSessionDataResponse *)response {
+    return [FBLPromise onQueue:[self defaultQueue]
+                            do:^id
+    _Nullable
+    {
+        NSError * error;
 
-                            GACAppCheckToken *token = [[GACAppCheckToken alloc]
-                                initWithTokenExchangeResponse:response.HTTPBody
-                                                  requestDate:[NSDate date]
-                                                        error:&error];
-                            return token ?: error;
-                          }];
+        GACAppCheckToken *token = [[GACAppCheckToken alloc]
+                initWithTokenExchangeResponse:response.HTTPBody
+                                  requestDate:[NSDate date]
+                                        error:&error];
+        return token ?: error;
+    }];
 }
 
 - (dispatch_queue_t)defaultQueue {
-  return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0);
+    return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0);
 }
 
 @end

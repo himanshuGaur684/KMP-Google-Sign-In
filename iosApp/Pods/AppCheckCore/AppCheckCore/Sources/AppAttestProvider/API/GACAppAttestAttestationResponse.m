@@ -25,72 +25,73 @@ static NSString *const kResponseFieldArtifact = @"artifact";
 @implementation GACAppAttestAttestationResponse
 
 - (instancetype)initWithArtifact:(NSData *)artifact token:(GACAppCheckToken *)token {
-  self = [super init];
-  if (self) {
-    _artifact = artifact;
-    _token = token;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _artifact = artifact;
+        _token = token;
+    }
+    return self;
 }
 
 - (nullable instancetype)initWithResponseData:(NSData *)response
                                   requestDate:(NSDate *)requestDate
                                         error:(NSError **)outError {
-  if (response.length <= 0) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil
-            errorWithFailureReason:
-                @"Failed to parse the initial handshake response. Empty server response body."],
-        outError);
-    return nil;
-  }
+    if (response.length <= 0) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil
+                        errorWithFailureReason:
+                                @"Failed to parse the initial handshake response. Empty server response body."],
+                outError);
+        return nil;
+    }
 
-  NSError *JSONError;
-  NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:response
-                                                               options:0
-                                                                 error:&JSONError];
+    NSError *JSONError;
+    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:response
+                                                                 options:0
+                                                                   error:&JSONError];
 
-  if (![responseDict isKindOfClass:[NSDictionary class]]) {
-    GACAppCheckSetErrorToPointer([GACAppCheckErrorUtil JSONSerializationError:JSONError], outError);
-    return nil;
-  }
+    if (![responseDict isKindOfClass:[NSDictionary class]]) {
+        GACAppCheckSetErrorToPointer([GACAppCheckErrorUtil JSONSerializationError:JSONError],
+                                     outError);
+        return nil;
+    }
 
-  NSString *artifactBase64String = responseDict[kResponseFieldArtifact];
-  if (![artifactBase64String isKindOfClass:[NSString class]]) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil
-            appAttestAttestationResponseErrorWithMissingField:kResponseFieldArtifact],
-        outError);
-    return nil;
-  }
-  NSData *artifactData = [[NSData alloc] initWithBase64EncodedString:artifactBase64String
-                                                             options:0];
-  if (artifactData == nil) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil
-            appAttestAttestationResponseErrorWithMissingField:kResponseFieldArtifact],
-        outError);
-    return nil;
-  }
+    NSString *artifactBase64String = responseDict[kResponseFieldArtifact];
+    if (![artifactBase64String isKindOfClass:[NSString class]]) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil
+                        appAttestAttestationResponseErrorWithMissingField:kResponseFieldArtifact],
+                outError);
+        return nil;
+    }
+    NSData *artifactData = [[NSData alloc] initWithBase64EncodedString:artifactBase64String
+                                                               options:0];
+    if (artifactData == nil) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil
+                        appAttestAttestationResponseErrorWithMissingField:kResponseFieldArtifact],
+                outError);
+        return nil;
+    }
 
-  NSDictionary *appCheckTokenDict = responseDict[kResponseFieldAppCheckTokenDict];
-  if (![appCheckTokenDict isKindOfClass:[NSDictionary class]]) {
-    GACAppCheckSetErrorToPointer(
-        [GACAppCheckErrorUtil
-            appAttestAttestationResponseErrorWithMissingField:kResponseFieldAppCheckTokenDict],
-        outError);
-    return nil;
-  }
+    NSDictionary *appCheckTokenDict = responseDict[kResponseFieldAppCheckTokenDict];
+    if (![appCheckTokenDict isKindOfClass:[NSDictionary class]]) {
+        GACAppCheckSetErrorToPointer(
+                [GACAppCheckErrorUtil
+                        appAttestAttestationResponseErrorWithMissingField:kResponseFieldAppCheckTokenDict],
+                outError);
+        return nil;
+    }
 
-  GACAppCheckToken *appCheckToken = [[GACAppCheckToken alloc] initWithResponseDict:appCheckTokenDict
-                                                                       requestDate:requestDate
-                                                                             error:outError];
+    GACAppCheckToken *appCheckToken = [[GACAppCheckToken alloc] initWithResponseDict:appCheckTokenDict
+                                                                         requestDate:requestDate
+                                                                               error:outError];
 
-  if (appCheckToken == nil) {
-    return nil;
-  }
+    if (appCheckToken == nil) {
+        return nil;
+    }
 
-  return [self initWithArtifact:artifactData token:appCheckToken];
+    return [self initWithArtifact:artifactData token:appCheckToken];
 }
 
 @end

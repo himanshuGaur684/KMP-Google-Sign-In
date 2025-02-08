@@ -27,68 +27,76 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation GIDToken
 
 - (instancetype)initWithTokenString:(NSString *)tokenString
-                     expirationDate:(nullable NSDate *)expirationDate {
-  self = [super init];
-  if (self) {
-    _tokenString = [tokenString copy];
-    _expirationDate  = expirationDate;
-  }
-  
-  return self;
+                     expirationDate:(nullable NSDate
+
+*)expirationDate {
+    self = [super init];
+    if (self) {
+        _tokenString = [tokenString copy];
+        _expirationDate = expirationDate;
+    }
+
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)decoder {
-  self = [super init];
-  if (self) {
-    _tokenString = [decoder decodeObjectOfClass:[NSString class] forKey:kTokenStringKey];
-    _expirationDate = [decoder decodeObjectOfClass:[NSDate class] forKey:kExpirationDateKey];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _tokenString = [decoder decodeObjectOfClass:[NSString class] forKey:kTokenStringKey];
+        _expirationDate = [decoder decodeObjectOfClass:[NSDate class] forKey:kExpirationDateKey];
+    }
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-  [encoder encodeObject:_tokenString forKey:kTokenStringKey];
-  [encoder encodeObject:_expirationDate forKey:kExpirationDateKey];
+    [encoder encodeObject:_tokenString forKey:kTokenStringKey];
+    [encoder encodeObject:_expirationDate forKey:kExpirationDateKey];
 }
 
 #pragma mark - isEqual
 
 - (BOOL)isEqual:(nullable id)object {
-  if (object == nil) {
-    return NO;
-  }
-  if (self == object) {
-    return YES;
-  }
-  if (![object isKindOfClass:[GIDToken class]]) {
-    return NO;
-  }
-  return [self isEqualToToken:(GIDToken *)object];
+    if (object == nil) {
+        return NO;
+    }
+    if (self == object) {
+        return YES;
+    }
+    if (![object isKindOfClass:[GIDToken class]]) {
+        return NO;
+    }
+    return [self isEqualToToken:(GIDToken *) object];
 }
 
 - (BOOL)isEqualToToken:(GIDToken *)otherToken {
-  return [_tokenString isEqual:otherToken.tokenString] &&
-      [self isTheSameDate:_expirationDate with:otherToken.expirationDate];
+    return [_tokenString isEqual:otherToken.tokenString] &&
+           [self isTheSameDate:_expirationDate with:otherToken.expirationDate];
 }
 
 // The date is nullable in GIDToken. Two `nil` dates are considered equal so
 // token equality check succeeds if token strings are equal and have no expiration.
-- (BOOL)isTheSameDate:(nullable NSDate *)date1
-                 with:(nullable NSDate *)date2 {
-  if (!date1 && !date2) {
-    return YES;
-  }
-  return [date1 isEqualToDate:date2];
+- (BOOL)isTheSameDate:(nullable NSDate
+
+*)
+date1
+        with
+:(
+nullable NSDate
+*)date2 {
+    if (!date1 && !date2) {
+        return YES;
+    }
+    return [date1 isEqualToDate:date2];
 }
 
 - (NSUInteger)hash {
-  return [self.tokenString hash] ^ [self.expirationDate hash];
+    return [self.tokenString hash] ^ [self.expirationDate hash];
 }
 
 @end

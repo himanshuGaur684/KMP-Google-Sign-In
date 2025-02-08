@@ -34,26 +34,26 @@ git clone https://github.com/google/GoogleSignIn-iOS
 open GoogleSignIn-iOS/Samples/ObjC/SignInSample/SignInSample.xcodeproj
 ```
 
-If you would like to see a Swift example, take a look at 
+If you would like to see a Swift example, take a look at
 [Samples/Swift/DaysUntilBirthday](Samples/Swift/DaysUntilBirthday).
 
 * Add Google Sign-In to your own app by following our
-[getting started guides](https://developers.google.com/identity/sign-in/ios/start-integrating).
+  [getting started guides](https://developers.google.com/identity/sign-in/ios/start-integrating).
 * Take a look at the
-[API reference](https://developers.google.com/identity/sign-in/ios/api/).
+  [API reference](https://developers.google.com/identity/sign-in/ios/api/).
 
 ## Google Sign-In on macOS
 
 Google Sign-In allows your users to sign-in to your native macOS app using their Google account
-and default browser.  When building for macOS, the `signInWithConfiguration:` and `addScopes:`
-methods take a `presentingWindow:` parameter in place of `presentingViewController:`.  Note that
+and default browser. When building for macOS, the `signInWithConfiguration:` and `addScopes:`
+methods take a `presentingWindow:` parameter in place of `presentingViewController:`. Note that
 in order for your macOS app to store credientials via the Keychain on macOS, you will need to
 [sign your app](https://developer.apple.com/support/code-signing/).
 
 ### Mac Catalyst
 
 Google Sign-In also supports iOS apps that are built for macOS via
-[Mac Catalyst](https://developer.apple.com/mac-catalyst/).  In order for your Mac Catalyst app
+[Mac Catalyst](https://developer.apple.com/mac-catalyst/). In order for your Mac Catalyst app
 to store credientials via the Keychain on macOS, you will need to
 [sign your app](https://developer.apple.com/support/code-signing/).
 
@@ -78,15 +78,16 @@ This example takes advantage of the initializer's [default argument for the
 view model](GoogleSignInSwift/Sources/GoogleSignInButton.swift#L39).
 The default arguments for the view model will use the light scheme, the
 standard button style, and the normal button state.
-You can supply an instance of [`GoogleSignInButtonViewModel`](GoogleSignInSwift/Sources/GoogleSignInButtonViewModel.swift)
+You can supply an instance of [
+`GoogleSignInButtonViewModel`](GoogleSignInSwift/Sources/GoogleSignInButtonViewModel.swift)
 with different values for these properties to customize the button.
-[This convenience initializer](GoogleSignInSwift/Sources/GoogleSignInButton.swift#L56) 
+[This convenience initializer](GoogleSignInSwift/Sources/GoogleSignInButton.swift#L56)
 provides parameters that you can use to set these values as needed.
 
 ### UIKit (iOS)
 
 If you are not using SwiftUI to build your user interfaces, you can either
-create `GIDSignInButton` programmatically, or in a Xib/Storyboard. 
+create `GIDSignInButton` programmatically, or in a Xib/Storyboard.
 If you are writing programmatic UI code, it will look something like this:
 
 `let button = GIDSignInButton(frame: CGRect(<YOUR_RECT>))`
@@ -94,7 +95,7 @@ If you are writing programmatic UI code, it will look something like this:
 ### AppKit (macOS)
 
 Given that `GIDSignInButton` is implemented as a subclass of `UIControl`, it
-will not be available on macOS. 
+will not be available on macOS.
 You can instead use the SwiftUI Google sign-in button.
 Doing so will require that you wrap the SwiftUI button in a hosting view so
 that it will be available for use in AppKit.

@@ -30,7 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// the same.
 ///
 /// @param suiteName The name of the suite of the user defaults.
-- (instancetype)initWithSuiteName:(nullable NSString *)suiteName;
+- (instancetype)initWithSuiteName:(nullable NSString
+
+*)
+suiteName;
 
 #pragma mark - Getters
 
@@ -42,15 +45,24 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)objectForKey:(NSString *)defaultName;
 
 /// Equivalent to -objectForKey:, except that it will return nil if the value is not an NSArray.
-- (nullable NSArray *)arrayForKey:(NSString *)defaultName;
+- (nullable NSArray
+
+*)arrayForKey:(NSString *)
+defaultName;
 
 /// Equivalent to -objectForKey:, except that it will return nil if the value
 /// is not an NSDictionary.
-- (nullable NSDictionary<NSString *, id> *)dictionaryForKey:(NSString *)defaultName;
+- (nullable NSDictionary
+
+<NSString *, id> *)dictionaryForKey:(NSString *)
+defaultName;
 
 /// Equivalent to -objectForKey:, except that it will convert NSNumber values to their NSString
 /// representation. If a non-string non-number value is found, nil will be returned.
-- (nullable NSString *)stringForKey:(NSString *)defaultName;
+- (nullable NSString
+
+*)stringForKey:(NSString *)
+defaultName;
 
 /// Equivalent to -objectForKey:, except that it converts the returned value to an NSInteger. If the
 /// value is an NSNumber, the result of -integerValue will be returned. If the value is an NSString,

@@ -21,9 +21,9 @@
 @implementation GACAppCheckCryptoUtils
 
 + (NSData *)sha256HashFromData:(NSData *)dataToHash {
-  NSMutableData *digest = [[NSMutableData alloc] initWithLength:CC_SHA256_DIGEST_LENGTH];
-  CC_SHA256(dataToHash.bytes, (CC_LONG)dataToHash.length, digest.mutableBytes);
-  return [digest copy];
+    NSMutableData *digest = [[NSMutableData alloc] initWithLength:CC_SHA256_DIGEST_LENGTH];
+    CC_SHA256(dataToHash.bytes, (CC_LONG) dataToHash.length, digest.mutableBytes);
+    return [digest copy];
 }
 
 @end

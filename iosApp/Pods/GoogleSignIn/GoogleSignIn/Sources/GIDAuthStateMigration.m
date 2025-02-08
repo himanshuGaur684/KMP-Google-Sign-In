@@ -21,13 +21,17 @@
 #ifdef SWIFT_PACKAGE
 @import AppAuth;
 #else
+
 #import <AppAuth/AppAuth.h>
+
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 // User preference key to detect whether or not the migration check has been performed.
-static NSString *const kMigrationCheckPerformedKey = @"GID_MigrationCheckPerformed";
+static NSString
+*
+const kMigrationCheckPerformedKey = @"GID_MigrationCheckPerformed";
 
 // Keychain account used to store additional state in SDKs previous to v5, including GPPSignIn.
 static NSString *const kOldKeychainAccount = @"GooglePlus";
@@ -40,154 +44,161 @@ static NSString *const kFingerprintService = @"fingerprint";
 
 @interface GIDAuthStateMigration ()
 
-@property (nonatomic, strong) GTMKeychainStore *keychainStore;
+@property(nonatomic, strong) GTMKeychainStore *keychainStore;
 
 @end
 
 @implementation GIDAuthStateMigration
 
 - (instancetype)initWithKeychainStore:(GTMKeychainStore *)keychainStore {
-  self = [super init];
-  if (self) {
-    _keychainStore = keychainStore;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _keychainStore = keychainStore;
+    }
+    return self;
 }
 
 - (instancetype)init {
-  GTMKeychainStore *keychainStore = [[GTMKeychainStore alloc] initWithItemName:@"auth"];
-  return [self initWithKeychainStore:keychainStore];
+    GTMKeychainStore *keychainStore = [[GTMKeychainStore alloc] initWithItemName:@"auth"];
+    return [self initWithKeychainStore:keychainStore];
 }
 
 - (void)migrateIfNeededWithTokenURL:(NSURL *)tokenURL
                        callbackPath:(NSString *)callbackPath
                        keychainName:(NSString *)keychainName
                      isFreshInstall:(BOOL)isFreshInstall {
-  // See if we've performed the migration check previously.
-  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-  if ([defaults boolForKey:kMigrationCheckPerformedKey]) {
-    return;
-  }
-
-  // If this is not a fresh install, attempt to migrate state.  If this is a fresh install, take no
-  // action and go on to mark the migration check as having been performed.
-  if (!isFreshInstall) {
-    // Attempt migration
-    GTMAuthSession *authSession =
-        [self extractAuthSessionWithTokenURL:tokenURL callbackPath:callbackPath];
-
-    // If migration was successful, save our migrated state to the keychain.
-    if (authSession) {
-      NSError *err;
-      [self.keychainStore saveAuthSession:authSession error:&err];
-      // If we're unable to save to the keychain, return without marking migration performed.
-      if (err) {
+    // See if we've performed the migration check previously.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:kMigrationCheckPerformedKey]) {
         return;
-      };
     }
-  }
 
-  // Mark the migration check as having been performed.
-  [defaults setBool:YES forKey:kMigrationCheckPerformedKey];
+    // If this is not a fresh install, attempt to migrate state.  If this is a fresh install, take no
+    // action and go on to mark the migration check as having been performed.
+    if (!isFreshInstall) {
+        // Attempt migration
+        GTMAuthSession *authSession =
+                [self extractAuthSessionWithTokenURL:tokenURL callbackPath:callbackPath];
+
+        // If migration was successful, save our migrated state to the keychain.
+        if (authSession) {
+            NSError *err;
+            [self.keychainStore saveAuthSession:authSession error:&err];
+            // If we're unable to save to the keychain, return without marking migration performed.
+            if (err) {
+                return;
+            };
+        }
+    }
+
+    // Mark the migration check as having been performed.
+    [defaults setBool:YES forKey:kMigrationCheckPerformedKey];
 }
 
 // Returns a |GTMAuthSession| object containing any old auth state or |nil| if none
 // was found or the migration failed.
-- (nullable GTMAuthSession *)extractAuthSessionWithTokenURL:(NSURL *)tokenURL
-                                               callbackPath:(NSString *)callbackPath {
-  // Retrieve the last used fingerprint.
-  NSString *fingerprint = [GIDAuthStateMigration passwordForService:kFingerprintService];
-  if (!fingerprint) {
-    return nil;
-  }
+- (nullable GTMAuthSession
 
-  // Retrieve the GTMOAuth2 persistence string.
-  NSError *passwordError;
-  NSString *GTMOAuth2PersistenceString =
-      [self.keychainStore.keychainHelper passwordForService:fingerprint error:&passwordError];
-  if (passwordError) {
-    return nil;
-  }
+*)extractAuthSessionWithTokenURL:(NSURL *)
+tokenURL
+        callbackPath
+:(NSString *)callbackPath {
+    // Retrieve the last used fingerprint.
+    NSString * fingerprint = [GIDAuthStateMigration passwordForService:kFingerprintService];
+    if (!fingerprint) {
+        return nil;
+    }
 
-  // Parse the fingerprint.
-  NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
-  NSString *pattern =
-      [NSString stringWithFormat:@"^%@-(.+)-(?:email|profile|https:\\/\\/).*$", bundleID];
-  NSError *error;
-  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                         options:0
-                                                                           error:&error];
-  NSRange matchRange = NSMakeRange(0, fingerprint.length);
-  NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:fingerprint
-                                                            options:0
-                                                              range:matchRange];
-  if ([matches count] != 1) {
-    return nil;
-  }
+    // Retrieve the GTMOAuth2 persistence string.
+    NSError *passwordError;
+    NSString * GTMOAuth2PersistenceString =
+            [self.keychainStore.keychainHelper passwordForService:fingerprint error:&passwordError];
+    if (passwordError) {
+        return nil;
+    }
 
-  // Extract the client ID from the fingerprint.
-  NSString *clientID = [fingerprint substringWithRange:[matches[0] rangeAtIndex:1]];
+    // Parse the fingerprint.
+    NSString * bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSString * pattern =
+            [NSString stringWithFormat:@"^%@-(.+)-(?:email|profile|https:\\/\\/).*$", bundleID];
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:0
+                                                                             error:&error];
+    NSRange matchRange = NSMakeRange(0, fingerprint.length);
+    NSArray < NSTextCheckingResult * > *matches = [regex matchesInString:fingerprint
+                                                                 options:0
+                                                                   range:matchRange];
+    if ([matches count] != 1) {
+        return nil;
+    }
 
-  // Generate the redirect URI from the extracted client ID.
-  NSString *scheme =
-      [[[GIDSignInCallbackSchemes alloc] initWithClientIdentifier:clientID] clientIdentifierScheme];
-  NSString *redirectURI = [NSString stringWithFormat:@"%@:%@", scheme, callbackPath];
+    // Extract the client ID from the fingerprint.
+    NSString * clientID = [fingerprint substringWithRange:[matches[0] rangeAtIndex:1]];
 
-  // Retrieve the additional token request parameters value.
-  NSString *additionalTokenRequestParametersService =
-      [NSString stringWithFormat:@"%@~~atrp", fingerprint];
-  NSString *additionalTokenRequestParameters =
-      [GIDAuthStateMigration passwordForService:additionalTokenRequestParametersService];
+    // Generate the redirect URI from the extracted client ID.
+    NSString * scheme =
+            [[[GIDSignInCallbackSchemes alloc] initWithClientIdentifier:clientID] clientIdentifierScheme];
+    NSString * redirectURI = [NSString stringWithFormat:@"%@:%@", scheme, callbackPath];
 
-  // Generate a persistence string that includes additional token request parameters if present.
-  NSString *persistenceString = GTMOAuth2PersistenceString;
-  if (additionalTokenRequestParameters) {
-    persistenceString = [NSString stringWithFormat:@"%@&%@",
-                         GTMOAuth2PersistenceString,
-                         additionalTokenRequestParameters];
-  }
+    // Retrieve the additional token request parameters value.
+    NSString * additionalTokenRequestParametersService =
+            [NSString stringWithFormat:@"%@~~atrp", fingerprint];
+    NSString * additionalTokenRequestParameters =
+            [GIDAuthStateMigration passwordForService:additionalTokenRequestParametersService];
 
-  // Use |GTMOAuth2Compatibility| to generate a |GTMAuthSession| from the
-  // persistence string, redirect URI, client ID, and token endpoint URL.
-  GTMAuthSession *authSession =
-      [GTMOAuth2Compatibility authSessionForPersistenceString:persistenceString
-                                                     tokenURL:tokenURL
-                                                  redirectURI:redirectURI
-                                                     clientID:clientID
-                                                 clientSecret:nil
-                                                        error:nil];
+    // Generate a persistence string that includes additional token request parameters if present.
+    NSString * persistenceString = GTMOAuth2PersistenceString;
+    if (additionalTokenRequestParameters) {
+        persistenceString = [NSString stringWithFormat:@"%@&%@",
+                                                       GTMOAuth2PersistenceString,
+                                                       additionalTokenRequestParameters];
+    }
 
-  return authSession;
+    // Use |GTMOAuth2Compatibility| to generate a |GTMAuthSession| from the
+    // persistence string, redirect URI, client ID, and token endpoint URL.
+    GTMAuthSession *authSession =
+            [GTMOAuth2Compatibility authSessionForPersistenceString:persistenceString
+                                                           tokenURL:tokenURL
+                                                        redirectURI:redirectURI
+                                                           clientID:clientID
+                                                       clientSecret:nil
+                                                              error:nil];
+
+    return authSession;
 }
 
 // Returns the password string for a given service string stored by an old version of the SDK or
 // |nil| if no matching keychain item was found.
-+ (nullable NSString *)passwordForService:(NSString *)service {
-  if (!service.length) {
-    return nil;
-  }
-  CFDataRef result = NULL;
-  NSDictionary<id, id> *query = @{
-    (id)kSecClass : (id)kSecClassGenericPassword,
-    (id)kSecAttrGeneric : kGenericAttribute,
-    (id)kSecAttrAccount : kOldKeychainAccount,
-    (id)kSecAttrService : service,
-    (id)kSecReturnData : (id)kCFBooleanTrue,
-    (id)kSecMatchLimit : (id)kSecMatchLimitOne,
-  };
-  OSStatus status = SecItemCopyMatching((CFDictionaryRef)query, (CFTypeRef *)&result);
-  NSData *passwordData;
-  if (status == noErr && [(__bridge NSData *)result length] > 0) {
-    passwordData = [(__bridge NSData *)result copy];
-  }
-  if (result != NULL) {
-    CFRelease(result);
-  }
-  if (!passwordData) {
-    return nil;
-  }
-  NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-  return password;
++ (nullable NSString
+
+*)passwordForService:(NSString *)service {
+    if (!service.length) {
+        return nil;
+    }
+    CFDataRef result = NULL;
+    NSDictionary <id, id> *query = @{
+            (id) kSecClass: (id) kSecClassGenericPassword,
+            (id) kSecAttrGeneric: kGenericAttribute,
+            (id) kSecAttrAccount: kOldKeychainAccount,
+            (id) kSecAttrService: service,
+            (id) kSecReturnData: (id) kCFBooleanTrue,
+            (id) kSecMatchLimit: (id) kSecMatchLimitOne,
+    };
+    OSStatus status = SecItemCopyMatching((CFDictionaryRef) query, (CFTypeRef * ) & result);
+    NSData *passwordData;
+    if (status == noErr && [(__bridge NSData *) result length] > 0) {
+        passwordData = [(__bridge NSData *) result copy];
+    }
+    if (result != NULL) {
+        CFRelease(result);
+    }
+    if (!passwordData) {
+        return nil;
+    }
+    NSString *
+    password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    return password;
 }
 
 @end

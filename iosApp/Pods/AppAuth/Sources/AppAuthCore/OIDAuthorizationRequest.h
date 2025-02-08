@@ -31,7 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief The @c code_challenge_method  value for the S256 code challenge.
     @see https://tools.ietf.org/html/rfc7636#section-4.3
  */
-extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
+extern NSString
+*
+const OIDOAuthorizationRequestCodeChallengeMethodS256;
 
 
 /*! @brief Represents an authorization request.
@@ -39,7 +41,7 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @see https://tools.ietf.org/html/rfc6749#section-4.1.1
  */
 @interface OIDAuthorizationRequest :
-    NSObject<NSCopying, NSSecureCoding, OIDExternalUserAgentRequest>
+        NSObject <NSCopying, NSSecureCoding, OIDExternalUserAgentRequest>
 
 /*! @brief The service's configuration.
     @remarks This configuration specifies how to connect to a particular OAuth provider.
@@ -138,7 +140,9 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @brief Unavailable. Please use
         @c initWithConfiguration:clientId:scopes:redirectURL:responseType:additionalParameters:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Creates an authorization request with opinionated defaults (a secure @c state, and
         PKCE with S256 as the @c code_challenge_method).
@@ -152,12 +156,23 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
         automatically.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
-                 clientId:(NSString *)clientID
-                   scopes:(nullable NSArray<NSString *> *)scopes
-              redirectURL:(NSURL *)redirectURL
-             responseType:(NSString *)responseType
-     additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+initWithConfiguration:(OIDServiceConfiguration *)configuration
+             clientId:(NSString *)clientID
+               scopes:(nullable NSArray
+
+<NSString *> *)
+scopes
+        redirectURL
+:(NSURL *)
+redirectURL
+        responseType
+:(NSString *)
+responseType
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters;
 
 /*! @brief Creates an authorization request with custom nonce, a secure @c state,
         and PKCE with S256 as the @c code_challenge_method.
@@ -174,13 +189,28 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
         automatically.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
-                 clientId:(NSString *)clientID
-                   scopes:(nullable NSArray<NSString *> *)scopes
-              redirectURL:(NSURL *)redirectURL
-             responseType:(NSString *)responseType
-                    nonce:(nullable NSString *)nonce
-     additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+initWithConfiguration:(OIDServiceConfiguration *)configuration
+             clientId:(NSString *)clientID
+               scopes:(nullable NSArray
+
+<NSString *> *)
+scopes
+        redirectURL
+:(NSURL *)
+redirectURL
+        responseType
+:(NSString *)
+responseType
+        nonce
+:(
+nullable NSString
+*)
+nonce
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters;
 
 /*! @brief Creates an authorization request with opinionated defaults (a secure @c state, @c nonce,
         and PKCE with S256 as the @c code_challenge_method).
@@ -195,13 +225,28 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
         automatically.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
-                 clientId:(NSString *)clientID
-             clientSecret:(nullable NSString *)clientSecret
-                   scopes:(nullable NSArray<NSString *> *)scopes
-              redirectURL:(NSURL *)redirectURL
-             responseType:(NSString *)responseType
-     additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters;
+initWithConfiguration:(OIDServiceConfiguration *)configuration
+             clientId:(NSString *)clientID
+         clientSecret:(nullable NSString
+
+*)
+clientSecret
+        scopes
+:(
+nullable NSArray<NSString *>
+*)
+scopes
+        redirectURL
+:(NSURL *)
+redirectURL
+        responseType
+:(NSString *)
+responseType
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters;
 
 /*! @brief Designated initializer.
     @param configuration The service's configuration.
@@ -224,19 +269,56 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @param additionalParameters The client's additional authorization parameters.
  */
 - (instancetype)
-    initWithConfiguration:(OIDServiceConfiguration *)configuration
-                 clientId:(NSString *)clientID
-             clientSecret:(nullable NSString *)clientSecret
-                    scope:(nullable NSString *)scope
-              redirectURL:(nullable NSURL *)redirectURL
-             responseType:(NSString *)responseType
-                    state:(nullable NSString *)state
-                    nonce:(nullable NSString *)nonce
-             codeVerifier:(nullable NSString *)codeVerifier
-            codeChallenge:(nullable NSString *)codeChallenge
-      codeChallengeMethod:(nullable NSString *)codeChallengeMethod
-     additionalParameters:(nullable NSDictionary<NSString *, NSString *> *)additionalParameters
-    NS_DESIGNATED_INITIALIZER;
+initWithConfiguration:(OIDServiceConfiguration *)configuration
+             clientId:(NSString *)clientID
+         clientSecret:(nullable NSString
+
+*)
+clientSecret
+        scope
+:(
+nullable NSString
+*)
+scope
+        redirectURL
+:(
+nullable NSURL
+*)
+redirectURL
+        responseType
+:(NSString *)
+responseType
+        state
+:(
+nullable NSString
+*)
+state
+        nonce
+:(
+nullable NSString
+*)
+nonce
+        codeVerifier
+:(
+nullable NSString
+*)
+codeVerifier
+        codeChallenge
+:(
+nullable NSString
+*)
+codeChallenge
+        codeChallengeMethod
+:(
+nullable NSString
+*)
+codeChallengeMethod
+        additionalParameters
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalParameters
+        NS_DESIGNATED_INITIALIZER;
 
 /*! @brief Constructs the request URI by adding the request parameters to the query component of the
         authorization endpoint URI using the "application/x-www-form-urlencoded" format.
@@ -249,13 +331,19 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
     @return The generated state.
     @see https://tools.ietf.org/html/rfc6819#section-5.3.5
  */
-+ (nullable NSString *)generateState;
++ (nullable NSString
+
+*)
+generateState;
 
 /*! @brief Constructs a PKCE-compliant code verifier.
     @return The generated code verifier.
     @see https://tools.ietf.org/html/rfc7636#section-4.1
  */
-+ (nullable NSString *)generateCodeVerifier;
++ (nullable NSString
+
+*)
+generateCodeVerifier;
 
 /*! @brief Creates a PKCE S256 codeChallenge from the codeVerifier.
     @param codeVerifier The code verifier from which the code challenge will be derived.
@@ -266,7 +354,12 @@ extern NSString *const OIDOAuthorizationRequestCodeChallengeMethodS256;
         ::OIDOAuthorizationRequestCodeChallengeMethodS256.
     @see https://tools.ietf.org/html/rfc7636#section-4.1
  */
-+ (nullable NSString *)codeChallengeS256ForVerifier:(nullable NSString *)codeVerifier;
++ (nullable NSString
+
+*)codeChallengeS256ForVerifier:(
+nullable NSString
+*)
+codeVerifier;
 
 @end
 

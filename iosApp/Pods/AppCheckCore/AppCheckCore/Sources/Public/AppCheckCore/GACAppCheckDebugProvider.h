@@ -49,9 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///    `xcodebuild test -scheme InstallationsExample -workspace InstallationsExample.xcworkspace \
 ///      MY_APP_CHECK_DEBUG_TOKEN=$(MY_SECRET_ON_CI)`
 NS_SWIFT_NAME(AppCheckCoreDebugProvider)
+
 @interface GACAppCheckDebugProvider : NSObject <GACAppCheckProvider>
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// The default initializer.
 /// @param serviceName A unique identifier to differentiate storage keys corresponding to the same
@@ -65,9 +68,18 @@ NS_SWIFT_NAME(AppCheckCoreDebugProvider)
 /// @return An instance of `AppCheckCoreDebugProvider`.
 - (instancetype)initWithServiceName:(NSString *)serviceName
                        resourceName:(NSString *)resourceName
-                            baseURL:(nullable NSString *)baseURL
-                             APIKey:(NSString *)APIKey
-                       requestHooks:(nullable NSArray<GACAppCheckAPIRequestHook> *)requestHooks;
+                            baseURL:(nullable NSString
+
+*)
+baseURL
+        APIKey
+:(NSString *)
+APIKey
+        requestHooks
+:(
+nullable NSArray<GACAppCheckAPIRequestHook>
+*)
+requestHooks;
 
 /// Returns the locally generated token.
 - (NSString *)localDebugToken;

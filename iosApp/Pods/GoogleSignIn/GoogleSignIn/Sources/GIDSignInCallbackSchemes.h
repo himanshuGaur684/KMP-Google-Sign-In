@@ -22,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GIDSignInCallbackSchemes : NSObject
 
 // Please call the designated initializer.
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 // The designated initializer.
 - (instancetype)initWithClientIdentifier:(NSString *)clientIdentifier NS_DESIGNATED_INITIALIZER;

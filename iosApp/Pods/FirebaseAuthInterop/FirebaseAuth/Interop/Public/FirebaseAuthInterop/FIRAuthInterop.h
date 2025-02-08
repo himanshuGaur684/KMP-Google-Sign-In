@@ -25,20 +25,30 @@ NS_ASSUME_NONNULL_BEGIN
  @brief The type of block which gets called when a token is ready.
  */
 typedef void (^FIRTokenCallback)(NSString *_Nullable_result token, NSError *_Nullable error)
-    NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
+
+NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
 
 /// Common methods for Auth interoperability.
 NS_SWIFT_NAME(AuthInterop)
+
 @protocol FIRAuthInterop
 
 /// Retrieves the Firebase authentication token, possibly refreshing it if it has expired.
 - (void)getTokenForcingRefresh:(BOOL)forceRefresh
                   withCallback:
-                      (void (^)(NSString *_Nullable_result token, NSError *_Nullable error))callback
-    NS_SWIFT_NAME(getToken(forcingRefresh:completion:));
+                          (void (^)(NSString *_Nullable_result token, NSError *_Nullable
+                                    error))callback
+NS_SWIFT_NAME
+
+(
+getToken(forcingRefresh
+:completion:));
 
 /// Get the current Auth user's UID. Returns nil if there is no user signed in.
-- (nullable NSString *)getUserID;
+- (nullable NSString
+
+*)
+getUserID;
 
 @end
 

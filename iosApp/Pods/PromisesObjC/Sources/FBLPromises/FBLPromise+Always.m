@@ -21,38 +21,38 @@
 @implementation FBLPromise (AlwaysAdditions)
 
 - (FBLPromise *)always:(FBLPromiseAlwaysWorkBlock)work {
-  return [self onQueue:FBLPromise.defaultDispatchQueue always:work];
+    return [self onQueue:FBLPromise.defaultDispatchQueue always:work];
 }
 
 - (FBLPromise *)onQueue:(dispatch_queue_t)queue always:(FBLPromiseAlwaysWorkBlock)work {
-  NSParameterAssert(queue);
-  NSParameterAssert(work);
+    NSParameterAssert(queue);
+    NSParameterAssert(work);
 
-  return [self chainOnQueue:queue
-      chainedFulfill:^id(id value) {
-        work();
-        return value;
-      }
-      chainedReject:^id(NSError *error) {
-        work();
-        return error;
-      }];
+    return [self chainOnQueue:queue
+               chainedFulfill:^id(id value) {
+                   work();
+                   return value;
+               }
+                chainedReject:^id(NSError *error) {
+                    work();
+                    return error;
+                }];
 }
 
 @end
 
 @implementation FBLPromise (DotSyntax_AlwaysAdditions)
 
-- (FBLPromise * (^)(FBLPromiseAlwaysWorkBlock))always {
-  return ^(FBLPromiseAlwaysWorkBlock work) {
-    return [self always:work];
-  };
+- (FBLPromise *(^)(FBLPromiseAlwaysWorkBlock))always {
+    return ^(FBLPromiseAlwaysWorkBlock work) {
+        return [self always:work];
+    };
 }
 
-- (FBLPromise * (^)(dispatch_queue_t, FBLPromiseAlwaysWorkBlock))alwaysOn {
-  return ^(dispatch_queue_t queue, FBLPromiseAlwaysWorkBlock work) {
-    return [self onQueue:queue always:work];
-  };
+- (FBLPromise *(^)(dispatch_queue_t, FBLPromiseAlwaysWorkBlock))alwaysOn {
+    return ^(dispatch_queue_t queue, FBLPromiseAlwaysWorkBlock work) {
+        return [self onQueue:queue always:work];
+    };
 }
 
 @end

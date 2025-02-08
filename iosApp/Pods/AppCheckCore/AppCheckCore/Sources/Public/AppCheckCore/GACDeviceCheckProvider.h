@@ -30,9 +30,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// https://firebase.google.com/docs/ios/learn-more for more details.
 GAC_DEVICE_CHECK_PROVIDER_AVAILABILITY
 NS_SWIFT_NAME(AppCheckCoreDeviceCheckProvider)
+
 @interface GACDeviceCheckProvider : NSObject <GACAppCheckProvider>
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// The default initializer.
 /// @param serviceName A unique identifier to differentiate storage keys corresponding to the same
@@ -45,7 +48,10 @@ NS_SWIFT_NAME(AppCheckCoreDeviceCheckProvider)
 - (instancetype)initWithServiceName:(NSString *)serviceName
                        resourceName:(NSString *)resourceName
                              APIKey:(NSString *)APIKey
-                       requestHooks:(nullable NSArray<GACAppCheckAPIRequestHook> *)requestHooks;
+                       requestHooks:(nullable NSArray
+
+<GACAppCheckAPIRequestHook> *)
+requestHooks;
 
 @end
 

@@ -380,7 +380,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Notifications
 //
 // Fetch started and stopped, and fetch retry delay started and stopped.
-extern NSString *const kGTMSessionFetcherStartedNotification;
+extern NSString
+*
+const kGTMSessionFetcherStartedNotification;
 extern NSString *const kGTMSessionFetcherStoppedNotification;
 extern NSString *const kGTMSessionFetcherRetryDelayStartedNotification;
 extern NSString *const kGTMSessionFetcherRetryDelayStoppedNotification;
@@ -417,97 +419,137 @@ extern NSString *const kGTMSessionFetcherElapsedIntervalWithRetriesKey;
 // If [NSUserDefaults standardUserDefaults] doesn't yield the correct NSUserDefaults for your usage,
 // ie for an App Extension, then implement this class/method to return the correct NSUserDefaults.
 // https://developer.apple.com/library/ios/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW6
-@interface GTMSessionFetcherUserDefaultsFactory : NSObject
+@
+interface GTMSessionFetcherUserDefaultsFactory
+: NSObject
 
-+ (NSUserDefaults *)fetcherUserDefaults;
++ (NSUserDefaults *)
+fetcherUserDefaults;
 
-@end
+@
+
+end
 
 #ifdef __cplusplus
 }
 #endif
 
 typedef NS_ENUM(NSInteger, GTMSessionFetcherError) {
-  GTMSessionFetcherErrorDownloadFailed = -1,
-  GTMSessionFetcherErrorUploadChunkUnavailable = -2,
-  GTMSessionFetcherErrorBackgroundExpiration = -3,
-  GTMSessionFetcherErrorBackgroundFetchFailed = -4,
-  GTMSessionFetcherErrorInsecureRequest = -5,
-  GTMSessionFetcherErrorTaskCreationFailed = -6,
+    GTMSessionFetcherErrorDownloadFailed = -1,
+    GTMSessionFetcherErrorUploadChunkUnavailable = -2,
+    GTMSessionFetcherErrorBackgroundExpiration = -3,
+    GTMSessionFetcherErrorBackgroundFetchFailed = -4,
+    GTMSessionFetcherErrorInsecureRequest = -5,
+    GTMSessionFetcherErrorTaskCreationFailed = -6,
 
-  // This error is only used if `stopFetchingTriggersCompletionHandler` is
-  // enabled and `-stopFetching` is called on that fetcher.
-  GTMSessionFetcherErrorUserCancelled = -7,
+            // This error is only used if `stopFetchingTriggersCompletionHandler` is
+            // enabled and `-stopFetching` is called on that fetcher.
+    GTMSessionFetcherErrorUserCancelled = -7,
 };
 
-typedef NS_ENUM(NSInteger, GTMSessionFetcherStatus) {
-  // Standard http status codes.
-  GTMSessionFetcherStatusNotModified = 304,
-  GTMSessionFetcherStatusBadRequest = 400,
-  GTMSessionFetcherStatusUnauthorized = 401,
-  GTMSessionFetcherStatusForbidden = 403,
-  GTMSessionFetcherStatusPreconditionFailed = 412
+typedef NS_ENUM(NSInteger, GTMSessionFetcherStatus
+) {
+// Standard http status codes.
+GTMSessionFetcherStatusNotModified = 304,
+        GTMSessionFetcherStatusBadRequest = 400,
+        GTMSessionFetcherStatusUnauthorized = 401,
+        GTMSessionFetcherStatusForbidden = 403,
+        GTMSessionFetcherStatusPreconditionFailed = 412
 };
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-@class GTMSessionCookieStorage;
-@class GTMSessionFetcher;
-@class GTMSessionFetcherService;
+@
+
+class GTMSessionCookieStorage;
+
+@
+
+class GTMSessionFetcher;
+
+@
+
+class GTMSessionFetcherService;
 
 // The configuration block is for modifying the NSURLSessionConfiguration only.
 // DO NOT change any fetcher properties in the configuration block.
 typedef void (^GTMSessionFetcherConfigurationBlock)(GTMSessionFetcher *fetcher,
                                                     NSURLSessionConfiguration *configuration);
+
 typedef void (^GTMSessionFetcherSystemCompletionHandler)(void);
+
 typedef void (^GTMSessionFetcherCompletionHandler)(NSData *_Nullable data,
                                                    NSError *_Nullable error);
-typedef NSURLSession *_Nullable (^GTMSessionFetcherSessionCreationBlock)(
-    id<NSURLSessionDelegate> _Nullable sessionDelegate);
+
+typedef NSURLSession *_Nullable(^GTMSessionFetcherSessionCreationBlock)
+(
+id <NSURLSessionDelegate> _Nullable
+sessionDelegate);
+
 typedef void (^GTMSessionFetcherBodyStreamProviderResponse)(NSInputStream *bodyStream);
+
 typedef void (^GTMSessionFetcherBodyStreamProvider)(
-    GTMSessionFetcherBodyStreamProviderResponse response);
+        GTMSessionFetcherBodyStreamProviderResponse response);
+
 typedef void (^GTMSessionFetcherDidReceiveResponseDispositionBlock)(
-    NSURLSessionResponseDisposition disposition);
+        NSURLSessionResponseDisposition disposition);
+
 typedef void (^GTMSessionFetcherDidReceiveResponseBlock)(
-    NSURLResponse *response, GTMSessionFetcherDidReceiveResponseDispositionBlock dispositionBlock);
+        NSURLResponse *response,
+        GTMSessionFetcherDidReceiveResponseDispositionBlock dispositionBlock);
+
 typedef void (^GTMSessionFetcherChallengeDispositionBlock)(
-    NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *_Nullable credential);
+        NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *_Nullable credential);
+
 typedef void (^GTMSessionFetcherChallengeBlock)(
-    GTMSessionFetcher *fetcher, NSURLAuthenticationChallenge *challenge,
-    GTMSessionFetcherChallengeDispositionBlock dispositionBlock);
+        GTMSessionFetcher *fetcher, NSURLAuthenticationChallenge *challenge,
+        GTMSessionFetcherChallengeDispositionBlock dispositionBlock);
+
 typedef void (^GTMSessionFetcherWillRedirectResponse)(NSURLRequest *_Nullable redirectedRequest);
+
 typedef void (^GTMSessionFetcherWillRedirectBlock)(NSHTTPURLResponse *redirectResponse,
                                                    NSURLRequest *redirectRequest,
                                                    GTMSessionFetcherWillRedirectResponse response);
+
 typedef void (^GTMSessionFetcherAccumulateDataBlock)(NSData *_Nullable buffer);
+
 typedef void (^GTMSessionFetcherSimulateByteTransferBlock)(NSData *_Nullable buffer,
                                                            int64_t bytesWritten,
                                                            int64_t totalBytesWritten,
                                                            int64_t totalBytesExpectedToWrite);
+
 typedef void (^GTMSessionFetcherReceivedProgressBlock)(int64_t bytesWritten,
                                                        int64_t totalBytesWritten);
+
 typedef void (^GTMSessionFetcherDownloadProgressBlock)(int64_t bytesWritten,
                                                        int64_t totalBytesWritten,
                                                        int64_t totalBytesExpectedToWrite);
+
 typedef void (^GTMSessionFetcherSendProgressBlock)(int64_t bytesSent, int64_t totalBytesSent,
                                                    int64_t totalBytesExpectedToSend);
+
 typedef void (^GTMSessionFetcherWillCacheURLResponseResponse)(
-    NSCachedURLResponse *_Nullable cachedResponse);
+        NSCachedURLResponse *_Nullable cachedResponse);
+
 typedef void (^GTMSessionFetcherWillCacheURLResponseBlock)(
-    NSCachedURLResponse *proposedResponse,
-    GTMSessionFetcherWillCacheURLResponseResponse responseBlock);
+        NSCachedURLResponse *proposedResponse,
+        GTMSessionFetcherWillCacheURLResponseResponse responseBlock);
+
 typedef void (^GTMSessionFetcherRetryResponse)(BOOL shouldRetry);
+
 typedef void (^GTMSessionFetcherRetryBlock)(BOOL suggestedWillRetry, NSError *_Nullable error,
                                             GTMSessionFetcherRetryResponse response);
 
-API_AVAILABLE(ios(10.0), macosx(10.12), tvos(10.0), watchos(6.0))
+API_AVAILABLE(ios(10.0), macosx(10.12), tvos(10.0), watchos(6.0)
+)
+
 typedef void (^GTMSessionFetcherMetricsCollectionBlock)(NSURLSessionTaskMetrics *metrics);
 
 typedef void (^GTMSessionFetcherTestResponse)(NSHTTPURLResponse *_Nullable response,
                                               NSData *_Nullable data, NSError *_Nullable error);
+
 typedef void (^GTMSessionFetcherTestBlock)(GTMSessionFetcher *fetcherToTest,
                                            GTMSessionFetcherTestResponse testResponse);
 
@@ -515,39 +557,60 @@ typedef void (^GTMSessionFetcherTestBlock)(GTMSessionFetcher *fetcherToTest,
 //
 // Methods and properties on this protocol must be thread-safe. In addition,
 // |userAgentCache| must not block the calling thread to perform I/O.
-@protocol GTMUserAgentProvider <NSObject>
+@
+protocol GTMUserAgentProvider<NSObject>
 
 // Non-nil user-agent string if |userAgent| has already been cached and is safe
 // to read without blocking the calling thread, |nil| otherwise.
-@property(atomic, readonly, nullable, copy) NSString *cachedUserAgent;
+@
+property(atomic, readonly, nullable, copy
+)
+NSString *cachedUserAgent;
 
 // The user-agent string, calculated on demand. This might block the calling thread if
 // |userAgentCached| is NO.
-@property(atomic, readonly, copy) NSString *userAgent;
+@
+property(atomic, readonly, copy
+)
+NSString *userAgent;
 
 @end
 
 /// Provides a User-Agent string that is known at the time the fetcher is created.
 __attribute__((objc_subclassing_restricted))
-@interface GTMUserAgentStringProvider : NSObject<GTMUserAgentProvider>
+@
+interface GTMUserAgentStringProvider
+: NSObject <GTMUserAgentProvider>
 
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new
+NS_UNAVAILABLE;
+- (instancetype)
+init NS_UNAVAILABLE;
 
-- (instancetype)initWithUserAgentString:(NSString *)userAgentString NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithUserAgentString:(NSString *)
+userAgentString NS_DESIGNATED_INITIALIZER;
 
 @end
 
 // Calculates the User-Agent string on demand using |GTMFetcherStandardUserAgentString()| given an
 // optional bundle.
 __attribute__((objc_subclassing_restricted))
-@interface GTMStandardUserAgentProvider : NSObject<GTMUserAgentProvider>
+@
+interface GTMStandardUserAgentProvider
+: NSObject <GTMUserAgentProvider>
 
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithBundle:(nullable NSBundle *)bundle NS_DESIGNATED_INITIALIZER;
++ (instancetype)new
+NS_UNAVAILABLE;
+- (instancetype)
+init NS_UNAVAILABLE;
+- (instancetype)initWithBundle:(
+nullable NSBundle
+*)
+bundle NS_DESIGNATED_INITIALIZER;
 
-@end
+@
+
+end
 
 void GTMSessionFetcherAssertValidSelector(id _Nullable obj, SEL _Nullable sel, ...);
 
@@ -561,7 +624,8 @@ void GTMSessionFetcherAssertValidSelector(id _Nullable obj, SEL _Nullable sel, .
 // Applications may use this as a starting point for their own user agent strings, perhaps
 // with additional sections appended.  Use GTMFetcherCleanedUserAgentString() below to
 // clean up any string being added to the user agent.
-NSString *GTMFetcherStandardUserAgentString(NSBundle *_Nullable bundle);
+NSString *GTMFetcherStandardUserAgentString(NSBundle * _Nullable
+bundle);
 
 // Make a generic name and version for the current application, like
 // com.example.MyApp/1.2.3 relying on the bundle identifier and the
@@ -575,7 +639,8 @@ NSString *GTMFetcherStandardUserAgentString(NSBundle *_Nullable bundle);
 //
 // If no bundle ID or override is available, the process name preceded
 // by "proc_" is used.
-NSString *GTMFetcherApplicationIdentifier(NSBundle *_Nullable bundle);
+NSString *GTMFetcherApplicationIdentifier(NSBundle * _Nullable
+bundle);
 
 // Make an identifier like "MacOSX/10.7.1" or "iPod_Touch/4.1 hw/iPod1_1"
 NSString *GTMFetcherSystemVersionString(void);
@@ -585,7 +650,7 @@ NSString *GTMFetcherSystemVersionString(void);
 // with parsing of the full user-agent string.
 //
 // For example, @"[My App]" would become @"My_App"
-NSString *GTMFetcherCleanedUserAgentString(NSString *str);
+NSString *GTMFetcherCleanedUserAgentString(NSString * str);
 
 // Grab the data from an input stream. Since streams cannot be assumed to be rewindable,
 // this may be destructive; the caller can try to rewind the stream (by setting the
@@ -598,7 +663,11 @@ NSString *GTMFetcherCleanedUserAgentString(NSString *str);
 // queue before calling this function.
 //
 // Failure is indicated by a returned data value of nil.
-NSData *_Nullable GTMDataFromInputStream(NSInputStream *inputStream, NSError **outError);
+NSData *_Nullable
+GTMDataFromInputStream(NSInputStream
+*inputStream,
+NSError **outError
+);
 
 #ifdef __cplusplus
 }  // extern "C"
@@ -620,7 +689,8 @@ typedef void (^GTMFetcherDecoratorFetcherWillStartCompletionHandler)(NSURLReques
 // removeDecorator:]`.
 //
 // Decorator methods must be thread-safe, as they might be invoked on any queue.
-@protocol GTMFetcherDecoratorProtocol <NSObject>
+@
+protocol GTMFetcherDecoratorProtocol<NSObject>
 
 // Invoked just before a fetcher's request starts.
 //
@@ -640,8 +710,11 @@ typedef void (^GTMFetcherDecoratorFetcherWillStartCompletionHandler)(NSURLReques
 // This method must not block the caller (e.g., performing synchronous I/O). Perform any blocking
 // work or I/O on a different queue, then invoke `handler` with the results after the blocking work
 // completes.
-- (void)fetcherWillStart:(GTMSessionFetcher *)fetcher
-       completionHandler:(GTMFetcherDecoratorFetcherWillStartCompletionHandler)handler;
+- (void)fetcherWillStart:(GTMSessionFetcher *)
+fetcher
+        completionHandler
+:(GTMFetcherDecoratorFetcherWillStartCompletionHandler)
+handler;
 
 // Invoked just after a fetcher's request finishes (either on success or on failure).
 //
@@ -653,31 +726,55 @@ typedef void (^GTMFetcherDecoratorFetcherWillStartCompletionHandler)(NSURLReques
 // This method must not block the caller (e.g., performing synchronous I/O). Perform any blocking
 // work or I/O on a different queue, then invoke `handler` with the results after the blocking work
 // completes.
-- (void)fetcherDidFinish:(GTMSessionFetcher *)fetcher
-                withData:(nullable NSData *)data
-                   error:(nullable NSError *)error
-       completionHandler:(void (^)(void))handler;
+- (void)fetcherDidFinish:(GTMSessionFetcher *)
+fetcher
+        withData
+:(
+nullable NSData
+*)
+data
+        error
+:(
+nullable NSError
+*)
+error
+        completionHandler
+:(void (^)(void))
+handler;
 
 @end
 
 // This protocol allows abstract references to the fetcher service.
 //
 // Apps should not need to use this protocol.
-@protocol GTMSessionFetcherServiceProtocol <NSObject>
+@
+protocol GTMSessionFetcherServiceProtocol<NSObject>
 
-- (GTMSessionFetcher *)fetcherWithRequest:(NSURLRequest *)request;
+- (GTMSessionFetcher *)fetcherWithRequest:(NSURLRequest *)
+request;
 
-@property(atomic, strong, null_resettable, readonly) dispatch_queue_t callbackQueue;
+@
+property(atomic, strong, null_resettable, readonly
+)
+dispatch_queue_t callbackQueue;
 
 // These properties are being removed from the protocol; clients should not attempt new
 // accesses to them.
-@property(atomic, assign) BOOL reuseSession;
-@property(atomic, readonly, strong, nullable) NSOperationQueue *delegateQueue;
+@
+property(atomic, assign
+)
+BOOL reuseSession;
+@
+property(atomic, readonly, strong, nullable
+)
+NSOperationQueue *delegateQueue;
 
-@end  // @protocol GTMSessionFetcherServiceProtocol
+@
+end  // @protocol GTMSessionFetcherServiceProtocol
 
 __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
-    @protocol GTMFetcherAuthorizationProtocol<NSObject>
+@
+protocol GTMFetcherAuthorizationProtocol<NSObject>
 @required
 // This protocol allows us to call the authorizer without requiring its sources
 // in this project. This protocol is deprecated in favor of GTMSessionFetcherAuthorizer,
@@ -689,39 +786,70 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // authorizeRequest:completionHandler: will have that called instead.
 // be removed in a future version when GTMFetcherAuthorizationProtocol is
 // also removed.
-- (void)authorizeRequest:(nullable NSMutableURLRequest *)request
-                delegate:(id)delegate
-       didFinishSelector:(SEL)sel
-    __deprecated_msg("implement authorizeRequest:completionHandler: instead");
+- (void)authorizeRequest:(
+nullable NSMutableURLRequest
+*)
+request
+        delegate
+:(id)
+delegate
+        didFinishSelector
+:(SEL)
+sel
+        __deprecated_msg("implement authorizeRequest:completionHandler: instead");
 
-- (void)stopAuthorization;
+- (void)
+stopAuthorization;
 
-- (void)stopAuthorizationForRequest:(NSURLRequest *)request;
+- (void)stopAuthorizationForRequest:(NSURLRequest *)
+request;
 
-- (BOOL)isAuthorizingRequest:(NSURLRequest *)request;
+- (BOOL)isAuthorizingRequest:(NSURLRequest *)
+request;
 
-- (BOOL)isAuthorizedRequest:(NSURLRequest *)request;
+- (BOOL)isAuthorizedRequest:(NSURLRequest *)
+request;
 
-@property(atomic, strong, readonly, nullable) NSString *userEmail;
+@
+property(atomic, strong, readonly, nullable
+)
+NSString *userEmail;
 
 @optional
 
 // This method is prefered over authorizeRequest:delegate:didFinishSelector:, and
 // becomes a required method in the GTMSessionFetcherAuthorizer protocol.
-- (void)authorizeRequest:(nullable NSMutableURLRequest *)request
-       completionHandler:(void (^)(NSError *_Nullable error))handler;
+- (void)authorizeRequest:(
+nullable NSMutableURLRequest
+*)
+request
+        completionHandler
+:(void (^)(
+NSError *_Nullable
+error))
+handler;
 
 // Indicate if authorization may be attempted. Even if this succeeds,
 // authorization may fail if the user's permissions have been revoked.
-@property(atomic, readonly) BOOL canAuthorize;
+@
+property(atomic, readonly
+)
+BOOL canAuthorize;
 
 // For development only, allow authorization of non-SSL requests, allowing
 // transmission of the bearer token unencrypted.
-@property(atomic, assign) BOOL shouldAuthorizeAllRequests;
+@
+property(atomic, assign
+)
+BOOL shouldAuthorizeAllRequests;
 
-@property(atomic, weak, nullable) id<GTMSessionFetcherServiceProtocol> fetcherService;
+@
+property(atomic, weak, nullable
+)
+id <GTMSessionFetcherServiceProtocol> fetcherService;
 
-- (BOOL)primeForRefresh;
+- (BOOL)
+primeForRefresh;
 
 @end
 
@@ -733,7 +861,8 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // migrate. In a future release, the non-deprecated method declarations will be
 // moved here and the GTMFetcherAuthorizationProtocol and the deprecated methods
 // deleted.
-@protocol GTMSessionFetcherAuthorizer <GTMFetcherAuthorizationProtocol>
+@
+protocol GTMSessionFetcherAuthorizer<GTMFetcherAuthorizationProtocol>
 // This protocol allows us to call the authorizer without requiring its sources
 // in this project.
 #pragma clang diagnostic pop
@@ -741,8 +870,15 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 
 // Authorizers should implement this method rather than the selector-based
 // callback form from the old protocol.
-- (void)authorizeRequest:(nullable NSMutableURLRequest *)request
-       completionHandler:(void (^)(NSError *_Nullable error))handler;
+- (void)authorizeRequest:(
+nullable NSMutableURLRequest
+*)
+request
+        completionHandler
+:(void (^)(
+NSError *_Nullable
+error))
+handler;
 
 @optional
 // This method is re-declared here as @optional only to quash deprecation warnings
@@ -750,9 +886,16 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // must still be provided by conforming implementations. Once the old protocol has
 // been removed, this method will be marked unavailable to trigger implementations
 // to stop providing it, and it will eventually be removed.
-- (void)authorizeRequest:(nullable NSMutableURLRequest *)request
-                delegate:(id)delegate
-       didFinishSelector:(SEL)sel;
+- (void)authorizeRequest:(
+nullable NSMutableURLRequest
+*)
+request
+        delegate
+:(id)
+delegate
+        didFinishSelector
+:(SEL)
+sel;
 
 @end
 
@@ -771,7 +914,9 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // GTMSessionFetcher objects are used for async retrieval of an http get or post
 //
 // See additional comments at the beginning of this file
-@interface GTMSessionFetcher : NSObject <NSURLSessionDelegate>
+@
+interface GTMSessionFetcher
+: NSObject <NSURLSessionDelegate>
 
 // Create a fetcher
 //
@@ -779,19 +924,29 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // the connection is successfully created, the connection should retain the
 // fetcher for the life of the connection as well. So the caller doesn't have
 // to retain the fetcher explicitly unless they want to be able to cancel it.
-+ (instancetype)fetcherWithRequest:(nullable NSURLRequest *)request;
++ (instancetype)fetcherWithRequest:(
+nullable NSURLRequest
+*)
+request;
 
 // Convenience methods that make a request, like +fetcherWithRequest
-+ (instancetype)fetcherWithURL:(NSURL *)requestURL;
-+ (instancetype)fetcherWithURLString:(NSString *)requestURLString;
++ (instancetype)fetcherWithURL:(NSURL *)
+requestURL;
++ (instancetype)fetcherWithURLString:(NSString *)
+requestURLString;
 
 // Methods for creating fetchers to continue previous fetches.
-+ (instancetype)fetcherWithDownloadResumeData:(NSData *)resumeData;
-+ (nullable instancetype)fetcherWithSessionIdentifier:(NSString *)sessionIdentifier;
++ (instancetype)fetcherWithDownloadResumeData:(NSData *)
+resumeData;
++ (
+nullable instancetype
+)fetcherWithSessionIdentifier:(NSString *)
+sessionIdentifier;
 
 // Returns an array of currently active fetchers for background sessions,
 // both restarted and newly created ones.
-+ (NSArray<GTMSessionFetcher *> *)fetchersForBackgroundSessions;
++ (NSArray<GTMSessionFetcher *> *)
+fetchersForBackgroundSessions;
 
 // Designated initializer.
 //
@@ -800,19 +955,37 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 //
 // The configuration should typically be nil. Applications needing to customize
 // the configuration may do so by setting the configurationBlock property.
-- (instancetype)initWithRequest:(nullable NSURLRequest *)request
-                  configuration:(nullable NSURLSessionConfiguration *)configuration;
+- (instancetype)initWithRequest:(
+nullable NSURLRequest
+*)
+request
+        configuration
+:(
+nullable NSURLSessionConfiguration
+*)
+configuration;
 
 // The fetcher's request.  This may not be set after beginFetch has been invoked. The request
 // may change due to redirects.
-@property(atomic, strong, nullable) NSURLRequest *request;
+@
+property(atomic, strong, nullable
+)
+NSURLRequest *request;
 
 // Set a header field value on the request. Header field value changes will not
 // affect a fetch after the fetch has begun.
-- (void)setRequestValue:(nullable NSString *)value forHTTPHeaderField:(NSString *)field;
+- (void)setRequestValue:(
+nullable NSString
+*)
+value forHTTPHeaderField
+:(NSString *)
+field;
 
 // Data used for resuming a download task.
-@property(atomic, readonly, nullable) NSData *downloadResumeData;
+@
+property(atomic, readonly, nullable
+)
+NSData *downloadResumeData;
 
 // The configuration; this must be set before the fetch begins. If no configuration is
 // set or inherited from the fetcher service, then the fetcher uses an ephemeral config.
@@ -821,7 +994,10 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // the configuration should do so by setting the configurationBlock property.
 // That allows the fetcher to pick an appropriate base configuration, with the
 // application setting only the configuration properties it needs to customize.
-@property(atomic, strong, nullable) NSURLSessionConfiguration *configuration;
+@
+property(atomic, strong, nullable
+)
+NSURLSessionConfiguration *configuration;
 
 // A block the client may use to customize the configuration used to create the session.
 //
@@ -833,48 +1009,81 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // DO NOT change any fetcher properties in the configuration block. Fetcher properties
 // may be set in the fetcher service prior to fetcher creation, or on the fetcher prior
 // to invoking beginFetch.
-@property(atomic, copy, nullable) GTMSessionFetcherConfigurationBlock configurationBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherConfigurationBlock configurationBlock;
 
 // A session is created as needed by the fetcher.  A fetcher service object
 // may maintain sessions for multiple fetches to the same host.
-@property(atomic, strong, nullable) NSURLSession *session;
+@
+property(atomic, strong, nullable
+)
+NSURLSession *session;
 
 // The task in flight.
-@property(atomic, readonly, nullable) NSURLSessionTask *sessionTask;
+@
+property(atomic, readonly, nullable
+)
+NSURLSessionTask *sessionTask;
 
 // The background session identifier.
-@property(atomic, readonly, nullable) NSString *sessionIdentifier;
+@
+property(atomic, readonly, nullable
+)
+NSString *sessionIdentifier;
 
 // Indicates a fetcher created to finish a background session task.
-@property(atomic, readonly) BOOL wasCreatedFromBackgroundSession;
+@
+property(atomic, readonly
+)
+BOOL wasCreatedFromBackgroundSession;
 
 // Indicates the client has committed to reconnecting this background session when
 // the app restarts. If this value is YES, the session fetcher will not automatically
 // call beginFetchWithCompletionHandler: on the restored fetcher on app start, and
 // the session will not handle system events until the client explicitly does.
-@property(atomic, assign) BOOL clientWillReconnectBackgroundSession;
+@
+property(atomic, assign
+)
+BOOL clientWillReconnectBackgroundSession;
 
 // Additional user-supplied data to encode into the session identifier. Since session identifier
 // length limits are unspecified, this should be kept small. Key names beginning with an underscore
 // are reserved for use by the fetcher.
-@property(atomic, strong, nullable) NSDictionary<NSString *, NSString *> *sessionUserInfo;
+@
+property(atomic, strong, nullable
+)
+NSDictionary<NSString *, NSString *> *sessionUserInfo;
 
 // The human-readable description to be assigned to the task.
-@property(atomic, copy, nullable) NSString *taskDescription;
+@
+property(atomic, copy, nullable
+)
+NSString *taskDescription;
 
 // The priority assigned to the task, if any.  Use NSURLSessionTaskPriorityLow,
 // NSURLSessionTaskPriorityDefault, or NSURLSessionTaskPriorityHigh.
-@property(atomic, assign) float taskPriority;
+@
+property(atomic, assign
+)
+float taskPriority;
 
 // An optional provider to calculate the User-Agent string on demand. If non-nil and
 // an HTTP header field for User-Agent is not set, this is queried before sending out
 // the network request for the User-Agent string.
-@property(atomic, strong, nullable) id<GTMUserAgentProvider> userAgentProvider;
+@
+property(atomic, strong, nullable
+)
+id <GTMUserAgentProvider> userAgentProvider;
 
 // The fetcher encodes information used to resume a session in the session identifier.
 // This method, intended for internal use returns the encoded information.  The sessionUserInfo
 // dictionary is stored as identifier metadata.
-- (nullable NSDictionary<NSString *, NSString *> *)sessionIdentifierMetadata;
+- (
+nullable NSDictionary<NSString *, NSString *>
+*)
+sessionIdentifierMetadata;
 
 #if TARGET_OS_IPHONE && !TARGET_OS_WATCH
 // The app should pass to this method the completion handler passed in the app delegate method
@@ -907,17 +1116,29 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 //   "Background Session Task state persistence"
 //   https://forums.developer.apple.com/thread/11554
 //
-@property(atomic, assign) BOOL useBackgroundSession;
+@
+property(atomic, assign
+)
+BOOL useBackgroundSession;
 
 // Indicates if the fetcher was started using a background session.
-@property(atomic, readonly, getter=isUsingBackgroundSession) BOOL usingBackgroundSession;
+@
+property(atomic, readonly, getter = isUsingBackgroundSession
+)
+BOOL usingBackgroundSession;
 
 // Indicates if uploads should use an upload task.  This is always set for file or stream-provider
 // bodies, but may be set explicitly for NSData bodies.
-@property(atomic, assign) BOOL useUploadTask;
+@
+property(atomic, assign
+)
+BOOL useUploadTask;
 
 // Indicates that the fetcher is using a session that may be shared with other fetchers.
-@property(atomic, readonly) BOOL canShareSession;
+@
+property(atomic, readonly
+)
+BOOL canShareSession;
 
 // By default, the fetcher allows only secure (https) schemes unless this
 // property is set, or the GTM_ALLOW_INSECURE_REQUESTS build flag is set.
@@ -932,7 +1153,10 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 //
 // For builds with the iOS 9/OS X 10.11 and later SDKs, this property is required only when
 // the app specifies NSAppTransportSecurity/NSAllowsArbitraryLoads in the main bundle's Info.plist.
-@property(atomic, copy, nullable) NSArray<NSString *> *allowedInsecureSchemes;
+@
+property(atomic, copy, nullable
+)
+NSArray<NSString *> *allowedInsecureSchemes;
 
 // By default, the fetcher prohibits localhost requests unless this property is set,
 // or the GTM_ALLOW_INSECURE_REQUESTS build flag is set.
@@ -941,11 +1165,17 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 //
 // For builds with the iOS 9/OS X 10.11 and later SDKs, this property is required only when
 // the app specifies NSAppTransportSecurity/NSAllowsArbitraryLoads in the main bundle's Info.plist.
-@property(atomic, assign) BOOL allowLocalhostRequest;
+@
+property(atomic, assign
+)
+BOOL allowLocalhostRequest;
 
 // By default, the fetcher requires valid server certs.  This may be bypassed
 // temporarily for development against a test server with an invalid cert.
-@property(atomic, assign) BOOL allowInvalidServerCertificates;
+@
+property(atomic, assign
+)
+BOOL allowInvalidServerCertificates;
 
 // Cookie storage object for this fetcher. If nil, the fetcher will use a static cookie
 // storage instance shared among fetchers. If this fetcher was created by a fetcher service
@@ -955,29 +1185,50 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // Because as of Jan 2014 standalone instances of NSHTTPCookieStorage do not actually
 // store any cookies (Radar 15735276) we use our own subclass, GTMSessionCookieStorage,
 // to hold cookies in memory.
-@property(atomic, strong, nullable) NSHTTPCookieStorage *cookieStorage;
+@
+property(atomic, strong, nullable
+)
+NSHTTPCookieStorage *cookieStorage;
 
 // Setting the credential is optional; it is used if the connection receives
 // an authentication challenge.
-@property(atomic, strong, nullable) NSURLCredential *credential;
+@
+property(atomic, strong, nullable
+)
+NSURLCredential *credential;
 
 // Setting the proxy credential is optional; it is used if the connection
 // receives an authentication challenge from a proxy.
-@property(atomic, strong, nullable) NSURLCredential *proxyCredential;
+@
+property(atomic, strong, nullable
+)
+NSURLCredential *proxyCredential;
 
 // If body data, body file URL, or body stream provider is not set, then a GET request
 // method is assumed.
-@property(atomic, strong, nullable) NSData *bodyData;
+@
+property(atomic, strong, nullable
+)
+NSData *bodyData;
 
 // File to use as the request body. This forces use of an upload task.
-@property(atomic, strong, nullable) NSURL *bodyFileURL;
+@
+property(atomic, strong, nullable
+)
+NSURL *bodyFileURL;
 
 // Length of body to send, expected or actual.
-@property(atomic, readonly) int64_t bodyLength;
+@
+property(atomic, readonly
+)
+int64_t bodyLength;
 
 // The body stream provider may be called repeatedly to provide a body.
 // Setting a body stream provider forces use of an upload task.
-@property(atomic, copy, nullable) GTMSessionFetcherBodyStreamProvider bodyStreamProvider;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherBodyStreamProvider bodyStreamProvider;
 
 #pragma clang diagnostic push
 // For now retain the existing API surface of accepting a GTMFetcherAuthorizationProtocol
@@ -987,14 +1238,23 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // Object to add authorization to the request, if needed.
 //
 // This may not be changed once beginFetch has been invoked.
-@property(atomic, strong, nullable) id<GTMFetcherAuthorizationProtocol> authorizer;
+@
+property(atomic, strong, nullable
+)
+id <GTMFetcherAuthorizationProtocol> authorizer;
 #pragma clang diagnostic pop
 
 // The service object that created and monitors this fetcher, if any.
-@property(atomic, strong) GTMSessionFetcherService *service;
+@
+property(atomic, strong
+)
+GTMSessionFetcherService *service;
 
 // The host, if any, used to classify this fetcher in the fetcher service.
-@property(atomic, copy, nullable) NSString *serviceHost;
+@
+property(atomic, copy, nullable
+)
+NSString *serviceHost;
 
 // The priority, if any, used for starting fetchers in the fetcher service.
 //
@@ -1003,13 +1263,19 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // fetchers that are being delayed by a fetcher service when the running fetchers
 // exceeds the service's maxRunningFetchersPerHost.  A priority of NSIntegerMin will
 // exempt this fetcher from delay.
-@property(atomic, assign) NSInteger servicePriority;
+@
+property(atomic, assign
+)
+NSInteger servicePriority;
 
 // The delegate's optional didReceiveResponse block may be used to inspect or alter
 // the session task response.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherDidReceiveResponseBlock didReceiveResponseBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherDidReceiveResponseBlock didReceiveResponseBlock;
 
 // The delegate's optional challenge block may be used to inspect or alter
 // the session task challenge.
@@ -1022,18 +1288,27 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // challenge.previousFailureCount to identify repeated invocations.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherChallengeBlock challengeBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherChallengeBlock challengeBlock;
 
 // The delegate's optional willRedirect block may be used to inspect or alter
 // the redirection.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherWillRedirectBlock willRedirectBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherWillRedirectBlock willRedirectBlock;
 
 // The optional send progress block reports body bytes uploaded.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherSendProgressBlock sendProgressBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherSendProgressBlock sendProgressBlock;
 
 // The optional accumulate block may be set by clients wishing to accumulate data
 // themselves rather than let the fetcher append each buffer to an NSData.
@@ -1042,65 +1317,101 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // should empty its accumulation buffer.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherAccumulateDataBlock accumulateDataBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherAccumulateDataBlock accumulateDataBlock;
 
 // The optional received progress block may be used to monitor data
 // received from a data task.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherReceivedProgressBlock receivedProgressBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherReceivedProgressBlock receivedProgressBlock;
 
 // The delegate's optional downloadProgress block may be used to monitor download
 // progress in writing to disk.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable) GTMSessionFetcherDownloadProgressBlock downloadProgressBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherDownloadProgressBlock downloadProgressBlock;
 
 // The delegate's optional willCacheURLResponse block may be used to alter the cached
 // NSURLResponse. The user may prevent caching by passing nil to the block's response.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable)
-    GTMSessionFetcherWillCacheURLResponseBlock willCacheURLResponseBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherWillCacheURLResponseBlock willCacheURLResponseBlock;
 
 // Enable retrying; see comments at the top of this file.  Setting
 // retryEnabled=YES resets the min and max retry intervals.
-@property(atomic, assign, getter=isRetryEnabled) BOOL retryEnabled;
+@
+property(atomic, assign, getter = isRetryEnabled
+)
+BOOL retryEnabled;
 
 // Retry block is optional for retries.
 //
 // If present, this block should call the response block with YES to cause a retry or NO to end the
 // fetch.
 // See comments at the top of this file.
-@property(atomic, copy, nullable) GTMSessionFetcherRetryBlock retryBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherRetryBlock retryBlock;
 
 // The optional block for collecting the metrics of the present session.
 //
 // This is called on the callback queue.
-@property(atomic, copy, nullable)
-    GTMSessionFetcherMetricsCollectionBlock metricsCollectionBlock API_AVAILABLE(
-        ios(10.0), macosx(10.12), tvos(10.0), watchos(6.0));
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherMetricsCollectionBlock metricsCollectionBlock
+API_AVAILABLE(
+        ios(10.0), macosx(10.12), tvos(10.0), watchos(6.0)
+);
 
 // Retry intervals must be strictly less than maxRetryInterval, else
 // they will be limited to maxRetryInterval and no further retries will
 // be attempted.  Setting maxRetryInterval to 0.0 will reset it to the
 // default value, 60 seconds for downloads and 600 seconds for uploads.
-@property(atomic, assign) NSTimeInterval maxRetryInterval;
+@
+property(atomic, assign
+)
+NSTimeInterval maxRetryInterval;
 
 // Starting retry interval.  Setting minRetryInterval to 0.0 will reset it
 // to a random value between 1.0 and 2.0 seconds.  Clients should normally not
 // set this except for unit testing.
-@property(atomic, assign) NSTimeInterval minRetryInterval;
+@
+property(atomic, assign
+)
+NSTimeInterval minRetryInterval;
 
 // Multiplier used to increase the interval between retries, typically 2.0.
 // Clients should not need to set this.
-@property(atomic, assign) double retryFactor;
+@
+property(atomic, assign
+)
+double retryFactor;
 
 // Number of retries attempted.
-@property(atomic, readonly) NSUInteger retryCount;
+@
+property(atomic, readonly
+)
+NSUInteger retryCount;
 
 // Interval delay to precede next retry.
-@property(atomic, readonly) NSTimeInterval nextRetryInterval;
+@
+property(atomic, readonly
+)
+NSTimeInterval nextRetryInterval;
 
 #if GTM_BACKGROUND_TASK_FETCHING
 // Skip use of a UIBackgroundTask, thus requiring fetches to complete when the app is in the
@@ -1130,80 +1441,148 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // If the application has specified a destinationFileURL or an accumulateDataBlock
 // for the fetcher, the data parameter passed to the callback will be nil.
 
-- (void)beginFetchWithDelegate:(nullable id)delegate didFinishSelector:(nullable SEL)finishedSEL;
+- (void)beginFetchWithDelegate:(
+nullable id
+)
+delegate didFinishSelector
+:(
+nullable SEL
+)
+finishedSEL;
 
-- (void)beginFetchWithCompletionHandler:(nullable GTMSessionFetcherCompletionHandler)handler;
+- (void)beginFetchWithCompletionHandler:(
+nullable GTMSessionFetcherCompletionHandler
+)
+handler;
 
 // Returns YES if this fetcher is in the process of fetching a URL.
-@property(atomic, readonly, getter=isFetching) BOOL fetching;
+@
+property(atomic, readonly, getter = isFetching
+)
+BOOL fetching;
 
 // Cancel the fetch of the request that's currently in progress.  The completion handler
 // will be called with `GTMSessionFetcherErrorUserCancelled` if the property
 // `stopFetchingTriggersCompletionHandler` is `YES`.
-- (void)stopFetching;
+- (void)
+stopFetching;
 
 // Call callbacks with `GTMSessionFetcherErrorUserCancelled` after a `stopFetching`.
 // It cannot be changed once the fetcher starts. This should be set to `YES` from
 // Swift clients before `beginFetch` with `async/await` since the Swift runtime
 // requires the completion handler to be called.
-@property(atomic, assign) BOOL stopFetchingTriggersCompletionHandler;
+@
+property(atomic, assign
+)
+BOOL stopFetchingTriggersCompletionHandler;
 
 // A block to be called when the fetch completes.
-@property(atomic, copy, nullable) GTMSessionFetcherCompletionHandler completionHandler;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherCompletionHandler completionHandler;
 
 // A block to be called if download resume data becomes available.
-@property(atomic, strong, nullable) void (^resumeDataBlock)(NSData *);
+@
+property(atomic, strong, nullable
+)
+void (^resumeDataBlock)(NSData * );
 
 // Return the status code from the server response.
-@property(atomic, readonly) NSInteger statusCode;
+@
+property(atomic, readonly
+)
+NSInteger statusCode;
 
 // Return the http headers from the response.
-@property(atomic, strong, readonly, nullable) NSDictionary<NSString *, NSString *> *responseHeaders;
+@
+property(atomic, strong, readonly, nullable
+)
+NSDictionary<NSString *, NSString *> *responseHeaders;
 
 // The response, once it's been received.
-@property(atomic, strong, readonly, nullable) NSURLResponse *response;
+@
+property(atomic, strong, readonly, nullable
+)
+NSURLResponse *response;
 
 // Bytes downloaded so far.
-@property(atomic, readonly) int64_t downloadedLength;
+@
+property(atomic, readonly
+)
+int64_t downloadedLength;
 
 // Buffer of currently-downloaded data, if available.
-@property(atomic, readonly, strong, nullable) NSData *downloadedData;
+@
+property(atomic, readonly, strong, nullable
+)
+NSData *downloadedData;
 
 // Local path to which the downloaded file will be moved.
 //
 // If a file already exists at the path, it will be overwritten.
 // Will create the enclosing folders if they are not present.
-@property(atomic, strong, nullable) NSURL *destinationFileURL;
+@
+property(atomic, strong, nullable
+)
+NSURL *destinationFileURL;
 
 // The time this fetcher originally began fetching. This is useful as a time
 // barrier for ignoring irrelevant fetch notifications or callbacks.
-@property(atomic, strong, readonly, nullable) NSDate *initialBeginFetchDate;
+@
+property(atomic, strong, readonly, nullable
+)
+NSDate *initialBeginFetchDate;
 
 // userData is retained solely for the convenience of the client.
-@property(atomic, strong, nullable) id userData;
+@
+property(atomic, strong, nullable
+)
+id userData;
 
 // Stored property values are retained solely for the convenience of the client.
-@property(atomic, copy, nullable) NSDictionary<NSString *, id> *properties;
+@
+property(atomic, copy, nullable
+)
+NSDictionary<NSString *, id> *properties;
 
-- (void)setProperty:(nullable id)obj
-             forKey:(NSString *)key;  // Pass nil for obj to remove the property.
-- (nullable id)propertyForKey:(NSString *)key;
+- (void)setProperty:(
+nullable id
+)
+obj
+        forKey
+:(NSString *)
+key;  // Pass nil for obj to remove the property.
+- (
+nullable id
+)propertyForKey:(NSString *)
+key;
 
-- (void)addPropertiesFromDictionary:(NSDictionary<NSString *, id> *)dict;
+- (void)addPropertiesFromDictionary:(NSDictionary<NSString *, id> *)
+dict;
 
 // Comments are useful for logging, so are strongly recommended for each fetcher.
-@property(atomic, copy, nullable) NSString *comment;
+@
+property(atomic, copy, nullable
+)
+NSString *comment;
 
 - (void)setCommentWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
 // Log of request and response, if logging is enabled
-@property(atomic, copy, nullable) NSString *log;
+@
+property(atomic, copy, nullable
+)
+NSString *log;
 
 // Callbacks are run on this queue. If none is supplied, the main queue is used.
 //
 // CAUTION: This block MUST be a serial queue. Setting a concurrent queue can result in callbacks
 // being dispatched concurrently, leading events to appear out-of-order.
-@property(atomic, strong, null_resettable) dispatch_queue_t callbackQueue;
+@
+property(atomic, strong, null_resettable
+)
+dispatch_queue_t callbackQueue;
 
 // The queue used internally by the session to invoke its delegate methods in the fetcher.
 //
@@ -1215,7 +1594,10 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // This value is ignored after the session has been created, so this
 // property should be set in the fetcher service rather in the fetcher as it applies
 // to a shared session.
-@property(atomic, strong, null_resettable) NSOperationQueue *sessionDelegateQueue;
+@
+property(atomic, strong, null_resettable
+)
+NSOperationQueue *sessionDelegateQueue;
 
 // DEPRECATED: Callers should use XCTestExpectation instead.
 //
@@ -1227,8 +1609,9 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // sufficient reason for rejection from the app store.
 //
 // Returns NO if timed out.
-- (BOOL)waitForCompletionWithTimeout:(NSTimeInterval)timeoutInSeconds
-    __deprecated_msg("Use XCTestExpectation instead");
+- (BOOL)waitForCompletionWithTimeout:(NSTimeInterval)
+timeoutInSeconds
+        __deprecated_msg("Use XCTestExpectation instead");
 
 // Test block is optional for testing.
 //
@@ -1244,15 +1627,24 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 // should proceed.
 //
 // Applications can exclude test block support by setting GTM_DISABLE_FETCHER_TEST_BLOCK.
-@property(atomic, copy, nullable) GTMSessionFetcherTestBlock testBlock;
+@
+property(atomic, copy, nullable
+)
+GTMSessionFetcherTestBlock testBlock;
 
-+ (void)setGlobalTestBlock:(nullable GTMSessionFetcherTestBlock)block;
++ (void)setGlobalTestBlock:(
+nullable GTMSessionFetcherTestBlock
+)
+block;
 
 // When using the testBlock, |testBlockAccumulateDataChunkCount| is the desired number of chunks to
 // divide the response data into if the client has streaming enabled. The data will be divided up to
 // |testBlockAccumulateDataChunkCount| chunks; however, the exact amount may vary depending on the
 // size of the response data (e.g. a 1-byte response can only be divided into one chunk).
-@property(atomic, readwrite) NSUInteger testBlockAccumulateDataChunkCount;
+@
+property(atomic, readwrite
+)
+NSUInteger testBlockAccumulateDataChunkCount;
 
 #if GTM_BACKGROUND_TASK_FETCHING
 // For testing or to override UIApplication invocations, apps may specify an alternative
@@ -1262,14 +1654,18 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 #endif  // GTM_BACKGROUND_TASK_FETCHING
 
 // Exposed for testing.
-+ (GTMSessionCookieStorage *)staticCookieStorage;
-+ (BOOL)appAllowsInsecureRequests;
++ (GTMSessionCookieStorage *)
+staticCookieStorage;
++ (BOOL)
+appAllowsInsecureRequests;
 
 #if STRIP_GTM_FETCH_LOGGING
 // If logging is stripped, provide a stub for the main method
 // for controlling logging.
-+ (void)setLoggingEnabled:(BOOL)flag;
-+ (BOOL)isLoggingEnabled;
++ (void)setLoggingEnabled:(BOOL)
+flag;
++ (BOOL)
+isLoggingEnabled;
 
 #else
 
@@ -1307,15 +1703,22 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 //
 // iOS 9/OS X 10.11 added +[NSHTTPCookieStorage sharedCookieStorageForGroupContainerIdentifier:]
 // which may also be used to create cookie storage.
-@interface GTMSessionCookieStorage : NSHTTPCookieStorage
+@
+interface GTMSessionCookieStorage
+: NSHTTPCookieStorage
 
 // Add the array off cookies to the storage, replacing duplicates.
 // Also removes expired cookies from the storage.
-- (void)setCookies:(nullable NSArray<NSHTTPCookie *> *)cookies;
+- (void)setCookies:(
+nullable NSArray<NSHTTPCookie *>
+*)
+cookies;
 
-- (void)removeAllCookies;
+- (void)
+removeAllCookies;
 
-@end
+@
+end
 
 // Macros to monitor synchronization blocks in debug builds.
 // These report problems using GTMSessionCheckDebug.
@@ -1417,4 +1820,4 @@ __deprecated_msg("implement GTMSessionFetcherAuthorizer instead")
 #endif  // !DEBUG
 #endif  // __OBJC__
 
-NS_ASSUME_NONNULL_END
+        NS_ASSUME_NONNULL_END

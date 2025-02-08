@@ -30,25 +30,27 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// The error domain for `NSError`s returned by the Google Sign-In SDK.
-extern NSErrorDomain const kGIDSignInErrorDomain;
+extern NSErrorDomain
+const kGIDSignInErrorDomain;
 
 /// A list of potential error codes returned from the Google Sign-In SDK.
-typedef NS_ERROR_ENUM(kGIDSignInErrorDomain, GIDSignInErrorCode) {
-  /// Indicates an unknown error has occurred.
-  kGIDSignInErrorCodeUnknown = -1,
-  /// Indicates a problem reading or writing to the application keychain.
-  kGIDSignInErrorCodeKeychain = -2,
-  /// Indicates there are no valid auth tokens in the keychain. This error code will be returned by
-  /// `restorePreviousSignIn` if the user has not signed in before or if they have since signed out.
-  kGIDSignInErrorCodeHasNoAuthInKeychain = -4,
-  /// Indicates the user canceled the sign in request.
-  kGIDSignInErrorCodeCanceled = -5,
-  /// Indicates an Enterprise Mobility Management related error has occurred.
-  kGIDSignInErrorCodeEMM = -6,
-  /// Indicates the requested scopes have already been granted to the `currentUser`.
-  kGIDSignInErrorCodeScopesAlreadyGranted = -8,
-  /// Indicates there is an operation on a previous user.
-  kGIDSignInErrorCodeMismatchWithCurrentUser = -9,
+typedef NS_ERROR_ENUM(kGIDSignInErrorDomain, GIDSignInErrorCode
+) {
+/// Indicates an unknown error has occurred.
+kGIDSignInErrorCodeUnknown = -1,
+/// Indicates a problem reading or writing to the application keychain.
+kGIDSignInErrorCodeKeychain = -2,
+/// Indicates there are no valid auth tokens in the keychain. This error code will be returned by
+/// `restorePreviousSignIn` if the user has not signed in before or if they have since signed out.
+kGIDSignInErrorCodeHasNoAuthInKeychain = -4,
+/// Indicates the user canceled the sign in request.
+kGIDSignInErrorCodeCanceled = -5,
+/// Indicates an Enterprise Mobility Management related error has occurred.
+kGIDSignInErrorCodeEMM = -6,
+/// Indicates the requested scopes have already been granted to the `currentUser`.
+kGIDSignInErrorCodeScopesAlreadyGranted = -8,
+/// Indicates there is an operation on a previous user.
+kGIDSignInErrorCodeMismatchWithCurrentUser = -9,
 };
 
 /// This class is used to sign in users with their Google account and manage their session.
@@ -97,11 +99,15 @@ NS_SWIFT_NAME(configureDebugProvider(withAPIKey:completion:));
 
 /// Unavailable. Use the `sharedInstance` property to instantiate `GIDSignIn`.
 /// :nodoc:
-+ (instancetype)new NS_UNAVAILABLE;
++ (instancetype)new
+
+NS_UNAVAILABLE;
 
 /// Unavailable. Use the `sharedInstance` property to instantiate `GIDSignIn`.
 /// :nodoc:
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// This method should be called from your `UIApplicationDelegate`'s `application:openURL:options:`
 /// method.

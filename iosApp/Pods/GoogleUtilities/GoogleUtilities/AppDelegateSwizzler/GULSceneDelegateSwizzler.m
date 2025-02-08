@@ -44,12 +44,12 @@ static GULLoggerService kGULLoggerSwizzler = @"[GoogleUtilities/SceneDelegateSwi
 
 /** Plist key that allows Firebase developers to disable App and Scene Delegate Proxying. */
 static NSString *const kGULFirebaseSceneDelegateProxyEnabledPlistKey =
-    @"FirebaseAppDelegateProxyEnabled";
+        @"FirebaseAppDelegateProxyEnabled";
 
 /** Plist key that allows developers not using Firebase to disable App and Scene Delegate Proxying.
  */
 static NSString *const kGULGoogleUtilitiesSceneDelegateProxyEnabledPlistKey =
-    @"GoogleUtilitiesAppDelegateProxyEnabled";
+        @"GoogleUtilitiesAppDelegateProxyEnabled";
 
 /** The prefix of the Scene Delegate. */
 static NSString *const kGULSceneDelegatePrefix = @"GUL_";
@@ -76,28 +76,28 @@ static NSString *const kGULSceneDelegatePrefix = @"GUL_";
 #pragma mark - Public methods
 
 + (BOOL)isSceneDelegateProxyEnabled {
-  return [GULAppDelegateSwizzler isAppDelegateProxyEnabled];
+    return [GULAppDelegateSwizzler isAppDelegateProxyEnabled];
 }
 
 + (void)proxyOriginalSceneDelegate {
 #if UISCENE_SUPPORTED
-  if ([GULAppEnvironmentUtil isAppExtension]) {
-    return;
-  }
-
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    if (@available(iOS 13.0, tvOS 13.0, *)) {
-      if (![GULSceneDelegateSwizzler isSceneDelegateProxyEnabled]) {
-        return;
-      }
-      [[NSNotificationCenter defaultCenter]
-          addObserver:self
-             selector:@selector(handleSceneWillConnectToNotification:)
-                 name:UISceneWillConnectNotification
-               object:nil];
+    if ([GULAppEnvironmentUtil isAppExtension]) {
+      return;
     }
-  });
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+      if (@available(iOS 13.0, tvOS 13.0, *)) {
+        if (![GULSceneDelegateSwizzler isSceneDelegateProxyEnabled]) {
+          return;
+        }
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(handleSceneWillConnectToNotification:)
+                   name:UISceneWillConnectNotification
+                 object:nil];
+      }
+    });
 #endif  // UISCENE_SUPPORTED
 }
 

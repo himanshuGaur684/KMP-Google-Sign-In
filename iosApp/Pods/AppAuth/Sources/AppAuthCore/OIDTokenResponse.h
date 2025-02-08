@@ -86,13 +86,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Additional parameters returned from the token server.
  */
-@property(nonatomic, readonly, nullable)
-    NSDictionary<NSString *, NSObject<NSCopying> *> *additionalParameters;
+@property(nonatomic, readonly, nullable) NSDictionary<NSString *, NSObject < NSCopying> *
+> *
+additionalParameters;
 
 /*! @internal
     @brief Unavailable. Please use initWithParameters:.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Designated initializer.
     @param request The serviced request.
@@ -102,8 +105,11 @@ NS_ASSUME_NONNULL_BEGIN
         @c #additionalParameters dictionary.
  */
 - (instancetype)initWithRequest:(OIDTokenRequest *)request
-                     parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters
-                     NS_DESIGNATED_INITIALIZER;
+                     parameters:(NSDictionary
+
+<NSString *, NSObject <NSCopying> *> *)
+parameters
+        NS_DESIGNATED_INITIALIZER;
 
 @end
 

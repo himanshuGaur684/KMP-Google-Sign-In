@@ -25,13 +25,24 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GIDSignInStrings : NSObject
 
 // Returns the localized string for the key if available, or the supplied default text if not.
-+ (nullable NSString *)localizedStringForKey:(NSString *)key text:(NSString *)text;
++ (nullable NSString
+
+*)localizedStringForKey:(NSString *)
+key text
+:(NSString *)
+text;
 
 // "Sign In"
-+ (nullable NSString *)signInString;
++ (nullable NSString
+
+*)
+signInString;
 
 // "Sign in with Google"
-+ (nullable NSString *)signInWithGoogleString;
++ (nullable NSString
+
+*)
+signInWithGoogleString;
 
 @end
 

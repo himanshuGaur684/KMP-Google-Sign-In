@@ -22,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*! @brief Parameter name for the token endpoint authentication method.
  */
-extern NSString *const OIDTokenEndpointAuthenticationMethodParam;
+extern NSString
+*
+const OIDTokenEndpointAuthenticationMethodParam;
 
 /*! @brief Parameter name for the application type.
  */

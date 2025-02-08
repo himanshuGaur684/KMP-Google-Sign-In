@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Internal class for GIDGoogleUser NSCoding backward compatibility.
 @interface GIDAuthentication : NSObject <NSSecureCoding>
 
-@property(nonatomic) OIDAuthState* authState;
+@property(nonatomic) OIDAuthState *authState;
 
 - (instancetype)initWithAuthState:(OIDAuthState *)authState;
 

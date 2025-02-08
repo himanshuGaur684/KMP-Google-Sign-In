@@ -64,98 +64,101 @@ static NSString *const kAdditionalParametersKey = @"additionalParameters";
 /*! @brief Returns a mapping of incoming parameters to instance variables.
     @return A mapping of incoming parameters to instance variables.
  */
-+ (NSDictionary<NSString *, OIDFieldMapping *> *)fieldMap {
-  static NSMutableDictionary<NSString *, OIDFieldMapping *> *fieldMap;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    fieldMap = [NSMutableDictionary dictionary];
-    fieldMap[kAccessTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_accessToken" type:[NSString class]];
-    fieldMap[kExpiresInKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_accessTokenExpirationDate"
-                                         type:[NSDate class]
-                                   conversion:[OIDFieldMapping dateSinceNowConversion]];
-    fieldMap[kTokenTypeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_tokenType" type:[NSString class]];
-    fieldMap[kIDTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_idToken" type:[NSString class]];
-    fieldMap[kRefreshTokenKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_refreshToken" type:[NSString class]];
-    fieldMap[kScopeKey] =
-        [[OIDFieldMapping alloc] initWithName:@"_scope" type:[NSString class]];
-  });
-  return fieldMap;
++ (NSDictionary<NSString * , OIDFieldMapping *> *)fieldMap {
+    static NSMutableDictionary < NSString * , OIDFieldMapping * > *fieldMap;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fieldMap = [NSMutableDictionary dictionary];
+        fieldMap[kAccessTokenKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_accessToken" type:[NSString class]];
+        fieldMap[kExpiresInKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_accessTokenExpirationDate"
+                                                 type:[NSDate class]
+                                           conversion:[OIDFieldMapping dateSinceNowConversion]];
+        fieldMap[kTokenTypeKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_tokenType" type:[NSString class]];
+        fieldMap[kIDTokenKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_idToken" type:[NSString class]];
+        fieldMap[kRefreshTokenKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_refreshToken" type:[NSString class]];
+        fieldMap[kScopeKey] =
+                [[OIDFieldMapping alloc] initWithName:@"_scope" type:[NSString class]];
+    });
+    return fieldMap;
 }
 
 #pragma mark - Initializers
 
-- (instancetype)init
-    OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
+- (instancetype)init OID_UNAVAILABLE_USE_INITIALIZER(@selector(initWithRequest:parameters:))
 
 - (instancetype)initWithRequest:(OIDTokenRequest *)request
-    parameters:(NSDictionary<NSString *, NSObject<NSCopying> *> *)parameters {
-  self = [super init];
-  if (self) {
-    _request = [request copy];
-    NSDictionary<NSString *, NSObject<NSCopying> *> *additionalParameters =
-        [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
-                                         parameters:parameters
-                                           instance:self];
-    _additionalParameters = additionalParameters;
-  }
-  return self;
+                     parameters:(NSDictionary<NSString * , NSObject < NSCopying> *
+
+> *)parameters {
+    self = [super init];
+    if (self) {
+        _request = [request copy];
+        NSDictionary<NSString * , NSObject < NSCopying> * > *additionalParameters =
+                [OIDFieldMapping remainingParametersWithMap:[[self class] fieldMap]
+                                                 parameters:parameters
+                                                   instance:self];
+        _additionalParameters = additionalParameters;
+    }
+    return self;
 }
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(nullable NSZone *)zone {
-  // The documentation for NSCopying specifically advises us to return a reference to the original
-  // instance in the case where instances are immutable (as ours is):
-  // "Implement NSCopying by retaining the original instead of creating a new copy when the class
-  // and its contents are immutable."
-  return self;
+- (instancetype)copyWithZone:(nullable NSZone
+
+*)zone {
+    // The documentation for NSCopying specifically advises us to return a reference to the original
+    // instance in the case where instances are immutable (as ours is):
+    // "Implement NSCopying by retaining the original instead of creating a new copy when the class
+    // and its contents are immutable."
+    return self;
 }
 
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {
-  return YES;
+    return YES;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
-  OIDTokenRequest *request =
-      [aDecoder decodeObjectOfClass:[OIDTokenRequest class] forKey:kRequestKey];
-  self = [self initWithRequest:request parameters:@{ }];
-  if (self) {
-    [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
-    _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
-                                                     forKey:kAdditionalParametersKey];
-  }
-  return self;
+    OIDTokenRequest *request =
+            [aDecoder decodeObjectOfClass:[OIDTokenRequest class] forKey:kRequestKey];
+    self = [self initWithRequest:request parameters:@{}];
+    if (self) {
+        [OIDFieldMapping decodeWithCoder:aDecoder map:[[self class] fieldMap] instance:self];
+        _additionalParameters = [aDecoder decodeObjectOfClasses:[OIDFieldMapping JSONTypes]
+                                                         forKey:kAdditionalParametersKey];
+    }
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
-  [aCoder encodeObject:_request forKey:kRequestKey];
-  [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
+    [OIDFieldMapping encodeWithCoder:aCoder map:[[self class] fieldMap] instance:self];
+    [aCoder encodeObject:_request forKey:kRequestKey];
+    [aCoder encodeObject:_additionalParameters forKey:kAdditionalParametersKey];
 }
 
 #pragma mark - NSObject overrides
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"<%@: %p, accessToken: \"%@\", accessTokenExpirationDate: %@, "
-                                     "tokenType: %@, idToken: \"%@\", refreshToken: \"%@\", "
-                                     "scope: \"%@\", additionalParameters: %@, request: %@>",
-                                    NSStringFromClass([self class]),
-                                    (void *)self,
-                                    [OIDTokenUtilities redact:_accessToken],
-                                    _accessTokenExpirationDate,
-                                    _tokenType,
-                                    [OIDTokenUtilities redact:_idToken],
-                                    [OIDTokenUtilities redact:_refreshToken],
-                                    _scope,
-                                    _additionalParameters,
-                                    _request];
+    return [NSString stringWithFormat:@"<%@: %p, accessToken: \"%@\", accessTokenExpirationDate: %@, "
+                                      "tokenType: %@, idToken: \"%@\", refreshToken: \"%@\", "
+                                      "scope: \"%@\", additionalParameters: %@, request: %@>",
+                                      NSStringFromClass([self class]),
+                                      (void *) self,
+                                      [OIDTokenUtilities redact:_accessToken],
+                                      _accessTokenExpirationDate,
+                                      _tokenType,
+                                      [OIDTokenUtilities redact:_idToken],
+                                      [OIDTokenUtilities redact:_refreshToken],
+                                      _scope,
+                                      _additionalParameters,
+                                      _request];
 }
 
 #pragma mark -

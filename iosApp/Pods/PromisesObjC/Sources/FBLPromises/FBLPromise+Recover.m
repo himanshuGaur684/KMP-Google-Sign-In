@@ -21,34 +21,34 @@
 @implementation FBLPromise (RecoverAdditions)
 
 - (FBLPromise *)recover:(FBLPromiseRecoverWorkBlock)recovery {
-  return [self onQueue:FBLPromise.defaultDispatchQueue recover:recovery];
+    return [self onQueue:FBLPromise.defaultDispatchQueue recover:recovery];
 }
 
 - (FBLPromise *)onQueue:(dispatch_queue_t)queue recover:(FBLPromiseRecoverWorkBlock)recovery {
-  NSParameterAssert(queue);
-  NSParameterAssert(recovery);
+    NSParameterAssert(queue);
+    NSParameterAssert(recovery);
 
-  return [self chainOnQueue:queue
-             chainedFulfill:nil
-              chainedReject:^id(NSError *error) {
-                return recovery(error);
-              }];
+    return [self chainOnQueue:queue
+               chainedFulfill:nil
+                chainedReject:^id(NSError *error) {
+                    return recovery(error);
+                }];
 }
 
 @end
 
 @implementation FBLPromise (DotSyntax_RecoverAdditions)
 
-- (FBLPromise * (^)(FBLPromiseRecoverWorkBlock))recover {
-  return ^(FBLPromiseRecoverWorkBlock recovery) {
-    return [self recover:recovery];
-  };
+- (FBLPromise *(^)(FBLPromiseRecoverWorkBlock))recover {
+    return ^(FBLPromiseRecoverWorkBlock recovery) {
+        return [self recover:recovery];
+    };
 }
 
-- (FBLPromise * (^)(dispatch_queue_t, FBLPromiseRecoverWorkBlock))recoverOn {
-  return ^(dispatch_queue_t queue, FBLPromiseRecoverWorkBlock recovery) {
-    return [self onQueue:queue recover:recovery];
-  };
+- (FBLPromise *(^)(dispatch_queue_t, FBLPromiseRecoverWorkBlock))recoverOn {
+    return ^(dispatch_queue_t queue, FBLPromiseRecoverWorkBlock recovery) {
+        return [self onQueue:queue recover:recovery];
+    };
 }
 
 @end

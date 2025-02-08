@@ -22,10 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The log levels used by GULNetworkLogger.
 typedef NS_ENUM(NSInteger, GULNetworkLogLevel) {
-  kGULNetworkLogLevelError = 3,
-  kGULNetworkLogLevelWarning = 4,
-  kGULNetworkLogLevelInfo = 6,
-  kGULNetworkLogLevelDebug = 7,
+    kGULNetworkLogLevelError = 3,
+    kGULNetworkLogLevelWarning = 4,
+    kGULNetworkLogLevelInfo = 6,
+    kGULNetworkLogLevelDebug = 7,
 };
 
 @protocol GULNetworkLoggerDelegate <NSObject>

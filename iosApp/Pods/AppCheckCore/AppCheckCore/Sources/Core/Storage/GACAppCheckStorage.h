@@ -29,7 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return A promise that is resolved with the stored object in the case of success or is rejected
  * with a specific error otherwise.
  */
-- (FBLPromise<GACAppCheckToken *> *)setToken:(nullable GACAppCheckToken *)token;
+- (FBLPromise<GACAppCheckToken *> *)setToken:(nullable GACAppCheckToken
+
+*)
+token;
 
 /** Reads a stored FAA token.
  *  @return A promise that is resolved with a stored token or `nil` if there is not a stored token.
@@ -42,13 +45,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// The class provides an implementation of persistent storage to store data like FAA token, etc.
 @interface GACAppCheckStorage : NSObject <GACAppCheckStorageProtocol>
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /** Default convenience initializer.
  *  @param tokenKey The key to store the token for the storage instance.
  *  @param accessGroup The Keychain Access Group.
  */
-- (instancetype)initWithTokenKey:(NSString *)tokenKey accessGroup:(nullable NSString *)accessGroup;
+- (instancetype)initWithTokenKey:(NSString *)tokenKey accessGroup:(nullable NSString
+
+*)
+accessGroup;
 
 /** Designated initializer.
  *  @param tokenKey The key to store the token for the storage instance.
@@ -57,7 +65,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype)initWithTokenKey:(NSString *)tokenKey
                  keychainStorage:(GULKeychainStorage *)keychainStorage
-                     accessGroup:(nullable NSString *)accessGroup NS_DESIGNATED_INITIALIZER;
+                     accessGroup:(nullable NSString
+
+*)
+accessGroup NS_DESIGNATED_INITIALIZER;
 
 @end
 

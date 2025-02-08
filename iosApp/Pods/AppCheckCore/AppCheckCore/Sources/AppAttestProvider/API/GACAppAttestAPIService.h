@@ -59,10 +59,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// network requests to the App Check backend.
 /// @param resourceName The name of the resource protected by App Check; for a Firebase App this is
 /// "projects/{project_id}/apps/{app_id}".
-- (instancetype)initWithAPIService:(id<GACAppCheckAPIServiceProtocol>)APIService
+- (instancetype)initWithAPIService:(id <GACAppCheckAPIServiceProtocol>)APIService
                       resourceName:(NSString *)resourceName NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

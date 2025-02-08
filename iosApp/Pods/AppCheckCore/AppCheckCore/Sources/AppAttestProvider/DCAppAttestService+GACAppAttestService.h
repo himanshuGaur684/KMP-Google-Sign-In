@@ -25,6 +25,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 GAC_APP_ATTEST_PROVIDER_AVAILABILITY
+
 @interface DCAppAttestService (GACAppAttestService) <GACAppAttestService>
 
 @end

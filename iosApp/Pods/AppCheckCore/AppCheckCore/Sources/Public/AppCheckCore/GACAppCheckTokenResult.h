@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class GACAppCheckToken;
 
 NS_SWIFT_NAME(AppCheckCoreTokenResult)
+
 @interface GACAppCheckTokenResult : NSObject
 
 /// An App Check token in the case of success or a placeholder token in the case of a failure.
@@ -34,9 +35,14 @@ NS_SWIFT_NAME(AppCheckCoreTokenResult)
 - (instancetype)initWithError:(NSError *)error;
 
 - (instancetype)initWithToken:(GACAppCheckToken *)token
-                        error:(nullable NSError *)error NS_DESIGNATED_INITIALIZER;
+                        error:(nullable NSError
 
-- (instancetype)init NS_UNAVAILABLE;
+*)
+error NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

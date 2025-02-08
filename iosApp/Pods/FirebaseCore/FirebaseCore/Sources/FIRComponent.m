@@ -30,29 +30,29 @@
 
 + (instancetype)componentWithProtocol:(Protocol *)protocol
                         creationBlock:(FIRComponentCreationBlock)creationBlock {
-  return [[FIRComponent alloc] initWithProtocol:protocol
-                            instantiationTiming:FIRInstantiationTimingLazy
-                                  creationBlock:creationBlock];
+    return [[FIRComponent alloc] initWithProtocol:protocol
+                              instantiationTiming:FIRInstantiationTimingLazy
+                                    creationBlock:creationBlock];
 }
 
 + (instancetype)componentWithProtocol:(Protocol *)protocol
                   instantiationTiming:(FIRInstantiationTiming)instantiationTiming
                         creationBlock:(FIRComponentCreationBlock)creationBlock {
-  return [[FIRComponent alloc] initWithProtocol:protocol
-                            instantiationTiming:instantiationTiming
-                                  creationBlock:creationBlock];
+    return [[FIRComponent alloc] initWithProtocol:protocol
+                              instantiationTiming:instantiationTiming
+                                    creationBlock:creationBlock];
 }
 
 - (instancetype)initWithProtocol:(Protocol *)protocol
              instantiationTiming:(FIRInstantiationTiming)instantiationTiming
                    creationBlock:(FIRComponentCreationBlock)creationBlock {
-  self = [super init];
-  if (self) {
-    _protocol = protocol;
-    _instantiationTiming = instantiationTiming;
-    _creationBlock = creationBlock;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _protocol = protocol;
+        _instantiationTiming = instantiationTiming;
+        _creationBlock = creationBlock;
+    }
+    return self;
 }
 
 @end

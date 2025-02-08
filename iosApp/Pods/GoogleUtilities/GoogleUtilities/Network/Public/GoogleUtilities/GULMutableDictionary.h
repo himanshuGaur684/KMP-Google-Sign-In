@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)objectForKey:(id)key;
 
 /// Updates the object given its key or adds it to the dictionary if it is not in the dictionary.
-- (void)setObject:(id)object forKey:(id<NSCopying>)key;
+- (void)setObject:(id)object forKey:(id <NSCopying>)key;
 
 /// Removes the object given its session ID from the dictionary.
 - (void)removeObjectForKey:(id)key;
@@ -37,10 +37,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)count;
 
 /// Returns an object given a key in the dictionary or nil if not found.
-- (id)objectForKeyedSubscript:(id<NSCopying>)key;
+- (id)objectForKeyedSubscript:(id <NSCopying>)key;
 
 /// Updates the object given its key or adds it to the dictionary if it is not in the dictionary.
-- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
+- (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
 
 /// Returns the immutable dictionary.
 - (NSDictionary *)dictionary;

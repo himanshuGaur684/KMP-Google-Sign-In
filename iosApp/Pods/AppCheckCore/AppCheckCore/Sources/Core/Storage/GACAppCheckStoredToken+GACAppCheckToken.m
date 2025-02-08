@@ -21,15 +21,15 @@
 @implementation GACAppCheckStoredToken (GACAppCheckToken)
 
 - (void)updateWithToken:(GACAppCheckToken *)token {
-  self.token = token.token;
-  self.expirationDate = token.expirationDate;
-  self.receivedAtDate = token.receivedAtDate;
+    self.token = token.token;
+    self.expirationDate = token.expirationDate;
+    self.receivedAtDate = token.receivedAtDate;
 }
 
 - (GACAppCheckToken *)appCheckToken {
-  return [[GACAppCheckToken alloc] initWithToken:self.token
-                                  expirationDate:self.expirationDate
-                                  receivedAtDate:self.receivedAtDate];
+    return [[GACAppCheckToken alloc] initWithToken:self.token
+                                    expirationDate:self.expirationDate
+                                    receivedAtDate:self.receivedAtDate];
 }
 
 @end

@@ -35,7 +35,10 @@ void GACAppCheckSetErrorToPointer(NSError *error, NSError **pointer);
 + (NSError *)keychainErrorWithError:(NSError *)error;
 
 + (GACAppCheckHTTPError *)APIErrorWithHTTPResponse:(NSHTTPURLResponse *)HTTPResponse
-                                              data:(nullable NSData *)data;
+                                              data:(nullable NSData
+
+*)
+data;
 
 + (NSError *)APIErrorWithNetworkError:(NSError *)networkError;
 

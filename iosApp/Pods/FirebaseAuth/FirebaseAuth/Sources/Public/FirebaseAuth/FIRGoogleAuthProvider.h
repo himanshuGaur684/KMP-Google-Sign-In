@@ -21,11 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
     @brief A string constant identifying the Google identity provider.
  */
-extern NSString *const FIRGoogleAuthProviderID NS_SWIFT_NAME(GoogleAuthProviderID);
+extern NSString
+*
+const FIRGoogleAuthProviderID NS_SWIFT_NAME(GoogleAuthProviderID);
 
 /**
     @brief A string constant identifying the Google sign-in method.
  */
-extern NSString *const _Nonnull FIRGoogleAuthSignInMethod NS_SWIFT_NAME(GoogleAuthSignInMethod);
+extern NSString *const _Nonnull
+FIRGoogleAuthSignInMethod NS_SWIFT_NAME(GoogleAuthSignInMethod);
 
 NS_ASSUME_NONNULL_END

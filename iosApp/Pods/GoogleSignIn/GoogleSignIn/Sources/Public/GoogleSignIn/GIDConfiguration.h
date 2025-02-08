@@ -39,11 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Unavailable.  Please use `initWithClientID:` or one of the other initializers below.
 /// :nodoc:
-+ (instancetype)new NS_UNAVAILABLE;
++ (instancetype)new
+
+NS_UNAVAILABLE;
 
 /// Unavailable.  Please use `initWithClientID:` or one of the other initializers below.
 /// :nodoc:
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 /// Initialize a `GIDConfiguration` object with a client ID.
 ///
@@ -57,7 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param serverClientID The server's client ID.
 /// @return An initialized `GIDConfiguration` instance.
 - (instancetype)initWithClientID:(NSString *)clientID
-                  serverClientID:(nullable NSString *)serverClientID;
+                  serverClientID:(nullable NSString
+
+*)
+serverClientID;
 
 /// Initialize a `GIDConfiguration` object by specifying all available properties.
 ///
@@ -67,9 +74,20 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param openIDRealm The OpenID realm to be used.
 /// @return An initialized `GIDConfiguration` instance.
 - (instancetype)initWithClientID:(NSString *)clientID
-                  serverClientID:(nullable NSString *)serverClientID
-                    hostedDomain:(nullable NSString *)hostedDomain
-                     openIDRealm:(nullable NSString *)openIDRealm NS_DESIGNATED_INITIALIZER;
+                  serverClientID:(nullable NSString
+
+*)
+serverClientID
+        hostedDomain
+:(
+nullable NSString
+*)
+hostedDomain
+        openIDRealm
+:(
+nullable NSString
+*)
+openIDRealm NS_DESIGNATED_INITIALIZER;
 
 @end
 

@@ -29,13 +29,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) NSString *baseURL;
 
 - (FBLPromise<GACURLSessionDataResponse *> *)
-    sendRequestWithURL:(NSURL *)requestURL
-            HTTPMethod:(NSString *)HTTPMethod
-                  body:(nullable NSData *)body
-     additionalHeaders:(nullable NSDictionary<NSString *, NSString *> *)additionalHeaders;
+sendRequestWithURL:(NSURL *)requestURL
+        HTTPMethod:(NSString *)HTTPMethod
+              body:(nullable NSData
+
+*)
+body
+        additionalHeaders
+:(
+nullable NSDictionary<NSString *, NSString *>
+*)
+additionalHeaders;
 
 - (FBLPromise<GACAppCheckToken *> *)appCheckTokenWithAPIResponse:
-    (GACURLSessionDataResponse *)response;
+        (GACURLSessionDataResponse *)response;
 
 @end
 
@@ -50,12 +57,25 @@ NS_ASSUME_NONNULL_BEGIN
  * @param requestHooks Hooks that will be invoked on requests through this service.
  */
 - (instancetype)initWithURLSession:(NSURLSession *)session
-                           baseURL:(nullable NSString *)baseURL
-                            APIKey:(nullable NSString *)APIKey
-                      requestHooks:(nullable NSArray<GACAppCheckAPIRequestHook> *)requestHooks
-    NS_DESIGNATED_INITIALIZER;
+                           baseURL:(nullable NSString
 
-- (instancetype)init NS_UNAVAILABLE;
+*)
+baseURL
+        APIKey
+:(
+nullable NSString
+*)
+APIKey
+        requestHooks
+:(
+nullable NSArray<GACAppCheckAPIRequestHook>
+*)
+requestHooks
+        NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init
+
+NS_UNAVAILABLE;
 
 @end
 

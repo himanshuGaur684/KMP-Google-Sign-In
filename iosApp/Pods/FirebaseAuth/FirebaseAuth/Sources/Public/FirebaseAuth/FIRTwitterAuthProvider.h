@@ -21,10 +21,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
     @brief A string constant identifying the Twitter identity provider.
  */
-extern NSString *const FIRTwitterAuthProviderID NS_SWIFT_NAME(TwitterAuthProviderID);
+extern NSString
+*
+const FIRTwitterAuthProviderID NS_SWIFT_NAME(TwitterAuthProviderID);
 /**
     @brief A string constant identifying the Twitter sign-in method.
  */
-extern NSString *const _Nonnull FIRTwitterAuthSignInMethod NS_SWIFT_NAME(TwitterAuthSignInMethod);
+extern NSString *const _Nonnull
+FIRTwitterAuthSignInMethod NS_SWIFT_NAME(TwitterAuthSignInMethod);
 
 NS_ASSUME_NONNULL_END

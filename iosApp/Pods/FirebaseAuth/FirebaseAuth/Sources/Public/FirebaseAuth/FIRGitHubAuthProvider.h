@@ -21,11 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
     @brief A string constant identifying the GitHub identity provider.
  */
-extern NSString *const FIRGitHubAuthProviderID NS_SWIFT_NAME(GitHubAuthProviderID);
+extern NSString
+*
+const FIRGitHubAuthProviderID NS_SWIFT_NAME(GitHubAuthProviderID);
 
 /**
     @brief A string constant identifying the GitHub sign-in method.
  */
-extern NSString *const _Nonnull FIRGitHubAuthSignInMethod NS_SWIFT_NAME(GitHubAuthSignInMethod);
+extern NSString *const _Nonnull
+FIRGitHubAuthSignInMethod NS_SWIFT_NAME(GitHubAuthSignInMethod);
 
 NS_ASSUME_NONNULL_END

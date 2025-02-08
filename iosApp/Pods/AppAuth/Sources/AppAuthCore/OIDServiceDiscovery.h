@@ -149,16 +149,14 @@ NS_ASSUME_NONNULL_BEGIN
     @remarks id_token_encryption_alg_values_supported
     @seealso https://tools.ietf.org/html/rfc7519
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *IDTokenEncryptionAlgorithmValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *IDTokenEncryptionAlgorithmValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWE encryption algorithms (@c enc values)
         supported by the OP for the ID Token to encode the Claims in a JWT.
     @remarks id_token_encryption_enc_values_supported
     @seealso https://tools.ietf.org/html/rfc7519
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *IDTokenEncryptionEncodingValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *IDTokenEncryptionEncodingValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWS signing algorithms (@c alg values)
         supported by the UserInfo Endpoint to encode the Claims in a JWT. The value none MAY be
@@ -168,8 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
     @seealso https://tools.ietf.org/html/rfc7518
     @seealso https://tools.ietf.org/html/rfc7519
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *userinfoSigningAlgorithmValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *userinfoSigningAlgorithmValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWE encryption algorithms (alg values)
         supported by the UserInfo Endpoint to encode the Claims in a JWT.
@@ -178,16 +175,14 @@ NS_ASSUME_NONNULL_BEGIN
     @seealso https://tools.ietf.org/html/rfc7518
     @seealso https://tools.ietf.org/html/rfc7519
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *userinfoEncryptionAlgorithmValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *userinfoEncryptionAlgorithmValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWE encryption algorithms (@c enc values)
         supported by the UserInfo Endpoint to encode the Claims in a JWT.
     @remarks userinfo_encryption_enc_values_supported
     @seealso https://tools.ietf.org/html/rfc7519
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *userinfoEncryptionEncodingValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *userinfoEncryptionEncodingValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWS signing algorithms (@c alg values)
         supported by the OP for Request Objects, which are described in Section 6.1 of OpenID
@@ -197,24 +192,21 @@ NS_ASSUME_NONNULL_BEGIN
     @remarks request_object_signing_alg_values_supported
     @seealso http://openid.net/specs/openid-connect-core-1_0.html
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *requestObjectSigningAlgorithmValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *requestObjectSigningAlgorithmValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWE encryption algorithms (@c alg values)
         supported by the OP for Request Objects. These algorithms are used both when the Request
         Object is passed by value and when it is passed by reference.
     @remarks request_object_encryption_alg_values_supported
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *requestObjectEncryptionAlgorithmValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *requestObjectEncryptionAlgorithmValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the JWE encryption algorithms (@c enc values)
         supported by the OP for Request Objects. These algorithms are used both when the Request
         Object is passed by value and when it is passed by reference.
     @remarks request_object_encryption_enc_values_supported
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *requestObjectEncryptionEncodingValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *requestObjectEncryptionEncodingValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of Client Authentication methods supported by this
         Token Endpoint. The options are @c client_secret_post, @c client_secret_basic,
@@ -235,8 +227,7 @@ NS_ASSUME_NONNULL_BEGIN
     @remarks token_endpoint_auth_signing_alg_values_supported
     @seealso https://tools.ietf.org/html/rfc7519
  */
-@property(nonatomic, readonly, nullable)
-    NSArray<NSString *> *tokenEndpointAuthSigningAlgorithmValuesSupported;
+@property(nonatomic, readonly, nullable) NSArray<NSString *> *tokenEndpointAuthSigningAlgorithmValuesSupported;
 
 /*! @brief OPTIONAL. JSON array containing a list of the @c display parameter values that the OpenID
         Provider supports. These values are described in Section 3.1.2.1 of OpenID Connect Core 1.0.
@@ -328,7 +319,9 @@ NS_ASSUME_NONNULL_BEGIN
     @brief Unavailable. Please use @c initWithDictionary:error:, @c initWithJSON:error, or the
         @c discoverServiceConfigurationForDiscoveryURL:callback: from @c OIDAuthorizationService.
  */
-- (nonnull instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init
+
+NS_UNAVAILABLE;
 
 /*! @brief Decodes a OpenID Connect Discovery 1.0 JSON document.
     @param serviceDiscoveryJSON An OpenID Connect Service Discovery document.
