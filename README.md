@@ -31,8 +31,8 @@ Watch the full tutorial on YouTube to understand the step-by-step implementation
 ### Steps
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/himanshuGaur684/google-signin-kmp.git
-   cd google-signin-kmp
+   git clone https://github.com/himanshuGaur684/KMP_Google_Sign_IN.git
+   cd KMP_Google_Sign_IN
    ```
 2. **Set up Firebase for Android & iOS:**
    - **For Android:**
