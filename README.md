@@ -11,7 +11,7 @@ This repository contains the complete implementation of Google Sign-In for both 
 
 ## 📺 YouTube Tutorial
 Watch the full tutorial on YouTube to understand the step-by-step implementation:  
-🔗 [YouTube Video Link](#) (Replace with actual link when available)
+🔗 [YouTube Video Link](https://youtu.be/2M8_7v17OQo) 
 
 ## 🛠️ Technologies Used
 - **Kotlin Multiplatform Mobile (KMP)**
